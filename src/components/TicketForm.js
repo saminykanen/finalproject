@@ -45,10 +45,10 @@ class TicketForm extends Component {
             <div>
                 <h1>Add new ticket</h1>
                 <form onSubmit={this.handleSubmitting}>
-                    <input type="text" value={this.state.ticketowner} onChange={this.handleInputChange} placeholder={"Owner"}/> <br/>
-                    <input type="text" value={this.state.tickettitle} onChange={this.handleInputChange} placeholder={"Title"}/><br/>
-                    <input type="text" value={this.state.ticketdescription} onChange={this.handleInputChange} placeholder={"Description"}/><br/>
-                    <input type="text" value={this.state.location} onChange={this.handleInputChange} placeholder={"Location"}/><br/>
+                    <input name="ticketOwner" type="text" value={this.state.ticketOwner} onChange={this.handleInputChange} placeholder={"Owner"}/> <br/>
+                    <input name="ticketTitle" type="text" value={this.state.ticketTitle} onChange={this.handleInputChange} placeholder={"Title"}/><br/>
+                    <input name="ticketDescription" type="text" value={this.state.ticketDescription} onChange={this.handleInputChange} placeholder={"Description"}/><br/>
+                    <input name="location" type="text" value={this.state.location} onChange={this.handleInputChange} placeholder={"Location"}/><br/>
                     <input type="submit" value="Add ticket"/>
                 </form>
             </div>

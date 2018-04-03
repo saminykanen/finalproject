@@ -3,15 +3,6 @@ import TicketForm from "./TicketForm";
 import {ticketJson} from './TicketList';
 
 class MyTicket extends Component {
-    state = {data:[]};
-    componentDidMount() {
-        fetch('api/tickets')
-            .then(function(response) {return response.json();})
-            .then(function(json) {
-                this.setState({data: json});
-            }.bind(this));
-        console.log("data tuli");
-    }
 
     constructor(props) {
         super(props);
