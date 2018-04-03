@@ -1,45 +1,34 @@
 import React, {Component} from 'react';
-import {ticketJson} from './TicketList';
+import {Panel} from 'react-bootstrap';
+import './Ticket.css';
 
 
 class Ticket extends Component {
 
-    state = {
-        ticketid: ticketJson.ticketid,
-        tickettitle: ticketJson.tickettitle,
-        ticketdescription: ticketJson.ticketdescription,
-        ticketowner: ticketJson.ticketowner,
-        ticketstatus: ticketJson.ticketstatus,
-        timestamp: ticketJson.timestamp,
-        courseid: ticketJson.courseid,
-        location: ticketJson.location
-    };
-
-
     render() {
         return (
             <div className="container">
-
-                <table>
-                    <thead>
-                    <tr>
-                        <th>{this.state.tickettitle}</th>
-                        <th>{this.state.ticketowner}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{this.state.location}</td>
-                    </tr>
-                    <tr>
-                        <td>{this.state.timestamp}</td>
-                    </tr>
-                    <tr>
-                        <td>{this.state.ticketdescription}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
+                <Panel defaultCollapsed>
+                    <Panel.Heading>
+                        <Panel.Title toggle className="text-left">
+                            <th>{this.props.ticket.tickettitle}</th>
+                            <th style={{float: 'right'}}>{this.props.ticket.ticketowner}</th>
+                        </Panel.Title>
+                    </Panel.Heading>
+                    <Panel.Collapse>
+                        <Panel.Body className="text-left">
+                            <tr>
+                                <td>{this.props.ticket.location}</td>
+                            </tr>
+                            <tr>
+                                <td>{this.props.ticket.timestamp}</td>
+                            </tr>
+                            <tr>
+                                <td>{this.props.ticket.ticketdescription}</td>
+                            </tr>
+                        </Panel.Body>
+                    </Panel.Collapse>
+                </Panel>
             </div>
         )
     }
