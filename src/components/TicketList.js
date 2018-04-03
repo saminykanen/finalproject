@@ -50,9 +50,9 @@ class TicketList extends Component {
         return (
             <div className="container">
                 <h4>Ticket count: <span className="badge">{tickets.length}</span></h4>
-                <ul>
+                <div>
                     {tickets}
-                </ul>
+                </div>
             </div>
         )
     }
