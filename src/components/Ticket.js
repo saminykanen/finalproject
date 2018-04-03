@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {ticketJson} from './TicketList';
 import {Panel} from 'react-bootstrap';
+import './Ticket.css';
 
 
 class Ticket extends Component {
@@ -10,13 +10,13 @@ class Ticket extends Component {
             <div className="container">
                 <Panel defaultCollapsed>
                     <Panel.Heading>
-                        <Panel.Title toggle>
-                            <th className="list-group-item-heading align-left">{this.props.ticket.tickettitle}</th>
+                        <Panel.Title toggle className="text-left">
+                            <th>{this.props.ticket.tickettitle}</th>
                             <th style={{float: 'right'}}>{this.props.ticket.ticketowner}</th>
                         </Panel.Title>
                     </Panel.Heading>
                     <Panel.Collapse>
-                        <Panel.Body className="align-left">
+                        <Panel.Body className="text-left">
                             <tr>
                                 <td>{this.props.ticket.location}</td>
                             </tr>
