@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {ticketJson} from "./TicketList";
+import './TicketForm.css';
 
 class TicketForm extends Component {
     constructor(props) {
@@ -42,15 +43,36 @@ class TicketForm extends Component {
 
     render(){
         return(
-            <div>
+            <div className="formi">
                 <h1>Add new ticket</h1>
                 <form onSubmit={this.handleSubmitting}>
-
                     {/*<input name="userName" type="text" value={this.state.userName} onChange={this.handleInputChange} placeholder={"Owner"}/> <br/>*/}
-                    <input name="ticketTitle" type="text" value={this.state.ticketTitle} onChange={this.handleInputChange} placeholder={"Title"}/><br/>
-                    <input name="ticketDescription" type="text" value={this.state.ticketDescription} onChange={this.handleInputChange} placeholder={"Description"}/><br/>
-                    <input name="location" type="text" value={this.state.location} onChange={this.handleInputChange} placeholder={"Location"}/><br/>
-                    <input type="submit" value="Add ticket"/>
+                    <div className="form-group">
+                        <input name="ticketTitle"
+                               type="text"
+                               className="form-control"
+                               value={this.state.ticketTitle}
+                               onChange={this.handleInputChange}
+                               placeholder={"Title"}/>
+                    </div>
+                    <div className="form-group">
+                        <input name="ticketDescription"
+                               type="text"
+                               class="form-control"
+                               value={this.state.ticketDescription}
+                               onChange={this.handleInputChange}
+                               placeholder={"Description"}/>
+                    </div>
+                    <div className="form-group">
+                    <input name="location"
+                           type="text"
+                           className="form-control"
+                           value={this.state.location}
+                           onChange={this.handleInputChange}
+                           placeholder={"Location"}/>
+                    </div>
+                        <button type="submit"
+                                className="btn btn-primary">Add ticket</button>
                 </form>
             </div>
         )
