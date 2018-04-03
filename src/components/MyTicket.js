@@ -6,13 +6,11 @@ class MyTicket extends Component {
 
     constructor(props) {
         super(props);
-
-/*        this.state= {tickets: data};*/
     }
 
     addNewTicket = (e) => {
         this.state.data.push(e);
-    }
+    };
 
     render(){
         return(

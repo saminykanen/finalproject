@@ -5,12 +5,12 @@ class TicketForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tickettitle: '',
-            ticketdescription: '',
-            ticketowner: '', //tuleeko tähän se kirjautunut?
-            ticketstatus: 'queue',
+            ticketTitle: '',
+            ticketDescription: '',
+            userName: '', //tuleeko tähän se kirjautunut?
+            ticketStatus: 'queue',
             timestamp: '', //tähän joku localdate now?
-            courseid: '', //tämäkin automatic?
+            courseId: '', //tämäkin automatic?
             location: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -29,12 +29,12 @@ class TicketForm extends Component {
         e.preventDefault();
         this.props.addNew(this.state);
         this.setState({
-                tickettitle: '',
-                ticketdescription: '',
-                ticketowner: '', //tuleeko tähän se kirjautunut?
-                ticketstatus: 'queue',
+                ticketTitle: '',
+                ticketDescription: '',
+                userName: '', //tuleeko tähän se kirjautunut?
+                ticketStatus: 'queue',
                 timestamp: '', //tähän joku localdate now?
-                courseid: '', //tämäkin automatic?
+                courseId: '', //tämäkin automatic?
                 location: ''
             });
     }
@@ -45,7 +45,8 @@ class TicketForm extends Component {
             <div>
                 <h1>Add new ticket</h1>
                 <form onSubmit={this.handleSubmitting}>
-                    <input name="ticketOwner" type="text" value={this.state.ticketOwner} onChange={this.handleInputChange} placeholder={"Owner"}/> <br/>
+
+                    {/*<input name="userName" type="text" value={this.state.userName} onChange={this.handleInputChange} placeholder={"Owner"}/> <br/>*/}
                     <input name="ticketTitle" type="text" value={this.state.ticketTitle} onChange={this.handleInputChange} placeholder={"Title"}/><br/>
                     <input name="ticketDescription" type="text" value={this.state.ticketDescription} onChange={this.handleInputChange} placeholder={"Description"}/><br/>
                     <input name="location" type="text" value={this.state.location} onChange={this.handleInputChange} placeholder={"Location"}/><br/>
