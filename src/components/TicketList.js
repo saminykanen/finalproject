@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Ticket from "./Ticket";
+import {Panel} from 'react-bootstrap';
 
 export const ticketJson = [
     {
@@ -49,25 +50,27 @@ class TicketList extends Component {
             <div className="container">
                 <ul>
                     {this.state.ticketJson.map((ticket, index) =>
-                        <table className="list-group-item" key={index}>
-                            <thead>
-                            <tr>
-                                <th className="list-group-item-heading">{ticket.tickettitle}</th>
-                                <th className="list-group-item-heading">{ticket.ticketowner}</th>
-                            </tr>
-                            </thead>
-                            <tbody className="invisible">
-                            <tr>
-                                <td>{ticket.location}</td>
-                            </tr>
-                            <tr>
-                                <td>{ticket.timestamp}</td>
-                            </tr>
-                            <tr>
-                                <td>{ticket.ticketdescription}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <Panel id="collapsible-panel-example-2" defaultCollapsed key={index}>
+                            <Panel.Heading>
+                                <Panel.Title toggle>
+                                    <th className="list-group-item-heading">{ticket.tickettitle}</th>
+                                    <th style={{float: 'right'}}>{ticket.ticketowner}</th>
+                                </Panel.Title>
+                            </Panel.Heading>
+                            <Panel.Collapse>
+                                <Panel.Body>
+                                    <tr>
+                                        <td>{ticket.location}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{ticket.timestamp}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{ticket.ticketdescription}</td>
+                                    </tr>
+                                </Panel.Body>
+                            </Panel.Collapse>
+                        </Panel>
                     )}
                 </ul>
             </div>
