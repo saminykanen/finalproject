@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Ticket from "./Ticket";
 import {Panel} from 'react-bootstrap';
+import './TicketList.css'
 
 export const ticketJson = [
     {
@@ -50,15 +51,15 @@ class TicketList extends Component {
             <div className="container">
                 <ul>
                     {this.state.ticketJson.map((ticket, index) =>
-                        <Panel id="collapsible-panel-example-2" defaultCollapsed key={index}>
+                        <Panel defaultCollapsed key={index}>
                             <Panel.Heading>
                                 <Panel.Title toggle>
-                                    <th className="list-group-item-heading">{ticket.tickettitle}</th>
+                                    <th className="list-group-item-heading align-left">{ticket.tickettitle}</th>
                                     <th style={{float: 'right'}}>{ticket.ticketowner}</th>
                                 </Panel.Title>
                             </Panel.Heading>
                             <Panel.Collapse>
-                                <Panel.Body>
+                                <Panel.Body className="align-left">
                                     <tr>
                                         <td>{ticket.location}</td>
                                     </tr>
