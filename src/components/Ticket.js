@@ -11,8 +11,8 @@ class Ticket extends Component {
                 <Panel defaultCollapsed>
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
-                            <th>{this.props.ticket.tickettitle}</th>
-                            <th style={{float: 'right'}}>{this.props.ticket.ticketowner}</th>
+                            <th>{this.props.ticket.ticketTitle}</th>
+                            <th style={{float: 'right'}}>{this.props.ticket.userName}</th>
                         </Panel.Title>
                     </Panel.Heading>
                     <Panel.Collapse>
@@ -24,7 +24,7 @@ class Ticket extends Component {
                                 <td>{this.props.ticket.timestamp}</td>
                             </tr>
                             <tr>
-                                <td>{this.props.ticket.ticketdescription}</td>
+                                <td>{this.props.ticket.ticketDescription}</td>
                             </tr>
                         </Panel.Body>
                     </Panel.Collapse>
