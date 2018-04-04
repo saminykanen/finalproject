@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {ticketJson} from "./TicketList";
 import './TicketForm.css';
-import Title from './Title';
-import TicketList from "./TicketList";
 
 class TicketForm extends Component {
     constructor(props) {
@@ -45,7 +43,6 @@ class TicketForm extends Component {
     render(){
         return(
             <div className="formi">
-                {/*<Title/>*/}
                 <h1>Add new ticket</h1>
                 <form onSubmit={this.handleSubmitting}>
                     {/*<input name="userName" type="text" value={this.state.userName} onChange={this.handleInputChange} placeholder={"Owner"}/> <br/>*/}
