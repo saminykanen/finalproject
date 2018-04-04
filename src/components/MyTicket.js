@@ -21,10 +21,10 @@ class MyTicket extends Component {
     render(){
         return(
             <Router>
-            <div className="col-xs-3 col sm-3">
+            <div className="col-xs-3 col-sm-3">
                     <div>
                         <Switch>
-                            <Route exact path="/addticket" component={TicketForm}/>
+                            <Route exact path="/addticket" render={props => <TicketForm reFetchList={this.props.reFetchList}/>}/>
                         </Switch>
                     </div>
                 <Link className="link" to="/addticket" >
@@ -33,7 +33,7 @@ class MyTicket extends Component {
                         <span className="button-text">Create new ticket</span>
                     </button>
                 </Link>
-               <TicketForm reFetchList={this.props.reFetchList}/>
+               {/*<TicketForm reFetchList={this.props.reFetchList}/>*/}
                {/*<TicketForm addNew = {this.addNewTicket}/>*/}
             </div>
             </Router>
