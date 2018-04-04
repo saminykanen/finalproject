@@ -1,3 +1,7 @@
 .align-left{
     text-align: left;
 }
+
+.activeticket {
+    background-color: #5ed964;
+}

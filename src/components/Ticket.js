@@ -8,8 +8,8 @@ class Ticket extends Component {
     render() {
         return (
             <div className="container">
-                <Panel defaultCollapsed>
-                    <Panel.Heading>
+                <Panel defaultCollapsed className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "defaultticket"}>
+                    <Panel.Heading >
                         <Panel.Title toggle className="text-left">
                             <th>{this.props.ticket.ticketTitle}</th>
                             {/*<th style={{float: 'right'}}>{this.props.ticket.user.userName}</th>*/}
