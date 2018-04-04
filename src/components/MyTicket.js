@@ -5,9 +5,18 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 
 class MyTicket extends Component {
 
-    addNewTicket = (e) => {
+    constructor(props) {
+        super(props);
+    }
+
+/*    addNewTicket = (e) => {
         this.state.data.push(e);
-    };
+    };*/
+/*
+    reFetchTickets = () => {
+        this.props.reFetchList();
+    }
+*/
 
     render(){
         return(
@@ -18,16 +27,16 @@ class MyTicket extends Component {
                             <Route exact path="/addticket" component={TicketForm}/>
                         </Switch>
                     </div>
-                <Link className="link" to="/addticket">
+                <Link className="link" to="/addticket" >
                     <button className="button button1">
                         <i className="plus">+</i>
                         <span className="button-text">Create new ticket</span>
                     </button>
                 </Link>
+               <TicketForm reFetchList={this.props.reFetchList}/>
                {/*<TicketForm addNew = {this.addNewTicket}/>*/}
             </div>
             </Router>
-
         )
     }
 }

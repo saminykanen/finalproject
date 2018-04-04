@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {ticketJson} from "./TicketList";
+import {ticketJson, fetchTicketsAndUpdate} from "./TicketList";
 import './TicketForm.css';
+import TicketList from "./TicketList";
+
 
 class TicketForm extends Component {
     constructor(props) {
@@ -28,7 +30,25 @@ class TicketForm extends Component {
 
     handleSubmitting(e) {
         e.preventDefault();
-        this.props.addNew(this.state);
+        const self = this;
+        fetch('/api/tickets/createticket/',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                ticketTitle: self.state.ticketTitle,
+                ticketDescription: self.state.ticketDescription,
+                location: self.state.location,
+                userName: "testi"
+            })
+
+        })
+            .then(function (body) {
+                console.log(body);
+                this.setState({ticketTitle: '', ticketDescription: '', location: ''});
+                this.props.reFetchList();
+            }.bind(this));
+/*        this.props.addNew(this.state);
         this.setState({
                 ticketTitle: '',
                 ticketDescription: '',
@@ -37,7 +57,7 @@ class TicketForm extends Component {
                 timestamp: '', //tähän joku localdate now?
                 courseId: '', //tämäkin automatic?
                 location: ''
-            });
+            });*/
     }
 
     render(){

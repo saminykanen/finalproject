@@ -1,19 +1,13 @@
 import React, {Component} from 'react';
 import Ticket from "./Ticket";
+import {fetchTickets} from "./Fetch";
 import './TicketList.css'
+import TicketForm from "./TicketForm";
 
 
 class TicketList extends Component {
 
-    state = {data:[]};
-    componentDidMount() {
-        fetch('api/tickets')
-            .then(function(response) {return response.json();})
-            .then(function(json) {
-                this.setState({data: json});
-                console.log(json);
-            }.bind(this));
-    }
+
 
     render() {
 
@@ -53,16 +47,17 @@ class TicketList extends Component {
             }
             ];*/
 
-        const tickets = this.state.data.map(function(ticket){
+       console.log("TicketList render" + this.props.data.length);
+        const tickets = this.props.data.map(function(ticket){
             return (<Ticket ticket = {ticket} key={ticket.ticketId}/>);
         });
 
         return (
             <div className="container">
                 <h4>Ticket count: <span className="badge">{tickets.length}</span></h4>
-                <ul>
+                <div>
                     {tickets}
-                </ul>
+                </div>
             </div>
         )
     }
