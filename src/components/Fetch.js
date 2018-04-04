@@ -1,7 +1,7 @@
 
 
 function fetchTickets(callback){
-    fetch('api/tickets')
+    fetch('api/tickets/notpassive')
         .then(function(response) {
             return response.json();})
         .then(function(tickets) {
