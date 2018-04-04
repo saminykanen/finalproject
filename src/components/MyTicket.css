@@ -1,20 +1,51 @@
 .button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 20px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #dcdcdc;
+    border:none;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    font-size: 18px;
     cursor: pointer;
+}
+.button:hover {
+    background-color: #5ed964;
+    color: #777777;
+}
+
+.plus {
+    color: #8d8d8d;
+    font-size: 2em;
+
+}
+.link {
+    color: #777777;
+}
+
+.link:link {
+    color: #777777;
+}
+
+.link:hover {
+    color: #777777;
+    text-decoration: none;
 }
 
 @media only screen and (min-width: 0px) and (max-width: 600px) {
-    .button1 {border-radius: 50%;}
+    .button1 {
+        border-radius: 20px;
+        width: 45px;
+        height: 45px;}
+
+    .button-text {
+        display: none;
+    }
 }
 
 @media only screen and (min-width: 601px) {
-    .button1 {border-radius: 2px}
+    .button1 {border-radius: 15px;
+        padding: 10px;
+        margin: 4px 2px;
+    }
+    .plus {display:none}
 }
