@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {ticketJson} from "./TicketList";
+import './TicketForm.css';
 
 class TicketForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tickettitle: '',
-            ticketdescription: '',
-            ticketowner: '', //tuleeko tähän se kirjautunut?
-            ticketstatus: 'queue',
+            ticketTitle: '',
+            ticketDescription: '',
+            userName: '', //tuleeko tähän se kirjautunut?
+            ticketStatus: 'queue',
             timestamp: '', //tähän joku localdate now?
-            courseid: '', //tämäkin automatic?
+            courseId: '', //tämäkin automatic?
             location: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -29,12 +30,12 @@ class TicketForm extends Component {
         e.preventDefault();
         this.props.addNew(this.state);
         this.setState({
-                tickettitle: '',
-                ticketdescription: '',
-                ticketowner: '', //tuleeko tähän se kirjautunut?
-                ticketstatus: 'queue',
+                ticketTitle: '',
+                ticketDescription: '',
+                userName: '', //tuleeko tähän se kirjautunut?
+                ticketStatus: 'queue',
                 timestamp: '', //tähän joku localdate now?
-                courseid: '', //tämäkin automatic?
+                courseId: '', //tämäkin automatic?
                 location: ''
             });
     }
@@ -42,14 +43,36 @@ class TicketForm extends Component {
 
     render(){
         return(
-            <div>
+            <div className="formi">
                 <h1>Add new ticket</h1>
                 <form onSubmit={this.handleSubmitting}>
-                    <input type="text" value={this.state.ticketowner} onChange={this.handleInputChange} placeholder={"Owner"}/> <br/>
-                    <input type="text" value={this.state.tickettitle} onChange={this.handleInputChange} placeholder={"Title"}/><br/>
-                    <input type="text" value={this.state.ticketdescription} onChange={this.handleInputChange} placeholder={"Description"}/><br/>
-                    <input type="text" value={this.state.location} onChange={this.handleInputChange} placeholder={"Location"}/><br/>
-                    <input type="submit" value="Add ticket"/>
+                    {/*<input name="userName" type="text" value={this.state.userName} onChange={this.handleInputChange} placeholder={"Owner"}/> <br/>*/}
+                    <div className="form-group">
+                        <input name="ticketTitle"
+                               type="text"
+                               className="form-control"
+                               value={this.state.ticketTitle}
+                               onChange={this.handleInputChange}
+                               placeholder={"Title"}/>
+                    </div>
+                    <div className="form-group">
+                        <input name="ticketDescription"
+                               type="text"
+                               class="form-control"
+                               value={this.state.ticketDescription}
+                               onChange={this.handleInputChange}
+                               placeholder={"Description"}/>
+                    </div>
+                    <div className="form-group">
+                    <input name="location"
+                           type="text"
+                           className="form-control"
+                           value={this.state.location}
+                           onChange={this.handleInputChange}
+                           placeholder={"Location"}/>
+                    </div>
+                        <button type="submit"
+                                className="btn btn-primary">Add ticket</button>
                 </form>
             </div>
         )

@@ -3,16 +3,14 @@ import TicketForm from "./TicketForm";
 import {ticketJson} from './TicketList';
 
 class MyTicket extends Component {
-    state = {};
 
     constructor(props) {
         super(props);
-        this.state= {tickets: ticketJson};
     }
 
     addNewTicket = (e) => {
-        this.state.tickets.push(e);
-    }
+        this.state.data.push(e);
+    };
 
     render(){
         return(
