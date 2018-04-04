@@ -8,15 +8,20 @@ class MyTicket extends Component {
         super(props);
     }
 
-    addNewTicket = (e) => {
+/*    addNewTicket = (e) => {
         this.state.data.push(e);
-    };
+    };*/
+/*
+    reFetchTickets = () => {
+        this.props.reFetchList();
+    }
+*/
 
     render(){
         return(
             <div className="container">
                 <span>MyTicket</span>
-                <TicketForm addNew = {this.addNewTicket}/>
+                <TicketForm reFetchList={this.props.reFetchList}/>
             </div>
         )
     }

@@ -12,7 +12,7 @@ class Ticket extends Component {
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
                             <th>{this.props.ticket.ticketTitle}</th>
-                            <th style={{float: 'right'}}>{this.props.ticket.user.userName}</th>
+                            {/*<th style={{float: 'right'}}>{this.props.ticket.user.userName}</th>*/}
                         </Panel.Title>
                     </Panel.Heading>
                     <Panel.Collapse>
