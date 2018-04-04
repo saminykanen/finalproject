@@ -27,6 +27,9 @@ class Ticket extends Component {
                             <tr>
                                 <td>{this.props.ticket.ticketDescription}</td>
                             </tr>
+                            <tr>
+                                <td><button className="btn btn-danger btn-md">DELETE</button></td>
+                            </tr>
                         </Panel.Body>
                     </Panel.Collapse>
                 </Panel>
