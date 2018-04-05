@@ -5,3 +5,7 @@
 .activeticket {
     background-color: #5ed964;
 }
+
+.expandbutton {
+    display: inline;
+}

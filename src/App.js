@@ -64,15 +64,8 @@ class App extends Component {
                         loading: false
                     })
                 }
-                {
-                    console.log("authenticated: " + this.state.authenticated)
-                }
-                {
-                    console.log("user tokenID2: " + user.uid)
-                }
-                {
-                    console.log("user firebaseUserId: " + this.state.firebaseUserId)
-                }
+                {console.log("authenticated: " + this.state.authenticated)}
+                {console.log("user firebaseAuth: " + user.uid)}
             }
         )
     }
@@ -92,6 +85,7 @@ class App extends Component {
     reFetchList = () => {
         this.fetchTicketsAndUpdate();
     }
+
 
     render() {
         console.log("App render");
@@ -116,9 +110,6 @@ class App extends Component {
                         return <Login setCurrentUser={this.setCurrentUser} {...props} />
                     }}/>
                 </Router>
-                {/*<Router>*/}
-                {/*<Route exact path="/logout" component={Logout}/>*/}
-                {/*</Router>*/}
 
                 <Title/>
                 {this.state.authenticated === true ? <TicketList data={this.state.data}/> : null}
@@ -127,6 +118,7 @@ class App extends Component {
             </div>
         );
     }
+
 }
 
 export default App;
