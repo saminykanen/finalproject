@@ -73,6 +73,7 @@ class TicketForm extends Component {
                     <div className="form-group">
                     <input name="location"
                            type="text"
+                           required="required"
                            className="form-control"
                            value={this.state.location}
                            onChange={this.handleInputChange}

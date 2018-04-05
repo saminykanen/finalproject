@@ -14,7 +14,7 @@ class Ticket extends Component {
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
                             <div>
-                                <span>{this.props.ticket.ticketTitle}</span>
+                                <span><b>{this.props.ticket.ticketTitle}</b></span>
                                 <span style={{float: 'right'}}>{this.props.ticket.timestamp}</span>
                                 <img src={expandbutton} width="45" height="12" className="center-block" alt="expandticket"/>
                             </div>
@@ -22,18 +22,19 @@ class Ticket extends Component {
                     </Panel.Heading>
                     <Panel.Collapse>
                         <Panel.Body className="text-left">
-                            <div>
-                                <span>{this.props.ticket.location}</span>
+                            <div className="row">
+                                <span className="col-md-1"><b>Location:</b></span><span className="col-md-11">{this.props.ticket.location}</span>
                             </div>
-                            <div>
-                                <span>{this.props.ticket.timestamp}</span>
+                            <div className="row">
+                                <span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>
                             </div>
-                            <div>
-                                <span>{this.props.ticket.ticketDescription}</span>
+                            <div className="row">
+                                <span className="col-md-1"><b>Description:</b></span><span className="col-md-11">{this.props.ticket.ticketDescription}</span>
                             </div>
+                            <br/>
                             <div>
                                 <span>
-                                    <button className="btn btn-danger btn-md"
+                                    <button className="btn btn-danger btn-md" style={{marginRight: '10px'}}
                                             onClick={this.handleChangeToPassive.bind(this)}>DELETE
                                     </button>
                                 </span>
