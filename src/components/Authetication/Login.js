@@ -73,7 +73,7 @@ class Login extends Component {
                 }}/>
 
                 <button onClick={() => {
-                this.autWithFacebook()
+                    this.autWithFacebook()
                 }}>Login with Facebook
                 </button>
 
