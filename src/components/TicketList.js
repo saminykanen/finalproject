@@ -46,11 +46,19 @@ class TicketList extends Component {
                 location: 'Utö'
             }
             ];*/
-
+        var tickets = '';
        console.log("TicketList render" + this.props.data.length);
-        const tickets = this.props.data.map(function(ticket){
-            return (<Ticket ticket = {ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList}/>);
-        }.bind(this));
+       if (this.props.data.map != null) {
+           tickets = this.props.data.map(function (ticket) {
+               return (<Ticket ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList}/>);
+           }.bind(this));
+       }else{
+           return(
+               <div className="container">
+                   <h4 className="blockquote">Could not load tickets.</h4>
+               </div>
+           );
+       }
 
         return (
             <div className="container">

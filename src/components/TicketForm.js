@@ -38,7 +38,8 @@ class TicketForm extends Component {
                 ticketTitle: self.state.ticketTitle,
                 ticketDescription: self.state.ticketDescription,
                 location: self.state.location,
-                userName: "testi"
+                userName: "testi",
+
             })
         })
             .then(function () {

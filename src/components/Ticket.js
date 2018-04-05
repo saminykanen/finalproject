@@ -35,6 +35,7 @@ class Ticket extends Component {
                             </tr>
                             <tr>
                                 <td><button className="btn btn-danger btn-md" onClick={this.handleChangeToPassive.bind(this)}>DELETE</button></td>
+                                <td><button className="btn btn-warning btn-md float-right" onClick={this.handleChangeToActive.bind(this)}>ACTIVATE</button></td>
                             </tr>
                         </Panel.Body>
                     </Panel.Collapse>
@@ -55,6 +56,19 @@ class Ticket extends Component {
                 this.props.reFetchList();
             }.bind(this));
     }
+        handleChangeToActive(e) {
+        e.preventDefault();
+        const API = 'api//tickets/setactive/';
+        const TID = this.props.ticket.ticketId;
+
+        fetch(API+TID,{
+            method: 'PUT'
+        })
+            .then(function () {
+                this.props.reFetchList();
+            }.bind(this));
+    }
+
 }
 
 export default Ticket;
