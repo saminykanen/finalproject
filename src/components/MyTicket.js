@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import TicketForm from "./TicketForm";
 import './MyTicket.css';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal} from "react-bootstrap";
 
 class MyTicket extends Component {

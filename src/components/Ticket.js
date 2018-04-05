@@ -16,7 +16,7 @@ class Ticket extends Component {
                             <div>
                                 <span>{this.props.ticket.ticketTitle}</span>
                                 <span style={{float: 'right'}}>{this.props.ticket.timestamp}</span>
-                                <img src={expandbutton} width="45" height="12" className="center-block"/>
+                                <img src={expandbutton} width="45" height="12" className="center-block" alt="expandticket"/>
                             </div>
                         </Panel.Title>
                     </Panel.Heading>

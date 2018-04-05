@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import Ticket from "./Ticket";
-import {fetchTickets} from "./Fetch";
 import './TicketList.css'
-import TicketForm from "./TicketForm";
+
 
 
 class TicketList extends Component {
