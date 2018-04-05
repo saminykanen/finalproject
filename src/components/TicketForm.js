@@ -13,8 +13,10 @@ class TicketForm extends Component {
             userName: '', //tuleeko tähän se kirjautunut?
             ticketStatus: 'queue',
             timestamp: '', //tähän joku localdate now?
-            courseId: '', //tämäkin automatic?
+            courseName: "Java-kurssi", // pitää muokata dymaamiseksi,
+            courseId: '',
             location: ''
+
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmitting = this.handleSubmitting.bind(this);
@@ -25,22 +27,30 @@ class TicketForm extends Component {
         const value = target.value;
         const name = target.name;
 
-        this.setState({[name] : value})
+        this.setState({[name]: value})
     }
 
     handleSubmitting(e) {
         e.preventDefault();
+        console.log("firebaseID " + this.props.firebaseUserId);
         const self = this;
-        fetch('/api/tickets/createticket/',{
+        fetch('/api/tickets/createticket/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(
                 {
-                ticketTitle: self.state.ticketTitle,
-                ticketDescription: self.state.ticketDescription,
-                location: self.state.location,
-                userName: "testi"
-            })
+                    ticket: {
+                        ticketTitle: self.state.ticketTitle,
+                        ticketDescription: self.state.ticketDescription,
+                        location: self.state.location
+                    },
+                    user: {
+                        firebaseUserId: this.props.firebaseUserId
+                    },
+                    course:{
+                        courseName: this.props.courseId
+                    }
+                })
 
         })
             .then(function (body) {
@@ -48,20 +58,20 @@ class TicketForm extends Component {
                 this.setState({ticketTitle: '', ticketDescription: '', location: ''});
                 this.props.reFetchList();
             }.bind(this));
-/*        this.props.addNew(this.state);
-        this.setState({
-                ticketTitle: '',
-                ticketDescription: '',
-                userName: '', //tuleeko tähän se kirjautunut?
-                ticketStatus: 'queue',
-                timestamp: '', //tähän joku localdate now?
-                courseId: '', //tämäkin automatic?
-                location: ''
-            });*/
+        /*        this.props.addNew(this.state);
+                this.setState({
+                        ticketTitle: '',
+                        ticketDescription: '',
+                        userName: '', //tuleeko tähän se kirjautunut?
+                        ticketStatus: 'queue',
+                        timestamp: '', //tähän joku localdate now?
+                        courseId: '', //tämäkin automatic?
+                        location: ''
+                    });*/
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="formi">
                 <h1>Add new ticket</h1>
                 <form onSubmit={this.handleSubmitting}>
@@ -83,18 +93,20 @@ class TicketForm extends Component {
                                placeholder={"Description"}/>
                     </div>
                     <div className="form-group">
-                    <input name="location"
-                           type="text"
-                           className="form-control"
-                           value={this.state.location}
-                           onChange={this.handleInputChange}
-                           placeholder={"Location"}/>
+                        <input name="location"
+                               type="text"
+                               className="form-control"
+                               value={this.state.location}
+                               onChange={this.handleInputChange}
+                               placeholder={"Location"}/>
                     </div>
-                        <button type="submit"
-                                className="btn btn-primary">Add ticket</button>
+                    <button type="submit"
+                            className="btn btn-primary">Add ticket
+                    </button>
                 </form>
             </div>
         )
     }
 }
+
 export default TicketForm;

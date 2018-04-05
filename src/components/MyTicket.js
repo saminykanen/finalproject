@@ -24,7 +24,7 @@ class MyTicket extends Component {
             <div className="col-xs-3 col-sm-3">
                     <div>
                         <Switch>
-                            <Route exact path="/addticket" render={props => <TicketForm reFetchList={this.props.reFetchList}/>}/>
+                            <Route exact path="/addticket" render={props => <TicketForm reFetchList={this.props.reFetchList} firebaseUserId={this.props.firebaseUserId}/>}/>
                         </Switch>
                     </div>
                 <Link className="link" to="/addticket" >

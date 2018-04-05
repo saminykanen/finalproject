@@ -117,7 +117,7 @@ class App extends Component {
 
                 <Title/>
                 <TicketList data={this.state.data}/>
-                <MyTicket reFetchList={this.reFetchList}/>
+                <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/>
             </div>
         );
     }
