@@ -49,8 +49,8 @@ class TicketList extends Component {
 
        console.log("TicketList render" + this.props.data.length);
         const tickets = this.props.data.map(function(ticket){
-            return (<Ticket ticket = {ticket} key={ticket.ticketId}/>);
-        });
+            return (<Ticket ticket = {ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList}/>);
+        }.bind(this));
 
         return (
             <div className="container">

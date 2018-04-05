@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <div className="App">
           <Title/>
-          <TicketList data={this.state.data}/>
+          <TicketList data={this.state.data} reFetchList={this.reFetchList} />
           <MyTicket reFetchList={this.reFetchList} />
       </div>
     );

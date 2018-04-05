@@ -28,13 +28,29 @@ class Ticket extends Component {
                                 <td>{this.props.ticket.ticketDescription}</td>
                             </tr>
                             <tr>
-                                <td><button className="btn btn-danger btn-md">DELETE</button></td>
+                                <td>{this.props.ticket.ticketId}</td>
+                            </tr>
+                            <tr>
+                                <td><button className="btn btn-danger btn-md" onClick={this.handleChangeToPassive.bind(this)}>DELETE</button></td>
                             </tr>
                         </Panel.Body>
                     </Panel.Collapse>
                 </Panel>
             </div>
         )
+    }
+
+    handleChangeToPassive(e) {
+        e.preventDefault();
+        const API = 'api//tickets/setpassive/';
+        const TID = this.props.ticket.ticketId;
+
+        fetch(API+TID,{
+            method: 'PUT'
+        })
+            .then(function () {
+                this.props.reFetchList();
+            }.bind(this));
     }
 }
 
