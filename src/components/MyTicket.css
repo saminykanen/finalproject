@@ -1,51 +1,33 @@
 .button {
     position: fixed;
     bottom: 20px;
-    left: 20px;
-    background-color: #dcdcdc;
-    border:none;
+    width: 10%;
     text-align: center;
-    font-size: 18px;
+    left: 45%;
+    right: 45%;
     cursor: pointer;
 }
-.button:hover {
-    background-color: #5ed964;
-    color: #777777;
-}
 
-.plus {
-    color: #8d8d8d;
-    font-size: 2em;
-
-}
-.link {
-    color: #777777;
-}
-
-.link:link {
-    color: #777777;
-}
-
-.link:hover {
-    color: #777777;
-    text-decoration: none;
-}
-
-@media only screen and (min-width: 0px) and (max-width: 600px) {
+@media only screen and (min-width: 0px) and (max-width: 750px) {
     .button1 {
         border-radius: 20px;
         width: 45px;
-        height: 45px;}
+        height: 45px;
+    }
 
     .button-text {
         display: none;
     }
 }
 
-@media only screen and (min-width: 601px) {
-    .button1 {border-radius: 15px;
+@media only screen and (min-width: 751px) {
+    .button1 {
+        border-radius: 15px;
         padding: 10px;
         margin: 4px 2px;
     }
-    .plus {display:none}
+
+    .plus {
+        display: none;
+    }
 }
