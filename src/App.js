@@ -24,9 +24,6 @@ class App extends Component {
         this.fetchTicketsAndUpdate()
     }
 
-    terppa() {
-        console.log("Terppa")
-    }
 
     createNewUserToMysql () {
         const self = this; //?
@@ -59,9 +56,7 @@ class App extends Component {
                         }
                     )
 
-                    this.terppa();
                     this.createNewUserToMysql();
-
 
                 } else {
                     this.setState({
@@ -69,15 +64,9 @@ class App extends Component {
                         loading: false
                     })
                 }
-                {
-                    console.log("authenticated: " + this.state.authenticated)
-                }
-                {
-                    console.log("user tokenID2: " + user.uid)
-                }
-                {
-                    console.log("user firebaseUserId: " + this.state.firebaseUserId)
-                }
+                {console.log("authenticated: " + this.state.authenticated)}
+                {console.log("user tokenID2: " + user.uid)}
+                {console.log("user firebaseUserId: " + this.state.firebaseUserId)}
             }
         )
     }
