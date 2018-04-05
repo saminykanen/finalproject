@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Toaster, Intent} from '@blueprintjs/core'
 import {app, facebookProvider} from "./base";
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom';
+import Logout from "./Logout";
 
 
 class Login extends Component {
@@ -55,9 +56,8 @@ class Login extends Component {
             .catch((error) => {
                 this.toaster.show({intent: Intent.DANGER, message: error.message})
             })
-
-
     }
+
 
     render() {
 
@@ -69,15 +69,12 @@ class Login extends Component {
 
         return (
             <div>
-
                 <Toaster ref={(element) => {
                     this.toaster = element
                 }}/>
 
-                <button onClick={() => {
-                    this.autWithFacebook()
-                }}>Login with Facebook
-                </button>
+                {this.props.authenticated === false ?
+                    <div><p>Kirjaudu sisään sähköpostitilillä tai rekisteröidy</p></div> : false}
 
                 <div>
                     {this.props.authenticated === false ?
@@ -86,25 +83,47 @@ class Login extends Component {
                         }} ref={(form) => {
                             this.loginForm = form
                         }}>
-                            <div>
-                                <p> Kirjaudu sisään tai luo uusi käyttäjä</p>
-                            </div>
+
                             <label>
-                                Email <input name="email" type="email" ref={(input) => {
-                                this.emailInput = input
-                            }} placeholder="Email"></input>
-                                Password <input name="password" type="password" ref={(input) => {
-                                this.passwordInput = input
-                            }} placeholder="Password"></input>
-                                <button value="Login">Login with email</button>
+                                <input name="email" type="email" ref={(input) => {
+                                    this.emailInput = input
+                                }} placeholder="Email"></input>
+                                <input name="password" type="password" ref={(input) => {
+                                    this.passwordInput = input
+                                }} placeholder="Password"></input>
+                                <button value="Login">Login/Register</button>
                             </label>
                         </form>
                         :
                         <Router>
-                            <Link className="link" to="/logout">
-                                <button>Logout</button>
-                            </Link>
-                        </Router>}
+                            <div>
+                                <div>
+                                    <Switch>
+                                        <Route exact path="/logout" component={Logout}/>
+                                    </Switch>
+                                </div>
+                                <Link to="/logout">
+                                    <button>Logout</button>
+                                </Link>
+                            </div>
+                        </Router>
+                    }
+
+                    {this.props.authenticated === false ?
+                    <div>
+                        <p> Kirjaudu sisään Facebook-tililläsi</p>
+                    </div>:null}
+
+                    <div>
+                        {this.props.authenticated === false ?
+                            <button onClick={() => {
+                                this.autWithFacebook()
+                            }}>Login with Facebook
+                            </button>
+                            : null}
+                    </div>
+
+
                 </div>
 
 

@@ -16,15 +16,22 @@ class Logout extends Component {
     componentWillMount() {
         app.auth().signOut().then((user) => {
             this.setState({redirect: true})
+            console.log("kirjauduppa ulos!");
+            console.log("redirect" + this.state.redirect);
         })
     }
 
     render() {
-        // tarvitaanko?
+
         if (this.state.redirect === true) {
+
             <Router>
+                <Switch>
+                    <Route exact path="/"/>
+                </Switch>
                 return <Redirect to=''/>
             </Router>
+
         }
 
         return (

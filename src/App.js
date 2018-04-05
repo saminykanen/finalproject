@@ -25,7 +25,7 @@ class App extends Component {
     }
 
 
-    createNewUserToMysql () {
+    createNewUserToMysql() {
         const self = this; //?
         fetch('/api/users/createuser/', {
             method: 'POST',
@@ -36,9 +36,9 @@ class App extends Component {
                 })
 
         })
-          .then(function (body) {
-        console.log("lähetetty body " + body);
-          }.bind(this));
+            .then(function (body) {
+                console.log("lähetetty body " + body);
+            }.bind(this));
     }
 
 
@@ -64,9 +64,15 @@ class App extends Component {
                         loading: false
                     })
                 }
-                {console.log("authenticated: " + this.state.authenticated)}
-                {console.log("user tokenID2: " + user.uid)}
-                {console.log("user firebaseUserId: " + this.state.firebaseUserId)}
+                {
+                    console.log("authenticated: " + this.state.authenticated)
+                }
+                {
+                    console.log("user tokenID2: " + user.uid)
+                }
+                {
+                    console.log("user firebaseUserId: " + this.state.firebaseUserId)
+                }
             }
         )
     }
@@ -90,11 +96,10 @@ class App extends Component {
     render() {
         console.log("App render");
 
-
         // jos lataa, niin ei vielä näytä mtn.
         if (this.state.loading === true) {
             return (
-                // Näyttää tämän kunnes sivu on latautunut - näin ei tule välähdyksiä väärästä sisällöstä
+                // Näyttää tämän kunnes sivu on latautunut - näin ei tule välähdyksiä väärästä sisällöstä ennen sisäänkirjautumista
                 <div>
                     <p>Loading...</p>
                 </div>
@@ -103,7 +108,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Authentication authenticated={this.state.authenticated}/>
+                {/*<Authentication authenticated={this.state.authenticated}/>*/}
                 <Login authenticated={this.state.authenticated}/>
 
                 <Router>
@@ -111,13 +116,14 @@ class App extends Component {
                         return <Login setCurrentUser={this.setCurrentUser} {...props} />
                     }}/>
                 </Router>
-                <Router>
-                    <Route exact path="/logout" component={Logout}/>
-                </Router>
+                {/*<Router>*/}
+                {/*<Route exact path="/logout" component={Logout}/>*/}
+                {/*</Router>*/}
 
                 <Title/>
-                <TicketList data={this.state.data}/>
-                <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/>
+                {this.state.authenticated === true ? <TicketList data={this.state.data}/> : null}
+                {this.state.authenticated === true ? <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/> :null}
+
             </div>
         );
     }
