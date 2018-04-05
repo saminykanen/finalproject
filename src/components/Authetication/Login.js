@@ -72,10 +72,10 @@ class Login extends Component {
                     this.toaster = element
                 }}/>
 
-                {/*<button onClick={() => {*/}
-                {/*this.autWithFacebook()*/}
-                {/*}}>Login with Facebook*/}
-                {/*</button>*/}
+                <button onClick={() => {
+                this.autWithFacebook()
+                }}>Login with Facebook
+                </button>
 
                 <div>
                     {this.props.authenticated === false ?
