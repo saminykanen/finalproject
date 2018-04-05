@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Panel} from 'react-bootstrap';
 import './Ticket.css';
+import expandbutton from '../images/expandbutton.png';
 
 
 class Ticket extends Component {
@@ -12,7 +13,9 @@ class Ticket extends Component {
                     <Panel.Heading >
                         <Panel.Title toggle className="text-left">
                             <th>{this.props.ticket.ticketTitle}</th>
-                            {/*<th style={{float: 'right'}}>{this.props.ticket.user.userName}</th>*/}
+                            <th style={{float: 'right'}}>{this.props.ticket.timestamp}</th>
+                            <img src={expandbutton} width="45" height="12" className="center-block"/>
+
 
                         </Panel.Title>
                     </Panel.Heading>
