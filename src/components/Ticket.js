@@ -31,9 +31,6 @@ class Ticket extends Component {
                                 <td>{this.props.ticket.ticketDescription}</td>
                             </tr>
                             <tr>
-                                <td>{this.props.ticket.ticketId}</td>
-                            </tr>
-                            <tr>
                                 <td><button className="btn btn-danger btn-md" onClick={this.handleChangeToPassive.bind(this)}>DELETE</button></td>
                                 <td><button className="btn btn-warning btn-md float-right" onClick={this.handleChangeToActive.bind(this)}>ACTIVATE</button></td>
                             </tr>
