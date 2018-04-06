@@ -6,8 +6,8 @@ import {app, facebookProvider} from "./base";
 
 class Logout extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             redirect: false
         }
@@ -16,6 +16,7 @@ class Logout extends Component {
     componentWillMount() {
         app.auth().signOut().then((user) => {
             this.setState({redirect: true})
+            this.props.history.push("/");
             console.log("kirjauduppa ulos!");
             console.log("redirect" + this.state.redirect);
         })
