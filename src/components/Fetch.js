@@ -11,4 +11,13 @@ function fetchTickets(callback){
         });
 }
 
-export {fetchTickets};
+function fetchCourses(callback){
+    fetch('api/courses')
+        .then(function(response) {
+            return response.json();})
+        .then(function(courses) {
+            callback(courses)
+        });
+}
+
+export {fetchTickets, fetchCourses};

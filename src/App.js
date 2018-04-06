@@ -3,12 +3,13 @@ import './App.css';
 import TicketList from "./components/TicketList";
 import Title from "./components/Title";
 import MyTicket from "./components/MyTicket";
-import {fetchTickets} from "./components/Fetch";
+import {fetchCourses, fetchTickets} from "./components/Fetch";
 import Authentication from "./components/Authetication/Authetication";
 import Login from "./components/Authetication/Login";
 import Logout from "./components/Authetication/Logout";
 import {app, base} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import CoursesList from "./components/CoursesList";
 
 
 class App extends Component {
@@ -17,11 +18,13 @@ class App extends Component {
         data: [],
         authenticated: false,
         loading: true, // estää välkkymisen kun sivu latautuu
-        firebaseUserId: ''
+        firebaseUserId: '',
+        coursesData: []
     };
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
+        this.fetchCoursesAndUpdate()
     }
 
     createNewUserToMysql() {
@@ -85,6 +88,17 @@ class App extends Component {
         this.fetchTicketsAndUpdate();
     }
 
+    fetchCoursesAndUpdate = () => {
+        fetchCourses(function (courses) {
+            console.log("Kurssit haettu. " + courses.length)
+            this.setState({coursesData: courses});
+        }.bind(this));
+    }
+
+    reFetchCourses = () => {
+        this.fetchCoursesAndUpdate();
+    }
+
 
     render() {
         console.log("App render");
@@ -111,7 +125,7 @@ class App extends Component {
                 </Router>
 
                 <Title />
-
+                {this.state.authenticated === true ? <CoursesList reFetchCourses={this.reFetchCourses} coursesData={this.state.coursesData} /> : null}
                 {this.state.authenticated === true ? <TicketList reFetchList={this.reFetchList} data={this.state.data}/> : null}
                 {this.state.authenticated === true ? <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/> :null}
 
