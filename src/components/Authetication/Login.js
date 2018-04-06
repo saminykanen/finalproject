@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Toaster, Intent} from '@blueprintjs/core'
-import {app, facebookProvider} from "./base";
+import {app, facebookProvider, googleProvider} from "./base";
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom';
 
 
@@ -13,6 +13,18 @@ class Login extends Component {
         this.state = {
             redirect: false
         }
+    }
+
+
+    autWithGoogle() {
+        app.auth().signInWithPopup(googleProvider)
+            .then((result, error) => {
+                if (error) {
+                    this.toaster.show({intent: Intent.DANGER, message: "Unable to sign in with Google"})
+                } else {
+                    this.setState({redirect: true})
+                }
+            })
     }
 
     autWithFacebook() {
@@ -77,6 +89,11 @@ class Login extends Component {
                 }}>Login with Facebook
                 </button>
 
+                <button onClick={() => {
+                    this.autWithGoogle()
+                }}>Login with Google
+                </button>
+
                 <div>
                     {this.props.authenticated === false ?
                         <form onSubmit={(event) => {
@@ -85,7 +102,7 @@ class Login extends Component {
                             this.loginForm = form
                         }}>
                             <div>
-                                <p> Kirjaudu sisään tai luo uusi käyttäjä</p>
+                                <p> Login or create a new user</p>
                             </div>
                             <label>
                                 Email <input name="email" type="email" ref={(input) => {

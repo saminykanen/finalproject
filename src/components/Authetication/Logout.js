@@ -13,9 +13,20 @@ class Logout extends Component {
         }
     }
 
+    /*componentWillMount() {
+        app.auth().signOut()
+            .then(() => {
+            this.setState({
+                user: null
+            })
+        })
+    }*/
     componentWillMount() {
-        app.auth().signOut().then((user) => {
-            this.setState({redirect: true})
+        app.auth().signOut()
+        .then((user) => {
+            this.setState({
+            redirect: true
+            })
         })
     }
 
@@ -23,7 +34,7 @@ class Logout extends Component {
         // tarvitaanko?
         if (this.state.redirect === true) {
             <Router>
-                return <Redirect to=''/>
+                return <Redirect to='/'/>
             </Router>
         }
 
