@@ -4,11 +4,9 @@ import TicketList from "./components/TicketList";
 import Title from "./components/Title";
 import MyTicket from "./components/MyTicket";
 import {fetchTickets} from "./components/Fetch";
-import Authentication from "./components/Authetication/Authetication";
 import Login from "./components/Authetication/Login";
-import Logout from "./components/Authetication/Logout";
 import {app, base} from "./components/Authetication/base";
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 
 class App extends Component {
@@ -55,7 +53,10 @@ class App extends Component {
                         }
                     )
 
-                    this.createNewUserToMysql();
+                    this.createNewUserToMysql(); // luodaan käyttäjä myös MySQL:ään
+
+                    {console.log("authenticated: " + this.state.authenticated)}
+                    {console.log("user firebaseAuth: " + user.uid)}
 
                 } else {
                     this.setState({
@@ -63,11 +64,10 @@ class App extends Component {
                         loading: false
                     })
                 }
-                {console.log("authenticated: " + this.state.authenticated)}
-                {console.log("user firebaseAuth: " + user.uid
-                )}
+
             }
         )
+
     }
 
 
