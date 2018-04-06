@@ -6,8 +6,6 @@ import expandbutton from '../images/expandbutton.png';
 
 class Ticket extends Component {
 
-
-
     render() {
         return (
             <div className="container">
@@ -17,8 +15,9 @@ class Ticket extends Component {
                             <div>
                                 <span><b>{this.props.ticket.ticketTitle}</b></span>
                                 <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0,10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
-                                <img src={expandbutton} width="45" height="12" className="center-block" alt="expandticket"/>
-                            </div>
+                                <img src={expandbutton} width="45" height="12" className="center-block"
+                                     alt="expandticket"/>
+                                </div>
                         </Panel.Title>
                     </Panel.Heading>
                     <Panel.Collapse>
