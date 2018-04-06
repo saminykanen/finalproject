@@ -6,19 +6,18 @@ import expandbutton from '../images/expandbutton.png';
 
 class Ticket extends Component {
 
-
-
     render() {
         return (
             <div className="container">
-                <Panel defaultcollapsed="true" className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "defaultticket"}>
+                <Panel style={{marginBottom: '10px'}} eventKey={this.props.index+1+''} defaultcollapsed="true" className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "defaultticket"}>
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
                             <div>
                                 <span><b>{this.props.ticket.ticketTitle}</b></span>
                                 <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0,10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
-                                <img src={expandbutton} width="45" height="12" className="center-block" alt="expandticket"/>
-                            </div>
+                                <img src={expandbutton} width="45" height="12" className="center-block"
+                                     alt="expandticket"/>
+                                </div>
                         </Panel.Title>
                     </Panel.Heading>
                     <Panel.Collapse>
@@ -39,15 +38,15 @@ class Ticket extends Component {
                                             onClick={this.handleChangeToPassive.bind(this)}>DELETE
                                     </button>
                                 </span>
-                                <span>
+                                    <span>
                                     <button className="btn btn-warning btn-md float-right"
                                             onClick={this.handleChangeToActive.bind(this)}>ACTIVATE
                                     </button>
                                 </span>
-                            </div>
-                        </Panel.Body>
-                    </Panel.Collapse>
-                </Panel>
+                                </div>
+                            </Panel.Body>
+                        </Panel.Collapse>
+                    </Panel>
             </div>
         )
     }
