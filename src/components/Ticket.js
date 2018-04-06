@@ -6,16 +6,17 @@ import expandbutton from '../images/expandbutton.png';
 
 class Ticket extends Component {
 
+
+
     render() {
         return (
             <div className="container">
-                <Panel defaultcollapsed="true"
-                       className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "defaultticket"}>
+                <Panel defaultcollapsed="true" className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "defaultticket"}>
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
                             <div>
                                 <span><b>{this.props.ticket.ticketTitle}</b></span>
-                                <span style={{float: 'right'}}>{this.props.ticket.timestamp}</span>
+                                <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0,10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
                                 <img src={expandbutton} width="45" height="12" className="center-block" alt="expandticket"/>
                             </div>
                         </Panel.Title>
@@ -25,9 +26,9 @@ class Ticket extends Component {
                             <div className="row">
                                 <span className="col-md-1"><b>Location:</b></span><span className="col-md-11">{this.props.ticket.location}</span>
                             </div>
-                            <div className="row">
-                                <span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>
-                            </div>
+                            {/*<div className="row">*/}
+                                {/*<span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>*/}
+                            {/*</div>*/}
                             <div className="row">
                                 <span className="col-md-1"><b>Description:</b></span><span className="col-md-11">{this.props.ticket.ticketDescription}</span>
                             </div>
