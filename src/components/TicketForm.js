@@ -11,8 +11,10 @@ class TicketForm extends Component {
             userName: '', //tuleeko tähän se kirjautunut?
             ticketStatus: 'queue',
             timestamp: '', //tähän joku localdate now?
-            courseId: '', //tämäkin automatic?
+            courseName: "Java-kurssi", // pitää muokata dymaamiseksi,
+            courseId: '',
             location: ''
+
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmitting = this.handleSubmitting.bind(this);
@@ -23,33 +25,41 @@ class TicketForm extends Component {
         const value = target.value;
         const name = target.name;
 
-        this.setState({[name] : value})
+        this.setState({[name]: value})
     }
 
     handleSubmitting(e) {
         e.preventDefault();
+        console.log("firebaseID " + this.props.firebaseUserId);
         const self = this;
-        fetch('/api/tickets/createticket/',{
+        fetch('/api/tickets/createticket/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(
                 {
-                ticketTitle: self.state.ticketTitle,
-                ticketDescription: self.state.ticketDescription,
-                location: self.state.location,
-                userName: "testi",
-
-            })
+                    ticket: {
+                        ticketTitle: self.state.ticketTitle,
+                        ticketDescription: self.state.ticketDescription,
+                        location: self.state.location
+                    },
+                    user: {
+                        firebaseUserId: this.props.firebaseUserId
+                    },
+                    course: {
+                        courseName: this.state.courseName
+                    }
+                })
         })
             .then(function () {
                 this.props.onClose();
                 this.setState({ticketTitle: '', ticketDescription: '', location: ''});
                 this.props.reFetchList();
             }.bind(this));
+
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="formi">
                 <h1>Add new ticket</h1>
                 <form onSubmit={this.handleSubmitting}>
@@ -64,26 +74,31 @@ class TicketForm extends Component {
                     </div>
                     <div className="form-group">
                         <textarea name="ticketDescription"
-                               rows="5"
-                               className="form-control"
-                               value={this.state.ticketDescription}
-                               onChange={this.handleInputChange}
-                               placeholder={"Description"}/>
+                                  rows="5"
+                                  className="form-control"
+                                  value={this.state.ticketDescription}
+                                  onChange={this.handleInputChange}
+                                  placeholder={"Description"}/>
                     </div>
                     <div className="form-group">
-                    <input name="location"
-                           type="text"
-                           required="required"
-                           className="form-control"
-                           value={this.state.location}
-                           onChange={this.handleInputChange}
-                           placeholder={"Location"}/>
+
+                        <input name="location"
+                               type="text"
+                               required="required"
+                               className="form-control"
+                               value={this.state.location}
+                               onChange={this.handleInputChange}
+                               placeholder={"Location"}/>
                     </div>
                     <button type="submit" className="btn btn-primary btn-md">Add ticket</button>
+
                 </form>
-                <button type="close" className="btn btn-danger btn-md" style={{marginTop: '5px'}} onClick={this.props.onClose}>Close</button>
+                <button type="close" className="btn btn-danger btn-md" style={{marginTop: '5px'}}
+                        onClick={this.props.onClose}>Close
+                </button>
             </div>
         )
     }
 }
+
 export default TicketForm;
