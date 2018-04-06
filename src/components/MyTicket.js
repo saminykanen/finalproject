@@ -22,7 +22,7 @@ class MyTicket extends Component {
                     <span className="button-text">TICKET!</span>
                 </button>
                 <Modal show={this.state.isOpen}>
-                    <TicketForm reFetchList={this.props.reFetchList} onClose={this.toggleModal}/>
+                    <TicketForm reFetchList={this.props.reFetchList} onClose={this.toggleModal} firebaseUserId={this.props.firebaseUserId} />
                 </Modal>
             </div>
         );
