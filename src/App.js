@@ -19,12 +19,13 @@ class App extends Component {
         authenticated: false,
         loading: true, // estää välkkymisen kun sivu latautuu
         firebaseUserId: '',
-        coursesData: []
+        coursesData: [],
+        courseId: null
     };
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
-        this.fetchCoursesAndUpdate()
+        // this.fetchCoursesAndUpdate()
     }
 
     createNewUserToMysql() {
@@ -77,18 +78,26 @@ class App extends Component {
         this.removeAuthListner(); // logout
     }
 
-    fetchTicketsAndUpdate = () => {
+    fetchTicketsAndUpdate = (courseId) => {
+        if(!courseId) courseId=1;  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
             console.log("Tiketit haettu. " + tickets.length)
-            this.setState({data: tickets});
-        }.bind(this));
+            this.setState({data: tickets, courseId: courseId});
+        }.bind(this), courseId);
+    }
+
+    fetchCourseTickets = (e) => {
+        e.preventDefault();
+        const id = e.target.elements.kurssiId.value;
+        // this.setState({courseId:id});
+        this.fetchTicketsAndUpdate(id); // numeron voi hakea tekstikentästäkin
     }
 
     reFetchList = () => {
         this.fetchTicketsAndUpdate();
     }
 
-    fetchCoursesAndUpdate = () => {
+/*    fetchCoursesAndUpdate = () => {
         fetchCourses(function (courses) {
             console.log("Kurssit haettu. " + courses.length)
             this.setState({coursesData: courses});
@@ -97,7 +106,7 @@ class App extends Component {
 
     reFetchCourses = () => {
         this.fetchCoursesAndUpdate();
-    }
+    }*/
 
 
     render() {
@@ -125,7 +134,11 @@ class App extends Component {
                 </Router>
 
                 <Title />
-                {this.state.authenticated === true ? <CoursesList reFetchCourses={this.reFetchCourses} coursesData={this.state.coursesData} /> : null}
+                {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
+                    <input type="text" name="kurssiId" placeholder="ID"/>
+                    <button>Kirahvi</button>
+                    </form> : null}
+
                 {this.state.authenticated === true ? <TicketList reFetchList={this.reFetchList} data={this.state.data}/> : null}
                 {this.state.authenticated === true ? <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/> :null}
 

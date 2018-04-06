@@ -7,7 +7,7 @@ class CoursesList extends Component{
         console.log("CourseList render" + this.props.coursesData.length);
         if (this.props.coursesData.map != null) {
             courses = this.props.coursesData.map(function (course, index) {
-                return (<Course index={index} course={course} key={course.courseId} reFetchCourses={this.reFetchCourses}/>);
+                return (<Course index={index} course={course} key={course.courseId} reFetchCourses={this.reFetchCourses} reFetchList={this.reFetchList(this.props.course.courseId)}/>);
             }.bind(this));
         }else{
             return(
