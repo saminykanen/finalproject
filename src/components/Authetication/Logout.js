@@ -13,12 +13,22 @@ class Logout extends Component {
         }
     }
 
+    /*componentWillMount() {
+        app.auth().signOut()
+            .then(() => {
+            this.setState({
+                user: null
+            })
+        })
+    }*/
     componentWillMount() {
+
         app.auth().signOut().then((user) => {
             this.setState({redirect: true})
             this.props.history.push("/");
             console.log("kirjauduppa ulos!");
             console.log("redirect" + this.state.redirect);
+
         })
     }
 
@@ -31,6 +41,7 @@ class Logout extends Component {
                     <Route exact path="/"/>
                 </Switch>
                 return <Redirect to=''/>
+
             </Router>
 
         }

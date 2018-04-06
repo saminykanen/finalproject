@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Toaster, Intent} from '@blueprintjs/core'
-import {app, facebookProvider} from "./base";
+import {app, facebookProvider, googleProvider} from "./base";
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom';
 import Logout from "./Logout";
 
@@ -14,6 +14,17 @@ class Login extends Component {
         this.state = {
             redirect: false
         }
+    }
+
+    autWithGoogle() {
+        app.auth().signInWithPopup(googleProvider)
+            .then((result, error) => {
+                if (error) {
+                    this.toaster.show({intent: Intent.DANGER, message: "Unable to sign in with Google"})
+                } else {
+                    this.setState({redirect: true})
+                }
+            })
     }
 
     autWithFacebook() {
@@ -84,6 +95,10 @@ class Login extends Component {
                             this.loginForm = form
                         }}>
 
+                            <div>
+                                <p> Login or create a new user</p>
+                            </div>
+
                             <label>
                                 <input name="email" type="email" ref={(input) => {
                                     this.emailInput = input
@@ -110,9 +125,9 @@ class Login extends Component {
                     }
 
                     {this.props.authenticated === false ?
-                    <div>
-                        <p> Kirjaudu sisään Facebook-tililläsi</p>
-                    </div>:null}
+                        <div>
+                            <p> Kirjaudu sisään Facebook-tililläsi</p>
+                        </div> : null}
 
                     <div>
                         {this.props.authenticated === false ?
@@ -123,10 +138,16 @@ class Login extends Component {
                             : null}
                     </div>
 
+                    <div>
+                        {this.props.authenticated === false ?
+                            <button onClick={() => {
+                                this.autWithGoogle()
+                            }}>Login with Google
+                            </button>
+                            : null}
+                    </div>
 
                 </div>
-
-
             </div>
         )
     }

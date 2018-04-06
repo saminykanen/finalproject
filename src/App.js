@@ -24,7 +24,6 @@ class App extends Component {
         this.fetchTicketsAndUpdate()
     }
 
-
     createNewUserToMysql() {
         const self = this; //?
         fetch('/api/users/createuser/', {
@@ -112,7 +111,6 @@ class App extends Component {
                 </Router>
 
                 <Title/>
-
 
                 {this.state.authenticated === true ? <TicketList data={this.state.data}/> : null}
                 {this.state.authenticated === true ? <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/> :null}
