@@ -4,15 +4,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@blueprintjs/core": "^2.0.1",
+    "@blueprintjs/core": "^2.1.1",
     "firebase": "^4.12.1",
+    "prop-types": "latest",
     "re-base": "^3.2.2",
     "react": "^16.3.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.2",
-    "prop-types": "latest"
+    "react-scripts": "1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
