@@ -3,7 +3,7 @@ import './App.css';
 import TicketList from "./components/TicketList";
 import Title from "./components/Title";
 import MyTicket from "./components/MyTicket";
-import {fetchTickets} from "./components/Fetch";
+import {fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app, base} from "./components/Authetication/base";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
@@ -15,11 +15,15 @@ class App extends Component {
         data: [],
         authenticated: false,
         loading: true, // estää välkkymisen kun sivu latautuu
-        firebaseUserId: ''
+        firebaseUserId: '',
+        userRole: '',
+        usersData: []
     };
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
+        this.usersFetchAndUpdate() // hakee käyttäjät
+        console.log("componentDidMount" + this.state.firebaseUserId);
     }
 
     createNewUserToMysql() {
@@ -31,7 +35,6 @@ class App extends Component {
                 {
                     firebaseUserId: self.state.firebaseUserId
                 })
-
         })
             .then(function (body) {
                 console.log("lähetetty body " + body);
@@ -55,8 +58,12 @@ class App extends Component {
 
                     this.createNewUserToMysql(); // luodaan käyttäjä myös MySQL:ään
 
-                    {console.log("authenticated: " + this.state.authenticated)}
-                    {console.log("user firebaseAuth: " + user.uid)}
+                    {
+                        console.log("authenticated: " + this.state.authenticated)
+                    }
+                    {
+                        console.log("user firebaseAuth: " + user.uid)
+                    }
 
                 } else {
                     this.setState({
@@ -67,9 +74,17 @@ class App extends Component {
 
             }
         )
-
+        console.log("componentWillMount" + this.state.firebaseUserId);
     }
 
+    usersFetchAndUpdate = (state) => {
+        console.log("usersFetchAndUpdate" + this.state.firebaseUserId);
+        fetchUserInfoFromMysql(function (users) {
+            console.log("Käyttäjät haettu. " + users.length)
+            console.log("Käyttäjän status " + users[1].userRole)
+            this.setState({usersData: users});
+        }.bind(this), this.state.firebaseUserId);
+    }
 
     componentWillUnmounth() {
         this.removeAuthListner(); // logout
@@ -111,10 +126,12 @@ class App extends Component {
                     }}/>
                 </Router>
 
-                <Title />
+                <Title/>
 
-                {this.state.authenticated === true ? <TicketList reFetchList={this.reFetchList} data={this.state.data}/> : null}
-                {this.state.authenticated === true ? <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/> :null}
+                {this.state.authenticated === true ?
+                    <TicketList reFetchList={this.reFetchList} data={this.state.data}/> : null}
+                {this.state.authenticated === true ?
+                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/> : null}
 
             </div>
         );
