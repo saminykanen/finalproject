@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Panel} from 'react-bootstrap';
 import './Ticket.css';
 import expandbutton from '../images/expandbutton.png';
-import PanelGroup from "react-bootstrap/es/PanelGroup";
 
 
 class Ticket extends Component {
