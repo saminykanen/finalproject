@@ -64,7 +64,8 @@ class App extends Component {
                     })
                 }
                 {console.log("authenticated: " + this.state.authenticated)}
-                {console.log("user firebaseAuth: " + user.uid)}
+                {console.log("user firebaseAuth: " + user.uid
+                )}
             }
         )
     }
