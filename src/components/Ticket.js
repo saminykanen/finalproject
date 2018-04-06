@@ -8,8 +8,8 @@ class Ticket extends Component {
 
     render() {
         return (
-            <div className="container">
-                <Panel style={{marginBottom: '10px'}} eventKey={this.props.index+1+''} defaultcollapsed="true" className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "defaultticket"}>
+            <div className="container" style={{width: '57%'}}>
+                <Panel style={{marginBottom: '10px'}} eventKey={this.props.index+1+''} defaultcollapsed="true" className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "panel-warning"}>
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
                             <div>
@@ -22,14 +22,15 @@ class Ticket extends Component {
                     </Panel.Heading>
                     <Panel.Collapse>
                         <Panel.Body className="text-left">
+                            <br/>
                             <div className="row">
-                                <span className="col-md-1"><b>Location:</b></span><span className="col-md-11">{this.props.ticket.location}</span>
+                                <span className="col-lg-1"><b>Location:</b></span><span className="col-lg-11">{this.props.ticket.location}</span>
                             </div>
                             {/*<div className="row">*/}
                                 {/*<span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>*/}
                             {/*</div>*/}
                             <div className="row">
-                                <span className="col-md-1"><b>Description:</b></span><span className="col-md-11">{this.props.ticket.ticketDescription}</span>
+                                <span className="col-lg-1"><b>Description:</b></span><span className="col-lg-11">{this.props.ticket.ticketDescription}</span>
                             </div>
                             <br/>
                             <div>
@@ -44,6 +45,7 @@ class Ticket extends Component {
                                     </button>
                                 </span>
                                 </div>
+                                <br/>
                             </Panel.Body>
                         </Panel.Collapse>
                     </Panel>

@@ -22,9 +22,9 @@ class TicketList extends Component {
        }
 
         return (
-            <div className="container">
+            <div className="wrapper">
                 <h4>Ticket count: <span className="badge">{tickets.length}</span></h4>
-                <PanelGroup accordion style={{paddingLeft: '0px', paddingRight:'30px'}}>
+                <PanelGroup accordion>
                     {tickets}
                 </PanelGroup>
             </div>
