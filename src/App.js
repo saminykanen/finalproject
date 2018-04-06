@@ -16,34 +16,72 @@ class App extends Component {
     state = {
         data: [],
         authenticated: false,
-        loading: true // estää välkkymisen kun sivu latautuu
+        loading: true, // estää välkkymisen kun sivu latautuu
+        firebaseUserId: ''
     };
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
     }
 
+    terppa() {
+        console.log("Terppa")
+    }
+
+    createNewUserToMysql () {
+        const self = this; //?
+        fetch('/api/users/createuser/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    firebaseUserId: self.state.firebaseUserId
+                })
+
+        })
+          .then(function (body) {
+        console.log("lähetetty body " + body);
+          }.bind(this));
+    }
+
+
     componentWillMount() {
         // LOGIN LISTENER
         // for undo
         this.removeAuthListner = app.auth().onAuthStateChanged((user) => {
                 if (user) {
+
                     this.setState(
                         {
                             authenticated: true,
-                            loading: false
+                            loading: false,
+                            firebaseUserId: user.uid
                         }
                     )
+
+                    this.terppa();
+                    this.createNewUserToMysql();
+
+
                 } else {
                     this.setState({
                         authenticated: false,
                         loading: false
                     })
                 }
-            {console.log("authenticated: " + this.state.authenticated)}
+                {
+                    console.log("authenticated: " + this.state.authenticated)
+                }
+                {
+                    console.log("user tokenID2: " + user.uid)
+                }
+                {
+                    console.log("user firebaseUserId: " + this.state.firebaseUserId)
+                }
             }
         )
     }
+
 
     componentWillUnmounth() {
         this.removeAuthListner(); // logout
@@ -62,6 +100,7 @@ class App extends Component {
 
     render() {
         console.log("App render");
+
 
         // jos lataa, niin ei vielä näytä mtn.
         if (this.state.loading === true) {
