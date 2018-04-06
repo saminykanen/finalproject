@@ -23,7 +23,7 @@ class TicketList extends Component {
         return (
             <div className="container">
                 <h4>Ticket count: <span className="badge">{tickets.length}</span></h4>
-                <div>
+                <div style={{paddingLeft: '0px', paddingRight:'30px'}}>
                     {tickets}
                 </div>
             </div>
