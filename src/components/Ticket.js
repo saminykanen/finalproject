@@ -8,7 +8,7 @@ class Ticket extends Component {
 
     render() {
         return (
-            <div className="container" style={{width: '57%'}}>
+            <div className="container">
                 <Panel style={{marginBottom: '10px'}} eventKey={this.props.index+1+''} defaultcollapsed="true" className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "panel-warning"}>
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">

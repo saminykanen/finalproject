@@ -8,25 +8,28 @@ class TicketList extends Component {
 
     render() {
         var tickets = '';
-       console.log("TicketList render" + this.props.data.length);
-       if (this.props.data.map != null) {
-           tickets = this.props.data.map(function (ticket, index) {
-               return (<Ticket index={index} ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList}/>);
-           }.bind(this));
-       }else{
-           return(
-               <div className="container">
-                   <h4 className="blockquote">Could not load tickets.</h4>
-               </div>
-           );
-       }
+        console.log("TicketList render" + this.props.data.length);
+        if (this.props.data.map != null) {
+            tickets = this.props.data.map(function (ticket, index) {
+                return (
+                    <Ticket index={index} ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList}/>);
+            }.bind(this));
+        } else {
+            return (
+                <div className="container">
+                    <h4 className="blockquote">Could not load tickets.</h4>
+                </div>
+            );
+        }
 
         return (
-            <div className="wrapper">
-                <h4>Ticket count: <span className="badge">{tickets.length}</span></h4>
-                <PanelGroup accordion>
-                    {tickets}
-                </PanelGroup>
+            <div>
+                <h4>Amount of active tickets: <span className="badge">{tickets.length}</span></h4>
+                <div className="wrapper centered style-2" style={{overflow: 'auto', maxHeight: '60%'}}>
+                    <PanelGroup accordion>
+                        {tickets}
+                    </PanelGroup>
+                </div>
             </div>
         )
     }
