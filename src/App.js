@@ -3,10 +3,11 @@ import './App.css';
 import TicketList from "./components/TicketList";
 import Title from "./components/Title";
 import MyTicket from "./components/MyTicket";
-import {fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
+import {fetchCourses, fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app, base} from "./components/Authetication/base";
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import CoursesList from "./components/CoursesList";
 
 
 class App extends Component {
@@ -17,13 +18,18 @@ class App extends Component {
         loading: true, // estää välkkymisen kun sivu latautuu
         firebaseUserId: '',
         userRole: '',
-        usersData: []
+        usersData: [],
+        coursesData: [],
+        courseId: null
+
     };
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
         this.usersFetchAndUpdate() // hakee käyttäjät
         console.log("componentDidMount" + this.state.firebaseUserId);
+        // this.fetchCoursesAndUpdate()
+
     }
 
     createNewUserToMysql() {
@@ -57,13 +63,8 @@ class App extends Component {
                     )
 
                     this.createNewUserToMysql(); // luodaan käyttäjä myös MySQL:ään
-
-                    {
-                        console.log("authenticated: " + this.state.authenticated)
-                    }
-                    {
-                        console.log("user firebaseAuth: " + user.uid)
-                    }
+                    {console.log("authenticated: " + this.state.authenticated)}
+                    {console.log("user firebaseAuth: " + user.uid)}
 
                 } else {
                     this.setState({
@@ -90,16 +91,35 @@ class App extends Component {
         this.removeAuthListner(); // logout
     }
 
-    fetchTicketsAndUpdate = () => {
+    fetchTicketsAndUpdate = (courseId) => {
+        if (!courseId) courseId = 1;  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
             console.log("Tiketit haettu. " + tickets.length)
-            this.setState({data: tickets});
-        }.bind(this));
+            this.setState({data: tickets, courseId: courseId});
+        }.bind(this), courseId);
+    }
+
+    fetchCourseTickets = (e) => {
+        e.preventDefault();
+        const id = e.target.elements.kurssiId.value;
+        // this.setState({courseId:id});
+        this.fetchTicketsAndUpdate(id); // numeron voi hakea tekstikentästäkin
     }
 
     reFetchList = () => {
         this.fetchTicketsAndUpdate();
     }
+
+    /*    fetchCoursesAndUpdate = () => {
+            fetchCourses(function (courses) {
+                console.log("Kurssit haettu. " + courses.length)
+                this.setState({coursesData: courses});
+            }.bind(this));
+        }
+
+        reFetchCourses = () => {
+            this.fetchCoursesAndUpdate();
+        }*/
 
 
     render() {
@@ -117,7 +137,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                {/*<Authentication authenticated={this.state.authenticated}/>*/}
+
                 <Login authenticated={this.state.authenticated}/>
 
                 <Router>
@@ -126,7 +146,13 @@ class App extends Component {
                     }}/>
                 </Router>
 
+
                 <Title/>
+                {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
+                    <input type="text" name="kurssiId" placeholder="ID"/>
+                    <button>Kirahvi</button>
+                </form> : null}
+
 
                 {this.state.authenticated === true ?
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}/> : null}
