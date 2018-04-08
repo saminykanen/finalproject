@@ -11,6 +11,7 @@ class Login extends Component {
         super(props);
         this.autWithFacebook = this.autWithFacebook.bind(this);
         this.autWithEmailPassword = this.autWithEmailPassword.bind(this);
+        this.handleResetPassword = this.handleResetPassword.bind(this);
         this.state = {
             redirect: false
         }
@@ -70,7 +71,17 @@ class Login extends Component {
             })
     }
 
+    handleResetPassword() {
+        console.log('resetting password')
 
+        let auth = app.auth();
+            auth.sendPasswordResetEmail(this.emailInput.value).then(function() {
+                console.log('email sent?');
+            // Email sent.
+        }).catch(function(error) {
+            // An error happened.
+        });
+    }
     render() {
 
 
@@ -98,12 +109,16 @@ class Login extends Component {
                             <label>
                                 <input name="email" type="email" ref={(input) => {
                                     this.emailInput = input
-                                }} placeholder="Email"></input>
+                                }} placeholder="Email"/>
                                 <input name="password" type="password" ref={(input) => {
                                     this.passwordInput = input
-                                }} placeholder="Password"></input>
+                                }} placeholder="Password"/>
                                 <button value="Login">Login/Register</button>
                             </label>
+                            <label>
+                                <button value="Reset" onClick={this.handleResetPassword}>Reset password</button>
+                            </label>
+
                         </form>
                         :
                         <Router>
@@ -122,7 +137,7 @@ class Login extends Component {
 
                     {this.props.authenticated === false ?
                         <div>
-                            <p> Kirjaudu sisään Facebook-tililläsi</p>
+                            <p> Kirjaudu sisään Facebook tai Google-tililläsi</p>
                         </div> : null}
 
                     <div>
