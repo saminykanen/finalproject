@@ -20,8 +20,9 @@ class Login extends Component {
         app.auth().signInWithPopup(googleProvider)
             .then((result, error) => {
                 if (error) {
-                    this.toaster.show({intent: Intent.DANGER, message: "Unable to sign in with Google"})
+                    console.log("Gmail login error");
                 } else {
+                    console.log(result.user.displayName);
                     this.setState({redirect: true})
                 }
             })
@@ -31,7 +32,7 @@ class Login extends Component {
         app.auth().signInWithPopup(facebookProvider)
             .then((result, error) => {
                 if (error) {
-                    this.toaster.show({intent: Intent.DANGER, message: "Unable to sign in with Facebook"})
+                    console.log("Facebook login error");
                 } else {
                     this.setState({redirect: true})
                 }
@@ -135,10 +136,13 @@ class Login extends Component {
 
                     <div>
                         {this.props.authenticated === false ?
-                            <button onClick={() => {
-                                this.autWithGoogle()
-                            }}>Login with Google
-                            </button>
+                            <div>
+                                <button onClick={() => {
+                                    this.autWithGoogle()
+                                }}>Login with Google
+                                </button>
+
+                            </div>
                             : null}
                     </div>
 

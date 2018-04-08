@@ -20,7 +20,8 @@ class App extends Component {
         userRole: '',
         usersData: [],
         coursesData: [],
-        courseId: null
+        courseId: null,
+        user: null
 
     };
 
@@ -58,13 +59,17 @@ class App extends Component {
                         {
                             authenticated: true,
                             loading: false,
-                            firebaseUserId: user.uid
+                            firebaseUserId: user.uid,
                         }
                     )
 
                     this.createNewUserToMysql(); // luodaan käyttäjä myös MySQL:ään
-                    {console.log("authenticated: " + this.state.authenticated)}
-                    {console.log("user firebaseAuth: " + user.uid)}
+                    {
+                        console.log("authenticated: " + this.state.authenticated)
+                    }
+                    {
+                        console.log("user displayName: " + user.displayName)
+                    }
 
                 } else {
                     this.setState({
@@ -80,11 +85,13 @@ class App extends Component {
 
     usersFetchAndUpdate = (state) => {
         console.log("usersFetchAndUpdate" + this.state.firebaseUserId);
+
         fetchUserInfoFromMysql(function (users) {
             console.log("Käyttäjät haettu. " + users.length)
             console.log("Käyttäjän status " + users[1].userRole)
             this.setState({usersData: users});
         }.bind(this), this.state.firebaseUserId);
+
     }
 
     componentWillUnmounth() {
@@ -135,10 +142,26 @@ class App extends Component {
             );
         }
 
+        var style = {fontSize: 12, lineHeight: 0.5, textAlign: 'left', position: 'relative' };
+        var stateValues = (
+            <div>
+                <p></p>
+                <p> firebaseUserId; {this.state.firebaseUserId}</p>
+                <p> authenticated: {this.state.authenticated.toString()}</p>
+                <p> kurssiId: {this.state.courseId}</p>
+                {/*<p> user: {this.state.user.displayName}</p>*/}
+            </div>
+        );
+
         return (
+
             <div className="App">
 
+                <div style={style}>{stateValues}</div>
+
+
                 <Login authenticated={this.state.authenticated}/>
+
 
                 <Router>
                     <Route exact path="/login" render={(props) => {
