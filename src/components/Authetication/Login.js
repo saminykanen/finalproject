@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Toaster, Intent} from '@blueprintjs/core'
 import {app, facebookProvider, googleProvider} from "./base";
-import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import Logout from "./Logout";
 
 
@@ -83,11 +83,6 @@ class Login extends Component {
     }
     render() {
 
-        if (this.state.redirect === true) {
-            <Router>
-                return <Redirect to=''/>
-            </Router>
-        }
 
         return (
             <div>
