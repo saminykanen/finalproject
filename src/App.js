@@ -3,7 +3,7 @@ import './App.css';
 import TicketList from "./components/TicketList";
 import Title from "./components/Title";
 import MyTicket from "./components/MyTicket";
-import {fetchCourses, fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
+import {fetchCourses, fetchTickets} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app, base} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
@@ -14,23 +14,20 @@ class App extends Component {
 
     state = {
         data: [],
-        authenticated: false,
         loading: true, // estää välkkymisen kun sivu latautuu
-        firebaseUserId: '',
-        userRole: '',
-        usersData: [],
-        coursesData: [],
-        courseId: null,
-        user: null
-
+        authenticated: false, // kirjautunut tai ei
+        user: null, // firebase object
+        firebaseUserId: '', // firebase
+        username: null, // firebase
+        email: null,// firebase
+        courses: [], // mySql käyttäjän kurssilista
+        userRole: null, // mySql
+        course: null // aktiivinen kurssi jonka tiketit näkyy
     };
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
-        this.usersFetchAndUpdate() // hakee käyttäjät
-        console.log("componentDidMount" + this.state.firebaseUserId);
         // this.fetchCoursesAndUpdate()
-
     }
 
     createNewUserToMysql() {
@@ -48,50 +45,58 @@ class App extends Component {
             }.bind(this));
     }
 
+    fetchUserInfoFromMysql = (callback) => {
+        var api = '/api/users/';
+        //var id = this.state.firebaseUserId;
+        var id = 'Samu';
+        fetch(api + id, {
+            method: 'GET'
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (users) {
+                callback(users);
+            })
+    };
 
     componentWillMount() {
         // LOGIN LISTENER
-        // for undo
         this.removeAuthListner = app.auth().onAuthStateChanged((user) => {
-                if (user) {
+            if (user) {
 
-                    this.setState(
-                        {
-                            authenticated: true,
-                            loading: false,
-                            firebaseUserId: user.uid,
-                        }
-                    )
+                this.setState({
+                    authenticated: true,
+                    loading: false,
+                    firebaseUserId: user.uid,
+                    user: user,
+                    username: user.displayName,
+                    email: user.email
+                });
+                console.log("userState päivitetty")
+                //  KÄYTTÄJÄN SQL KYSELYT ALLE
+                this.createNewUserToMysql(); // luodaan käyttäjä myös MySQL:ään
 
-                    this.createNewUserToMysql(); // luodaan käyttäjä myös MySQL:ään
-                    {
-                        console.log("authenticated: " + this.state.authenticated)
-                    }
-                    {
-                        console.log("user displayName: " + user.displayName)
-                    }
+                this.fetchUserInfoFromMysql(function (users) {
+                    console.log(users.userRole)
+                    console.log(users.courses)
+                    // this.setState({
+                    // userRole: users.userRole
+                    // })
+                });
 
-                } else {
-                    this.setState({
-                        authenticated: false,
-                        loading: false
-                    })
-                }
 
+            } else {
+                this.setState({
+                    authenticated: false,
+                    loading: false,
+                    firebaseUserId: null,
+                    user: null,
+                    username: null,
+                    email: null
+                })
             }
-        )
-        console.log("componentWillMount" + this.state.firebaseUserId);
-    }
-
-    usersFetchAndUpdate = (state) => {
-        console.log("usersFetchAndUpdate" + this.state.firebaseUserId);
-
-        fetchUserInfoFromMysql(function (users) {
-            console.log("Käyttäjät haettu. " + users.length)
-            console.log("Käyttäjän status " + users[1].userRole)
-            this.setState({usersData: users});
-        }.bind(this), this.state.firebaseUserId);
-
+        });
     }
 
     componentWillUnmounth() {
@@ -142,14 +147,17 @@ class App extends Component {
             );
         }
 
-        var style = {fontSize: 12, lineHeight: 0.5, textAlign: 'left', position: 'relative' };
+        var style = {fontSize: 12, lineHeight: 0.5, textAlign: 'left', position: 'relative'};
         var stateValues = (
             <div>
                 <p></p>
+                <p> loading; {this.state.loading.toString()}</p>
                 <p> firebaseUserId; {this.state.firebaseUserId}</p>
                 <p> authenticated: {this.state.authenticated.toString()}</p>
                 <p> kurssiId: {this.state.courseId}</p>
-                {/*<p> user: {this.state.user.displayName}</p>*/}
+                <p> username: {this.state.username}</p>
+                <p> email: {this.state.email}</p>
+                <p> userRole: {this.state.userRole}</p>
             </div>
         );
 
@@ -175,7 +183,6 @@ class App extends Component {
                     <input type="text" name="kurssiId" placeholder="ID"/>
                     <button>Kirahvi</button>
                 </form> : null}
-
 
                 {this.state.authenticated === true ?
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}/> : null}
