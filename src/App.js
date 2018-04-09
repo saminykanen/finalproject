@@ -45,10 +45,10 @@ class App extends Component {
             }.bind(this));
     }
 
+
     fetchUserInfoFromMysql = (callback) => {
         var api = '/api/users/';
-        //var id = this.state.firebaseUserId;
-        var id = 'Samu';
+        var id = this.state.firebaseUserId;
         fetch(api + id, {
             method: 'GET'
         })
@@ -59,6 +59,7 @@ class App extends Component {
                 callback(users);
             })
     };
+
 
     componentWillMount() {
         // LOGIN LISTENER
@@ -80,10 +81,25 @@ class App extends Component {
                 this.fetchUserInfoFromMysql(function (users) {
                     console.log(users.userRole)
                     console.log(users.courses)
-                    // this.setState({
-                    // userRole: users.userRole
-                    // })
-                });
+                    this.setState({
+                    userRole: users.userRole
+                    })
+                }.bind(this));
+
+                // var api = '/api/users/';
+                // //var id = this.state.firebaseUserId;
+                // var id = 'Samu';
+                // fetch(api + id, {
+                //     method: 'GET'
+                // })
+                //     .then(function (response) {
+                //         return response.json();
+                //     })
+                //     .then(function (users) {
+                //         this.setState({
+                //             userRole: users.userRole
+                //         })
+                //     }).bind(this);
 
 
             } else {
@@ -150,7 +166,7 @@ class App extends Component {
         var style = {fontSize: 12, lineHeight: 0.5, textAlign: 'left', position: 'relative'};
         var stateValues = (
             <div>
-                <p></p>
+                <p>DEBUG CONSOLE</p>
                 <p> loading; {this.state.loading.toString()}</p>
                 <p> firebaseUserId; {this.state.firebaseUserId}</p>
                 <p> authenticated: {this.state.authenticated.toString()}</p>
@@ -165,7 +181,8 @@ class App extends Component {
 
             <div className="App">
 
-                <div style={style}>{stateValues}</div>
+                {/*DEBUG CONSOLE*/}
+                {/*<div style={style}>{stateValues}</div>*/}
 
 
                 <Login authenticated={this.state.authenticated}/>
