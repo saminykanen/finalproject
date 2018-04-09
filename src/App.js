@@ -36,7 +36,8 @@ class App extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(
                 {
-                    firebaseUserId: self.state.firebaseUserId
+                    firebaseUserId: self.state.firebaseUserId,
+                    username: self.state.username
                 })
         })
             .then(function (body) {
@@ -170,7 +171,7 @@ class App extends Component {
             <div className="App">
 
                 {/*DEBUG CONSOLE*/}
-                {/*<div style={style}>{stateValues}</div>*/}
+                <div style={style}>{stateValues}</div>
 
 
                 <Login authenticated={this.state.authenticated}/>
