@@ -3,6 +3,8 @@ import {Toaster, Intent} from '@blueprintjs/core'
 import {app, facebookProvider, googleProvider} from "./base";
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom';
 import Logout from "./Logout";
+import './Login.css';
+import {Grid, Row, Col} from 'react-bootstrap';
 
 
 class Login extends Component {
@@ -79,75 +81,108 @@ class Login extends Component {
         }
 
         return (
-            <div>
+            <div className="loginForm">
                 <Toaster ref={(element) => {
                     this.toaster = element
                 }}/>
 
-                {this.props.authenticated === false ?
-                    <div><p>Kirjaudu sisään sähköpostitilillä tai rekisteröidy</p></div> : false}
+                <Grid>
+                    <Row>
+                        <Col xs={12} sm={6} md={8}>
+                            {this.props.authenticated === false ?
+                                <p>Login or create a new user</p> : false}
+                                <div>
+                            {this.props.authenticated === false ?
+                                        <button onClick={() => {
+                                            this.autWithFacebook()
+                                        }}>Login with Facebook</button>
+                                        : null}
+                                        <br/>
+
+                                {this.props.authenticated === false ?
+                                    <button onClick={() => {
+                                        this.autWithGoogle()
+                                    }}>Login with Google
+                                    </button>
+                                    : null}
+                                </div>
+                            <div>
+                                {this.props.authenticated === false ?
+                                    <form onSubmit={(event) => {
+                                        this.autWithEmailPassword(event)
+                                    }} ref={(form) => {
+                                        this.loginForm = form
+                                    }}>
+
+                                        <label>
+                                            <input name="email" type="email" ref={(input) => {
+                                                this.emailInput = input
+                                            }} placeholder="Enter email"/><br/>
+                                            <input name="password" type="password" ref={(input) => {
+                                                this.passwordInput = input
+                                            }} placeholder="Password"/><br/>
+                                            <button value="Login">Login/Register</button>
+                                        </label>
+                                    </form>
+                                    :
+                                    <Router>
+                                        <div>
+                                            <Switch>
+                                                <Route exact path="/logout" component={Logout}/>
+                                            </Switch>
+                                        </div>
+                                    </Router>
+                                }
+                            </div>
+                        </Col>
+                    </Row>
+                </Grid>
+
+                {/*<div>
+                    {this.props.authenticated === false ?
+                        <button onClick={() => {
+                            this.autWithFacebook()
+                        }}>Login with Facebook
+                        </button>
+                        : null}
+                </div>
 
                 <div>
                     {this.props.authenticated === false ?
-                        <form onSubmit={(event) => {
-                            this.autWithEmailPassword(event)
-                        }} ref={(form) => {
-                            this.loginForm = form
-                        }}>
+                        <button onClick={() => {
+                            this.autWithGoogle()
+                        }}>Login with Google
+                        </button>
+                        : null}
+                </div>*/}
+                {/*<div>
+                                    {this.props.authenticated === false ?
+                                        <form onSubmit={(event) => {
+                                            this.autWithEmailPassword(event)
+                                        }} ref={(form) => {
+                                            this.loginForm = form
+                                        }}>
 
-                            <div>
-                                <p> Login or create a new user</p>
-                            </div>
-
-                            <label>
+                                            <label>
                                 <input name="email" type="email" ref={(input) => {
                                     this.emailInput = input
-                                }} placeholder="Email"></input>
+                                }} placeholder="Enter email"/><br/>
                                 <input name="password" type="password" ref={(input) => {
                                     this.passwordInput = input
-                                }} placeholder="Password"></input>
+                                }} placeholder="Password"/><br/>
                                 <button value="Login">Login/Register</button>
                             </label>
                         </form>
                         :
                         <Router>
                             <div>
-                                <div>
-                                    <Switch>
-                                        <Route exact path="/logout" component={Logout}/>
-                                    </Switch>
-                                </div>
-                                <Link to="/logout">
-                                    <button>Logout</button>
-                                </Link>
+                                <Switch>
+                                    <Route exact path="/logout" component={Logout}/>
+                                </Switch>
                             </div>
                         </Router>
                     }
-
-                    {this.props.authenticated === false ?
-                        <div>
-                            <p> Kirjaudu sisään Facebook-tililläsi</p>
-                        </div> : null}
-
-                    <div>
-                        {this.props.authenticated === false ?
-                            <button onClick={() => {
-                                this.autWithFacebook()
-                            }}>Login with Facebook
-                            </button>
-                            : null}
-                    </div>
-
-                    <div>
-                        {this.props.authenticated === false ?
-                            <button onClick={() => {
-                                this.autWithGoogle()
-                            }}>Login with Google
-                            </button>
-                            : null}
-                    </div>
-
-                </div>
+                </div>*/}
             </div>
         )
     }

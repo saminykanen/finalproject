@@ -2,15 +2,16 @@ import React, {Component} from 'react';
 import {Panel} from 'react-bootstrap';
 import './Ticket.css';
 import expandbutton from '../images/expandbutton.png';
+import expandbutton_vertical from '../images/expandbutton_vertical.png';
 
 
 class Ticket extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container"  >
                 <Panel style={{marginBottom: '10px'}} eventKey={this.props.index+1+''} defaultcollapsed="true" className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "panel-warning"}>
-                    <Panel.Heading>
+                    <Panel.Heading style={{height: '50px'}}>
                         <Panel.Title toggle className="text-left">
                             <div>
                                 <span><b>{this.props.ticket.ticketTitle}</b></span>
@@ -23,7 +24,7 @@ class Ticket extends Component {
                     <Panel.Collapse>
                         <Panel.Body className="text-left">
                             <br/>
-                            <div className="row">
+                            <div className="row" >
                                 <span className="col-lg-1"><b>Location:</b></span><span className="col-lg-11">{this.props.ticket.location}</span>
                             </div>
                             {/*<div className="row">*/}

@@ -8,9 +8,9 @@ class TicketForm extends Component {
         this.state = {
             ticketTitle: '',
             ticketDescription: '',
-            userName: '', //tuleeko tähän se kirjautunut?
+            userName: '',
             ticketStatus: 'queue',
-            timestamp: '', //tähän joku localdate now?
+            timestamp: '',
             courseName: "Java-kurssi", // pitää muokata dymaamiseksi,
             courseId: '',
             location: ''
@@ -28,6 +28,7 @@ class TicketForm extends Component {
         this.setState({[name]: value})
     }
 
+    //Posting a ticket to the database
     handleSubmitting(e) {
         e.preventDefault();
         console.log("firebaseID " + this.props.firebaseUserId);

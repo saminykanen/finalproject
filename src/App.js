@@ -9,7 +9,7 @@ import Login from "./components/Authetication/Login";
 import Logout from "./components/Authetication/Logout";
 import {app, base} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-
+import { Navigation } from './components/Navigation';
 
 class App extends Component {
 
@@ -17,7 +17,8 @@ class App extends Component {
         data: [],
         authenticated: false,
         loading: true, // estää välkkymisen kun sivu latautuu
-        firebaseUserId: ''
+        firebaseUserId: '',
+        userRole: ''
     };
 
     componentDidMount() {
@@ -100,17 +101,18 @@ class App extends Component {
         }
 
         return (
-            <div className="App">
+            <div>
                 {/*<Authentication authenticated={this.state.authenticated}/>*/}
-                <Login authenticated={this.state.authenticated}/>
-
+                {this.state.authenticated === true ? <Navigation /> : null }
+                <Title className="default" />
+                <Login className="default" authenticated={this.state.authenticated}/>
                 <Router>
                     <Route exact path="/login" render={(props) => {
                         return <Login setCurrentUser={this.setCurrentUser} {...props} />
                     }}/>
                 </Router>
 
-                <Title />
+
 
                 {this.state.authenticated === true ? <TicketList reFetchList={this.reFetchList} data={this.state.data}/> : null}
                 {this.state.authenticated === true ? <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/> :null}
