@@ -25,7 +25,7 @@ class App extends Component {
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
-        // this.fetchCoursesAndUpdate()
+        //this.fetchCoursesAndUpdate()
     }
 
     createNewUserToMysql() {
@@ -81,7 +81,8 @@ class App extends Component {
                     console.log(users.userRole)
                     console.log(users.courses)
                     this.setState({
-                    userRole: users.userRole
+                        userRole: users.userRole,
+                        courses: users.courses
                     })
                 }.bind(this));
 
@@ -97,7 +98,8 @@ class App extends Component {
             }
 
 
-    })}
+        })
+    }
 
     componentWillUnmounth() {
         this.removeAuthListner(); // logout
