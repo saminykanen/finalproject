@@ -6,50 +6,85 @@ import expandbutton from '../images/expandbutton.png';
 
 class Ticket extends Component {
 
+    showDeleteButton(userInfo) {
+        if (userInfo === 'teacher') {
+            return (
+                <span>
+                    <button className="btn btn-danger btn-md" style={{marginRight: '10px'}}
+                            onClick={this.handleChangeToPassive.bind(this)}>DELETE
+                    </button>
+                </span>
+            )
+        }else if(userInfo === this.props.ticket.user.firebaseUserId){
+            return (
+                <span>
+                    <button className="btn btn-danger btn-md" style={{marginRight: '10px'}}
+                            onClick={this.handleChangeToPassive.bind(this)}>DELETE
+                    </button>
+                </span>
+            )
+        }else{
+            return(null)
+        }
+
+    }
+
+    showActivateButton(userInfo){
+        if (userInfo === 'teacher'){
+            return(
+                <button className="btn btn-warning btn-md float-right"
+                        onClick={this.handleChangeToActive.bind(this)}>ACTIVATE
+                </button>
+            )
+        }else{
+            return(null)
+        }
+    }
+
     render() {
         return (
             <div className="container">
-                <Panel style={{marginBottom: '10px'}} eventKey={this.props.index+1+''} defaultcollapsed="true" className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "panel-warning"}>
+                <Panel style={{marginBottom: '10px'}} eventKey={this.props.index + 1 + ''} defaultcollapsed="true"
+                       className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "panel-warning"}>
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
                             <div>
                                 <span><b>{this.props.ticket.ticketTitle}</b></span>
                                 <span>{this.props.ticket.user.firebaseUserId}</span>
-                                <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0,10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
+                                <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
                                 <img src={expandbutton} width="45" height="12" className="center-block"
                                      alt="expandticket"/>
-                                </div>
+                            </div>
                         </Panel.Title>
                     </Panel.Heading>
                     <Panel.Collapse>
                         <Panel.Body className="text-left">
                             <br/>
                             <div className="row">
-                                <span className="col-lg-1"><b>Location:</b></span><span className="col-lg-11">{this.props.ticket.location}</span>
+                                <span className="col-lg-1"><b>Location:</b></span><span
+                                className="col-lg-11">{this.props.ticket.location}</span>
                             </div>
                             {/*<div className="row">*/}
-                                {/*<span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>*/}
+                            {/*<span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>*/}
                             {/*</div>*/}
                             <div className="row">
-                                <span className="col-lg-1"><b>Description:</b></span><span className="col-lg-11">{this.props.ticket.ticketDescription}</span>
+                                <span className="col-lg-1"><b>Description:</b></span><span
+                                className="col-lg-11">{this.props.ticket.ticketDescription}</span>
                             </div>
                             <br/>
                             <div>
                                 <span>
-                                    <button className="btn btn-danger btn-md" style={{marginRight: '10px'}}
-                                            onClick={this.handleChangeToPassive.bind(this)}>DELETE
-                                    </button>
+                                    {this.showDeleteButton(this.props.username)}
+                                    {this.showDeleteButton(this.props.userRole)}
                                 </span>
-                                    <span>
-                                    <button className="btn btn-warning btn-md float-right"
-                                            onClick={this.handleChangeToActive.bind(this)}>ACTIVATE
-                                    </button>
+                                <span>
+                                    {this.showActivateButton(this.props.userRole)}
                                 </span>
-                                </div>
-                                <br/>
-                            </Panel.Body>
-                        </Panel.Collapse>
-                    </Panel>
+                            </div>
+                            <br/>
+                        </Panel.Body>
+                    </Panel.Collapse>
+                </Panel>
             </div>
         )
     }

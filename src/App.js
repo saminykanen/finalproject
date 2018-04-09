@@ -194,7 +194,7 @@ class App extends Component {
                         <button>Find course</button>
                     </form> : null}
                 {this.state.authenticated === true ?
-                    <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.username}/> : null}
+                    <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
                 {this.state.authenticated === true ?
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} username={this.state.username}/> : null}
                     </div>}
