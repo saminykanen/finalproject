@@ -20,12 +20,13 @@ class App extends Component {
         username: null, // firebase
         email: null,// firebase
         courses: [], // mySql käyttäjän kurssilista
-        userRole: null // mySql
+        userRole: null, // mySql
+        courseId: null
     };
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
-        // this.fetchCoursesAndUpdate()
+        //this.fetchCoursesAndUpdate()
     }
 
     createNewUserToMysql() {
@@ -35,7 +36,8 @@ class App extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(
                 {
-                    firebaseUserId: self.state.firebaseUserId
+                    firebaseUserId: self.state.firebaseUserId,
+                    username: self.state.username
                 })
         })
             .then(function (body) {
@@ -98,13 +100,15 @@ class App extends Component {
             }
 
 
-    })}
+        })
+    }
 
     componentWillUnmounth() {
         this.removeAuthListner(); // logout
     }
 
     fetchTicketsAndUpdate = (courseId) => {
+
         if (!courseId) courseId = 'Java-kurssi';  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
             console.log("Tiketit haettu. " + tickets.length)
@@ -167,7 +171,7 @@ class App extends Component {
             <div className="App">
 
                 {/*DEBUG CONSOLE*/}
-                {/*<div style={style}>{stateValues}</div>*/}
+                <div style={style}>{stateValues}</div>
 
 
                 <Login authenticated={this.state.authenticated}/>
@@ -193,7 +197,8 @@ class App extends Component {
                 {this.state.authenticated === true ?
                     <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
                 {this.state.authenticated === true ?
-                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
+
+                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}
 
             </div>

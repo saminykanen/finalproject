@@ -50,7 +50,7 @@ class Ticket extends Component {
                         <Panel.Title toggle className="text-left">
                             <div>
                                 <span><b>{this.props.ticket.ticketTitle}</b></span>
-                                <span>{this.props.ticket.user.firebaseUserId}</span>
+                                <span>{this.props.ticket.user.username}</span>
                                 <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
                                 <img src={expandbutton} width="45" height="12" className="center-block"
                                      alt="expandticket"/>
@@ -94,6 +94,8 @@ class Ticket extends Component {
         const API = 'api/tickets/setpassive/';
         const TID = this.props.ticket.ticketId;
 
+        console.log(this.props.ticket.ticketId)
+
         fetch(API + TID, {
             method: 'PUT'
         })
@@ -106,6 +108,8 @@ class Ticket extends Component {
         e.preventDefault();
         const API = 'api/tickets/setactive/';
         const TID = this.props.ticket.ticketId;
+
+        console.log(this.props.ticket.ticketId)
 
         fetch(API + TID, {
             method: 'PUT'
