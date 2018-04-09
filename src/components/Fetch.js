@@ -1,6 +1,6 @@
 function fetchTickets(callback, courseId){
-    var api = 'api/tickets/';
-    var cId = courseId ? courseId : 1;
+    var api = 'api/tickets/course/';
+    var cId = courseId ? courseId : 'Java-kurssi';
     fetch(api+cId)
         .then(function(response) {
             return response.json();})
