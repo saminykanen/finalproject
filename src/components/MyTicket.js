@@ -14,13 +14,23 @@ class MyTicket extends Component {
         this.setState({isOpen: !this.state.isOpen});
     };
 
-    render(){
-        return (
-            <div className="container">
+    showAddNewTicket(userInfo){
+        if(userInfo === 'student'){
+            return(
                 <button className="btn btn-info button button1" onClick={this.toggleModal}>
                     <i className="plus">+</i>
                     <span className="button-text">TICKET!</span>
                 </button>
+            )
+        }else{
+            return(null)
+        }
+    }
+
+    render(){
+        return (
+            <div className="container">
+                {this.showAddNewTicket(this.props.userRole)}
                 <Modal show={this.state.isOpen}>
                     <TicketForm reFetchList={this.props.reFetchList} onClose={this.toggleModal} firebaseUserId={this.props.firebaseUserId} />
                 </Modal>
