@@ -58,6 +58,8 @@ class Ticket extends Component {
         const API = 'api//tickets/setpassive/';
         const TID = this.props.ticket.ticketId;
 
+        console.log(this.props.ticket.ticketId)
+
         fetch(API + TID, {
             method: 'PUT'
         })
@@ -70,6 +72,8 @@ class Ticket extends Component {
         e.preventDefault();
         const API = 'api//tickets/setactive/';
         const TID = this.props.ticket.ticketId;
+
+        console.log(this.props.ticket.ticketId)
 
         fetch(API + TID, {
             method: 'PUT'

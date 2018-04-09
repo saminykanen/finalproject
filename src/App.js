@@ -20,7 +20,8 @@ class App extends Component {
         username: null, // firebase
         email: null,// firebase
         courses: [], // mySql käyttäjän kurssilista
-        userRole: null // mySql
+        userRole: null, // mySql
+        courseId: null
     };
 
     componentDidMount() {
@@ -106,7 +107,7 @@ class App extends Component {
     }
 
     fetchTicketsAndUpdate = (courseId) => {
-        if (!courseId) courseId = 1;  // virhekäisttelyn voi heittää tähänkin
+        if (!courseId) courseId = "Java-kurssi";  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
             console.log("Tiketit haettu. " + tickets.length)
             this.setState({data: tickets, courseId: courseId});
