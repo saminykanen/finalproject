@@ -14,6 +14,7 @@ class Ticket extends Component {
                         <Panel.Title toggle className="text-left">
                             <div>
                                 <span><b>{this.props.ticket.ticketTitle}</b></span>
+                                <span>{this.props.ticket.user.firebaseUserId}</span>
                                 <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0,10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
                                 <img src={expandbutton} width="45" height="12" className="center-block"
                                      alt="expandticket"/>
@@ -55,7 +56,7 @@ class Ticket extends Component {
 
     handleChangeToPassive(e) {
         e.preventDefault();
-        const API = 'api//tickets/setpassive/';
+        const API = 'api/tickets/setpassive/';
         const TID = this.props.ticket.ticketId;
 
         console.log(this.props.ticket.ticketId)
@@ -70,7 +71,7 @@ class Ticket extends Component {
 
     handleChangeToActive(e) {
         e.preventDefault();
-        const API = 'api//tickets/setactive/';
+        const API = 'api/tickets/setactive/';
         const TID = this.props.ticket.ticketId;
 
         console.log(this.props.ticket.ticketId)
