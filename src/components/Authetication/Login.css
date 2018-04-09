@@ -4,8 +4,13 @@
 
 .loginButton {
     color: orangered;
+    background: #5ed964;
 }
 
 .show-grid {
     font-family: Calibri;
+}
+
+.facebook {
+    background: ('../images/facebook-login.png');
 }

@@ -90,23 +90,22 @@ class Login extends Component {
                     <Row>
                         <Col xs={12} sm={6} md={8}>
                             {this.props.authenticated === false ?
-                                <p>Login or create a new user</p> : false}
+                                <p>Login with Facebook or Google</p> : false}
                                 <div>
                             {this.props.authenticated === false ?
-                                        <button onClick={() => {
+                                        <button className="facebook" onClick={() => {
                                             this.autWithFacebook()
-                                        }}>Login with Facebook</button>
+                                        }}>Facebook</button>
                                         : null}
-                                        <br/>
-
                                 {this.props.authenticated === false ?
-                                    <button onClick={() => {
+                                    <button className="btn btn-info" onClick={() => {
                                         this.autWithGoogle()
                                     }}>Login with Google
                                     </button>
                                     : null}
                                 </div>
                             <div>
+                                <p>Create new user with email address</p>
                                 {this.props.authenticated === false ?
                                     <form onSubmit={(event) => {
                                         this.autWithEmailPassword(event)
