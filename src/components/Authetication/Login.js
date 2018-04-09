@@ -118,6 +118,7 @@ class Login extends Component {
                                 <button value="Reset" onClick={this.handleResetPassword}>Reset password</button>
                             </label>
 
+
                         </form>
                         :
                         <Router>
@@ -129,6 +130,8 @@ class Login extends Component {
                                 </div>
                                 <Link to="/logout">
                                     <button>Logout</button>
+                                    {/*<div><p>You are logged in as {this.state.user.displayName}</p></div>*/}
+
                                 </Link>
                             </div>
                         </Router>
