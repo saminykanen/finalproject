@@ -186,7 +186,7 @@ class App extends Component {
 
                 <Title/>
 
-                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
+{/*                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
                     <input type="text" name="kurssiId" placeholder="ID"/>
                     <button>Find course</button></form> :
                     <div>
@@ -199,10 +199,33 @@ class App extends Component {
                 {this.state.authenticated === true ?
 
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
-                    </div>}
-
+                    </div>}*/}
+                {this.showStuffBasedOnLoginAndCourseStatus()}
+                {this.state.courses.length}
             </div>
         );
+    }
+
+    showStuffBasedOnLoginAndCourseStatus(){
+        if (this.state.courses.length === 0){
+            return(
+            <form onSubmit={this.fetchCourseTickets}>
+                <input type="text" name="kurssiId" placeholder="ID"/>
+                <button>Find course</button>
+            </form>
+            )
+        }else if(this.state.authenticated === true){
+            return(
+                <div>
+                <form onSubmit={this.fetchCourseTickets}>
+                    <input type="text" name="kurssiId" placeholder="ID"/>
+                    <button>Find course</button>
+                </form>
+                <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/>
+                <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
+                </div>
+            )
+        }
     }
 
 }
