@@ -9,8 +9,6 @@ function fetchTickets(callback, courseId){
         });
 }
 
-
-
 function fetchCourses(callback){
     fetch('api/courses')
         .then(function(response) {

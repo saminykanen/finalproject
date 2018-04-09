@@ -171,7 +171,7 @@ class App extends Component {
             <div className="App">
 
                 {/*DEBUG CONSOLE*/}
-                <div style={style}>{stateValues}</div>
+                {/*<div style={style}>{stateValues}</div>*/}
 
 
                 <Login authenticated={this.state.authenticated}/>
