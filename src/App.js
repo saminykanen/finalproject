@@ -3,11 +3,10 @@ import './App.css';
 import TicketList from "./components/TicketList";
 import Title from "./components/Title";
 import MyTicket from "./components/MyTicket";
-import {fetchCourses, fetchTickets} from "./components/Fetch";
+import {fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app, base} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import CoursesList from "./components/CoursesList";
 
 
 class App extends Component {
@@ -21,8 +20,7 @@ class App extends Component {
         username: null, // firebase
         email: null,// firebase
         courses: [], // mySql käyttäjän kurssilista
-        userRole: null, // mySql
-        course: null // aktiivinen kurssi jonka tiketit näkyy
+        userRole: null // mySql
     };
 
     componentDidMount() {
@@ -64,6 +62,7 @@ class App extends Component {
     componentWillMount() {
         // LOGIN LISTENER
         this.removeAuthListner = app.auth().onAuthStateChanged((user) => {
+
             if (user) {
 
                 this.setState({
@@ -86,22 +85,6 @@ class App extends Component {
                     })
                 }.bind(this));
 
-                // var api = '/api/users/';
-                // //var id = this.state.firebaseUserId;
-                // var id = 'Samu';
-                // fetch(api + id, {
-                //     method: 'GET'
-                // })
-                //     .then(function (response) {
-                //         return response.json();
-                //     })
-                //     .then(function (users) {
-                //         this.setState({
-                //             userRole: users.userRole
-                //         })
-                //     }).bind(this);
-
-
             } else {
                 this.setState({
                     authenticated: false,
@@ -112,8 +95,9 @@ class App extends Component {
                     email: null
                 })
             }
-        });
-    }
+
+
+    })}
 
     componentWillUnmounth() {
         this.removeAuthListner(); // logout
@@ -182,7 +166,7 @@ class App extends Component {
             <div className="App">
 
                 {/*DEBUG CONSOLE*/}
-                {/*<div style={style}>{stateValues}</div>*/}
+                <div style={style}>{stateValues}</div>
 
 
                 <Login authenticated={this.state.authenticated}/>
