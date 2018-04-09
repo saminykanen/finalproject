@@ -1,6 +1,6 @@
 function fetchTickets(callback, courseId){
-    var api = 'api/tickets/';
-    var cId = courseId ? courseId : 1;
+    var api = 'api/tickets/course/';
+    var cId = courseId ? courseId : 'Java-kurssi';
     fetch(api+cId)
         .then(function(response) {
             return response.json();})
@@ -9,19 +9,7 @@ function fetchTickets(callback, courseId){
         });
 }
 
-function fetchUserInfoFromMysql(callback, fbuid) {
-    var api = '/api/users/'
-    var id = fbuid;
-    console.log("fetchUserInfoFromMysql: ")
-    console.log(api + id)
-    fetch(api + id)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (users) {
-            callback(users)
-        });
-}
+
 
 function fetchCourses(callback){
     fetch('api/courses')
@@ -32,5 +20,5 @@ function fetchCourses(callback){
         });
 }
 
-export {fetchTickets, fetchUserInfoFromMysql};
+export {fetchTickets, fetchCourses};
 

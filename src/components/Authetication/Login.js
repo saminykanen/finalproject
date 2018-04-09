@@ -19,24 +19,30 @@ class Login extends Component {
 
     autWithGoogle() {
         app.auth().signInWithPopup(googleProvider)
-            .then((result, error) => {
-                if (error) {
-                    this.toaster.show({intent: Intent.DANGER, message: "Unable to sign in with Google"})
-                } else {
-                    this.setState({redirect: true})
-                }
-            })
+            .then(function (result) {
+                var token = result.credential.accessToken;
+                var user = result.user;
+                console.log(user.displayName + " logged in");
+                this.setState({redirect: true})
+            }).catch(function (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            console.log("Gmail login error " + errorCode + errorMessage)
+        });
     }
 
     autWithFacebook() {
         app.auth().signInWithPopup(facebookProvider)
-            .then((result, error) => {
-                if (error) {
-                    this.toaster.show({intent: Intent.DANGER, message: "Unable to sign in with Facebook"})
-                } else {
-                    this.setState({redirect: true})
-                }
-            })
+            .then(function (result) {
+                var token = result.credential.accessToken;
+                var user = result.user;
+                console.log(user.displayName + " logged in");
+                this.setState({redirect: true})
+            }).catch(function (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            console.log("Facebook login error " + errorCode + errorMessage)
+        });
     }
 
     autWithEmailPassword(event) {
@@ -51,9 +57,8 @@ class Login extends Component {
                     // jos, niin ei tiliä, niin luodaan
                     return app.auth().createUserWithEmailAndPassword(email, password)
                 } else if (providers.indexOf("password") === -1) {
-                    // user Facebook
+                    console.log("Email login error - email in use wiht Facebook or Gmail" )
                     this.loginForm.reset();
-                    this.toaster.show({intent: Intent.WARNING, message: "Try an alternative login."})
                 } else {
                     // sign user in
                     return app.auth().signInWithEmailAndPassword(email, password)
@@ -74,13 +79,14 @@ class Login extends Component {
         console.log('resetting password')
 
         let auth = app.auth();
-            auth.sendPasswordResetEmail(this.emailInput.value).then(function() {
-                console.log('email sent?');
+        auth.sendPasswordResetEmail(this.emailInput.value).then(function () {
+            console.log('email sent?');
             // Email sent.
-        }).catch(function(error) {
+        }).catch(function (error) {
             // An error happened.
         });
     }
+
     render() {
 
 
@@ -111,7 +117,8 @@ class Login extends Component {
                                 }} placeholder="Email"/>
                                 <input name="password" type="password" ref={(input) => {
                                     this.passwordInput = input
-                                }} placeholder="Password"/>
+                                }} placeholder="password"/>
+
                                 <button value="Login">Login/Register</button>
                             </label>
                             <label>
@@ -153,10 +160,13 @@ class Login extends Component {
 
                     <div>
                         {this.props.authenticated === false ?
-                            <button onClick={() => {
-                                this.autWithGoogle()
-                            }}>Login with Google
-                            </button>
+                            <div>
+                                <button onClick={() => {
+                                    this.autWithGoogle()
+                                }}>Login with Google
+                                </button>
+
+                            </div>
                             : null}
                     </div>
 
