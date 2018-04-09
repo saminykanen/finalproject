@@ -3,11 +3,11 @@ import './App.css';
 import TicketList from "./components/TicketList";
 import Title from "./components/Title";
 import MyTicket from "./components/MyTicket";
-import {fetchCourses, fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
+import {fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app, base} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import CoursesList from "./components/CoursesList";
+
 
 
 class App extends Component {
@@ -81,8 +81,8 @@ class App extends Component {
     usersFetchAndUpdate = (state) => {
         console.log("usersFetchAndUpdate" + this.state.firebaseUserId);
         fetchUserInfoFromMysql(function (users) {
-            console.log("Käyttäjät haettu. " + users.length)
-            console.log("Käyttäjän status " + users[1].userRole)
+            // console.log("Käyttäjät haettu. " + users.length)
+            // console.log("Käyttäjän status " + users[1].userRole)
             this.setState({usersData: users});
         }.bind(this), this.state.firebaseUserId);
     }

@@ -32,5 +32,5 @@ function fetchCourses(callback){
         });
 }
 
-export {fetchTickets, fetchCourses, fetchUserInfoFromMysql};
+export {fetchTickets, fetchUserInfoFromMysql};
 
