@@ -9,19 +9,7 @@ function fetchTickets(callback, courseId){
         });
 }
 
-function fetchUserInfoFromMysql(callback, fbuid) {
-    var api = '/api/users/'
-    var id = fbuid;
-    console.log("fetchUserInfoFromMysql: ")
-    console.log(api + id)
-    fetch(api + id)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (users) {
-            callback(users)
-        });
-}
+
 
 function fetchCourses(callback){
     fetch('api/courses')
@@ -32,5 +20,5 @@ function fetchCourses(callback){
         });
 }
 
-export {fetchTickets, fetchUserInfoFromMysql};
+export {fetchTickets, fetchCourses};
 
