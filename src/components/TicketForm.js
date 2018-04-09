@@ -44,7 +44,8 @@ class TicketForm extends Component {
                         location: self.state.location
                     },
                     user: {
-                        firebaseUserId: this.props.firebaseUserId
+                        firebaseUserId: this.props.firebaseUserId,
+                        userName: this.props.username
                     },
                     course: {
                         courseName: this.state.courseName
