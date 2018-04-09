@@ -49,8 +49,7 @@ class Ticket extends Component {
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
                             <div className="row">
-                                <div><span className="col-lg-4"><b>{this.props.ticket.ticketTitle}</b></span></div>
-                                <div><span className="col-lg-6"></span></div>
+                                <div><span className="col-lg-10"><b>{this.props.ticket.ticketTitle}</b></span></div>
                                 <div><span className="col-lg-2" style={{float: 'right'}}><i><small>{this.props.ticket.user.username}</small></i></span></div>
                             </div>
                             <div className="row">

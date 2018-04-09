@@ -7,7 +7,6 @@ class Title extends Component {
             <div className="container">
                 <div className="jumbotron">
                     <h1>Academy Ticket Service</h1>
-                    <hr/>
                 </div>
             </div>
         )
