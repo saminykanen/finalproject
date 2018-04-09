@@ -48,12 +48,14 @@ class Ticket extends Component {
                        className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "panel-warning"}>
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
-                            <div>
-                                <span><b>{this.props.ticket.ticketTitle}</b></span>
-                                <span>{this.props.ticket.user.username}</span>
-                                <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
-                                <img src={expandbutton} width="45" height="12" className="center-block"
-                                     alt="expandticket"/>
+                            <div className="row">
+                                <div><span className="col-lg-10"><b>{this.props.ticket.ticketTitle}</b></span></div>
+                                <div><span className="col-lg-2" style={{float: 'right'}}><i><small>{this.props.ticket.user.username}</small></i></span></div>
+                            </div>
+                            <div className="row">
+                                <div><span className="col-lg-2"></span></div>
+                                <div><span className="col-lg-8"><img src={expandbutton} width="45" height="12" className="center-block" alt="expandticket"/></span></div>
+                                <div><span className="col-lg-2" style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span></div>
                             </div>
                         </Panel.Title>
                     </Panel.Heading>
