@@ -3,11 +3,11 @@ import './App.css';
 import TicketList from "./components/TicketList";
 import Title from "./components/Title";
 import MyTicket from "./components/MyTicket";
-import {fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
+import {fetchTickets} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
-import {app, base} from "./components/Authetication/base";
+import {app} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import {Navigation} from './components/Navigation';
+import { Navigation } from './components/Navigation';
 
 
 class App extends Component {
@@ -32,7 +32,7 @@ class App extends Component {
 
     createNewUserToMysql() {
         const self = this; //?
-        fetch('/api/users/createuser/', {
+        return fetch('/api/users/createuser/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(
@@ -43,7 +43,7 @@ class App extends Component {
         })
             .then(function (body) {
                 console.log("lähetetty body " + body);
-            }.bind(this));
+            })
     }
 
 
@@ -61,7 +61,6 @@ class App extends Component {
             })
     };
 
-
     componentWillMount() {
         // LOGIN LISTENER
         this.removeAuthListner = app.auth().onAuthStateChanged((user) => {
@@ -76,18 +75,21 @@ class App extends Component {
                     username: user.displayName,
                     email: user.email
                 });
-                console.log("userState päivitetty")
+                console.log("userState päivitetty");
                 //  KÄYTTÄJÄN SQL KYSELYT ALLE
-                this.createNewUserToMysql(); // luodaan käyttäjä myös MySQL:ään
 
-                this.fetchUserInfoFromMysql(function (users) {
-                    console.log(users.userRole)
-                    console.log(users.courses)
-                    this.setState({
-                        userRole: users.userRole,
-                        courses: users.courses
-                    })
-                }.bind(this));
+                // luodaan käyttäjä myös MySQL:ään
+                this.createNewUserToMysql() // palauttaa promisen
+                // haetaan käyttäjä vasta kun MySQL on luotu
+                    .then(function () {
+                        this.fetchUserInfoFromMysql(function (users) {
+                            this.setState({
+                                userRole: users.userRole,
+                                courses: users.courses
+                            })
+                        }.bind(this));
+                    }.bind(this));
+
 
             } else {
                 this.setState({
@@ -168,14 +170,16 @@ class App extends Component {
         );
 
         return (
-
             <div>
-                {this.state.authenticated === true ? <Navigation /> : null}
+                {/*<Authentication authenticated={this.state.authenticated}/>*/}
+                {this.state.authenticated === true ? <Navigation /> : null }
                 <Title className="default" />
                 <Login className="default" authenticated={this.state.authenticated}/>
 
                 {/*DEBUG CONSOLE*/}
                 {/*<div style={style}>{stateValues}</div>*/}
+
+
 
                 <Router>
                     <Route exact path="/login" render={(props) => {
@@ -183,21 +187,20 @@ class App extends Component {
                     }}/>
                 </Router>
 
-                {this.state.courses.length !== 0 ?
-                    <form onSubmit={this.fetchCourseTickets} className="default">
+                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
                         <input type="text" name="kurssiId" placeholder="ID"/>
                         <button>Find course</button>
                     </form> :
                     <div>
-                        {this.state.authenticated === true ?
-                            <form onSubmit={this.fetchCourseTickets}  className="default">
-                                <input type="text" name="kurssiId" placeholder="ID"/>
-                                <button>Find course</button>
-                            </form> : null}
+                        {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
+                            <input type="text" name="kurssiId" placeholder="ID"/>
+                            <button>Find course</button>
+                        </form> : null}
                         {this.state.authenticated === true ?
                             <TicketList reFetchList={this.reFetchList} data={this.state.data}
                                         username={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
                         {this.state.authenticated === true ?
+
                             <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
                                       userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}

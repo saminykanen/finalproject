@@ -22,9 +22,9 @@ class Login extends Component {
     autWithGoogle() {
         app.auth().signInWithPopup(googleProvider)
             .then(function (result) {
-                var token = result.credential.accessToken;
+                // token = result.credential.accessToken;
                 var user = result.user;
-                console.log(user.displayName + " logged in");
+                // console.log(user.displayName + " logged in");
                 this.setState({redirect: true})
             }).catch(function (error) {
             let errorCode = error.code;
@@ -35,9 +35,9 @@ class Login extends Component {
     autWithFacebook() {
         app.auth().signInWithPopup(facebookProvider)
             .then(function (result) {
-                var token = result.credential.accessToken;
+                // var token = result.credential.accessToken;
                 var user = result.user;
-                console.log(user.displayName + " logged in");
+                // console.log(user.displayName + " logged in");
                 this.setState({redirect: true})
             }).catch(function (error) {
             let errorCode = error.code;
