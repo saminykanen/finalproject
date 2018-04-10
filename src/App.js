@@ -244,7 +244,6 @@ class App extends Component {
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}*/}
                 {this.showStuffBasedOnLoginAndCourseStatus()}
-                {this.state.courses.length}
             </div>
         );
     }
