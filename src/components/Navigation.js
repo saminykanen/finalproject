@@ -20,11 +20,6 @@ export const Navigation = () => (
     <Navbar.Text pullRight>
         <Navbar.Link className="glyphicon glyphicon-user" href="#"> Profile</Navbar.Link>
     </Navbar.Text>
-        <Navbar.Text>
-        <Navbar.Form>
-        </Navbar.Form>
-        </Navbar.Text>
-
     </Navbar.Collapse>
 </Navbar>
 );
