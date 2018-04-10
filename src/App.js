@@ -60,6 +60,23 @@ class App extends Component {
             })
     };
 
+    updateUserCourses(courseN){
+        console.log("kurssinlisäyskutsu");
+        var courseName = courseN;
+        var api = '/api/users/addcourse/';
+        var userid = this.state.firebaseUserId;
+        fetch(api+userid,{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                courseName: courseName
+            })
+        })
+            .then(function () {
+                console.log("lähetetty body " + courseN);
+            }.bind(this));
+    }
+
 
     componentWillMount() {
         // LOGIN LISTENER
@@ -119,8 +136,9 @@ class App extends Component {
     fetchCourseTickets = (e) => {
         e.preventDefault();
         const id = e.target.elements.kurssiId.value;
-        // this.setState({courseId:id});
+        this.updateUserCourses(id);
         this.fetchTicketsAndUpdate(id); // numeron voi hakea tekstikentästäkin
+
     }
 
     reFetchList = () => {
@@ -210,7 +228,7 @@ class App extends Component {
         if (this.state.courses.length === 0){
             return(
             <form onSubmit={this.fetchCourseTickets}>
-                <input type="text" name="kurssiId" placeholder="ID"/>
+                <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
                 <button>Find course</button>
             </form>
             )
@@ -218,7 +236,7 @@ class App extends Component {
             return(
                 <div>
                 <form onSubmit={this.fetchCourseTickets}>
-                    <input type="text" name="kurssiId" placeholder="ID"/>
+                    <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
                     <button>Find course</button>
                 </form>
                 <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/>

@@ -65,6 +65,7 @@ class Ticket extends Component {
                             <div className="row">
                                 <span className="col-lg-1"><b>Location:</b></span><span
                                 className="col-lg-11">{this.props.ticket.location}</span>
+                                <span>{this.props.ticket.course.courseName}</span>
                             </div>
                             {/*<div className="row">*/}
                             {/*<span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>*/}
