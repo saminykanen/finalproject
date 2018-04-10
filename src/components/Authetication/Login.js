@@ -117,13 +117,12 @@ class Login extends Component {
                                     : null}
                                 </div>
                             <div>
-                                <p>Create new user with email address</p>
                                 {this.props.authenticated === false ?
                                     <form onSubmit={(event) => {
                                         this.autWithEmailPassword(event)
                                     }} ref={(form) => {
                                         this.loginForm = form
-                                    }}>
+                                    }}><p>Create new user with email address</p>
 
                                         <label>
                                             <input name="email" type="email" ref={(input) => {
