@@ -132,7 +132,7 @@ class App extends Component {
 
         if (!courseId) courseId = 'Java-kurssi';  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
-            console.log("Tiketit haettu. " + tickets.length)
+            // console.log("Tiketit haettu. " + tickets.length)
             this.setState({data: tickets, courseId: courseId});
         }.bind(this), courseId);
     }
@@ -171,7 +171,7 @@ class App extends Component {
                     <img className="img img-responsive center-block" src={nocourseimg}/>
                 </div>
             )
-        }else if(this.state.authenticated === true && this.state.data !== nu){
+        }else if(this.state.authenticated === true){
             return(
                 <div>
                     <form className="default" onSubmit={this.fetchCourseTickets}>
@@ -182,8 +182,19 @@ class App extends Component {
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
                 </div>
             )
+        }else{
+            return(
+                <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
+            )
         }
     }
+
+/*    showMyTicketEvenIfTicketDataIsEmpty(){
+        if (this.state.authenticated === true && this.state.data == null){
+            return(
+            <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
+            )}
+    }*/
 
 
     render() {
@@ -247,6 +258,7 @@ class App extends Component {
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}*/}
                 {this.showStuffBasedOnLoginAndCourseStatus()}
+                {/*{this.showMyTicketEvenIfTicketDataIsEmpty()}*/}
             </div>
         );
     }

@@ -3,14 +3,15 @@ import Ticket from "./Ticket";
 import {PanelGroup} from 'react-bootstrap';
 import './TicketList.css'
 import '../App.css';
+import notickets from '../images/notickets.png';
 
 
 class TicketList extends Component {
 
     render() {
         var tickets = '';
-        console.log("TicketList render" + this.props.data.length);
-        if (this.props.data.map != null) {
+        // console.log("TicketList render" + this.props.data.length);
+        if (this.props.data != null) {
             tickets = this.props.data.map(function (ticket, index) {
                 return (
                     <Ticket index={index} ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList} username={this.props.username} userRole={this.props.userRole}/>);
@@ -18,7 +19,7 @@ class TicketList extends Component {
         } else {
             return (
                 <div className="container">
-                    <h4 className="blockquote">Could not load tickets.</h4>
+                    <img className="im img-responsive center-block" src={notickets}/>
                 </div>
             );
         }

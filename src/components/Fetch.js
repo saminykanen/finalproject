@@ -3,7 +3,14 @@ function fetchTickets(callback, courseId) {
     var cId = courseId ? courseId : 'Java-kurssi';
     fetch(api + cId)
         .then(function (response) {
-            return response.json();
+            console.log(response);
+            if (response.status == 200) {
+                console.log('response 200');
+                return response.json();
+            } else {
+                console.log('response 204');
+                return null
+            }
         })
         .then(function (tickets) {
             callback(tickets)
