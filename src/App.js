@@ -161,7 +161,7 @@ class App extends Component {
         }*/
 
     showStuffBasedOnLoginAndCourseStatus(){
-        if (this.state.courses.length === 0 && this.state.authenticated === true){
+        if (this.state.courses.length !== 0 && this.state.authenticated === true){
             return(
                 <div>
 
@@ -173,7 +173,7 @@ class App extends Component {
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
                 </div>
             )
-        } else if (this.state.authenticated === true) {
+        } else if (this.state.authenticated === true && this.state.courses.length === 0) {
             return (
                 <div>
                     <form className="default" onSubmit={this.fetchCourseTickets}>
@@ -185,11 +185,11 @@ class App extends Component {
                     <img className="center-block img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
                 </div>
             )
-        }else{
+        }/*else{
             return(
                 <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
             )
-        }
+        }*/
     }
 
     render() {
