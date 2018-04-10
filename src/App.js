@@ -9,6 +9,7 @@ import {app} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import nocourseimg from './images/nocourseimg.png';
+import Profile from "./components/Profile";
 
 class App extends Component {
 
@@ -124,7 +125,7 @@ class App extends Component {
         })
     }
 
-    componentWillUnmounth() {
+    componentWillUnmount() {
         this.removeAuthListner(); // logout
     }
 
@@ -161,7 +162,7 @@ class App extends Component {
         }*/
 
     showStuffBasedOnLoginAndCourseStatus(){
-        if (this.state.courses.length === 0 && this.state.authenticated === true){
+        if (this.state.courses.length === 0 && this.state.authenticated === true && this.state.courseId === null){
             return(
                 <div>
                     <form className="default" onSubmit={this.fetchCourseTickets}>
@@ -172,7 +173,7 @@ class App extends Component {
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
                 </div>
             )
-        } else if (this.state.authenticated === true) {
+        } else if (this.state.authenticated === true && this.state.courseId === null) {
             return (
                 <div>
                     <form className="default" onSubmit={this.fetchCourseTickets}>
@@ -227,9 +228,14 @@ class App extends Component {
 
 
                 <Router>
+                    <Switch>
                     <Route exact path="/login" render={(props) => {
                         return <Login setCurrentUser={this.setCurrentUser} {...props} />
                     }}/>
+                    <Route exact path="/profile" component={Profile} /*render={ (props) => {
+                        return <Profile setCurrentUser={this.setCurrentUser} {...props}*/ />
+                    }}/>
+                    </Switch>
                 </Router>
 
 
