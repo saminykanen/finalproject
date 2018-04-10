@@ -1,7 +1,16 @@
 .navbar {
-    background-color: #f6f6f6;
+    background-color: white;
+    color: black;
     border-radius: 0;
     border: #222222;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+.navbar-brand>img {
+    padding: 7px 14px;
 }
 
 
