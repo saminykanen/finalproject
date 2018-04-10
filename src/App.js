@@ -57,7 +57,12 @@ class App extends Component {
                 return response.json();
             })
             .then(function (users) {
-                callback(users);
+
+                var currentUser = app.auth().currentUser;
+                // console.log("currentUser  fetchUserInfoFromMysql" + currentUser);
+                if (currentUser) {
+                    callback(users);
+                }
             })
     };
 
@@ -83,9 +88,12 @@ class App extends Component {
         // LOGIN LISTENER
         this.removeAuthListner = app.auth().onAuthStateChanged((user) => {
 
+            // var currentUser = app.auth().currentUser;
+            // console.log("currentUser " + currentUser);
+
             if (user) {
-                console.log("componentWillMount - USER")
-                console.log("auth tila " + this.state.authenticated.toString())
+                // console.log("componentWillMount - USER")
+                // console.log("auth tila " + this.state.authenticated.toString())
 
                 this.setState({
                     authenticated: true,
@@ -95,8 +103,8 @@ class App extends Component {
                     username: user.displayName,
                     email: user.email
                 });
-                console.log("userState päivitetty");
-                console.log("auth tila " + this.state.authenticated.toString())
+                // console.log("userState päivitetty");
+                // console.log("auth tila " + this.state.authenticated.toString())
 
                 //  KÄYTTÄJÄN SQL KYSELYT ALLE
 
@@ -115,8 +123,8 @@ class App extends Component {
                 //  }
 
             } else {
-                console.log("componentWillMount - ELSE")
-                console.log("auth tila " + this.state.authenticated.toString())
+                // console.log("componentWillMount - ELSE")
+                // console.log("auth tila " + this.state.authenticated.toString())
                 this.setState({
                     authenticated: false,
                     loading: false,
@@ -241,7 +249,7 @@ class App extends Component {
                 {/*<Authentication authenticated={this.state.authenticated}/>*/}
                 {this.state.authenticated === true ? <Navigation/> : null}
                 <Title className="default"/>
-                <Login className="default" authenticated={this.state.authenticated} logout={this.state.logout}/>
+                <Login className="default" authenticated={this.state.authenticated}/>
 
                 {/*DEBUG CONSOLE*/}
                 {/*<div style={style}>{stateValues}</div>*/}

@@ -11,7 +11,7 @@ class Logout extends Component {
 
     componentWillMount() {
         app.auth().signOut()
-            .then((user) => {
+            .then(() => {
                 this.props.history.push("/");
             })
     }
