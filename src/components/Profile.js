@@ -3,14 +3,11 @@ import "./Profile.css";
 
 class Profile extends Component {
 
-    state= {
-
-    }
     render() {
-        return(
+
+        return (
             <div className="default">
-            <h1>Moi</h1>
-                <p>username: {this.state.username}</p>
+                <h3>Profile information</h3>
             </div>
         );
     }
