@@ -3,6 +3,8 @@ import {Toaster, Intent} from '@blueprintjs/core'
 import {app, facebookProvider, googleProvider} from "./base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import Logout from "./Logout";
+import './Login.css';
+import {Grid, Row, Col} from 'react-bootstrap';
 
 
 class Login extends Component {
@@ -20,9 +22,9 @@ class Login extends Component {
     autWithGoogle() {
         app.auth().signInWithPopup(googleProvider)
             .then(function (result) {
-                var token = result.credential.accessToken;
+                // token = result.credential.accessToken;
                 var user = result.user;
-                console.log(user.displayName + " logged in");
+                // console.log(user.displayName + " logged in");
                 this.setState({redirect: true})
             }).catch(function (error) {
             let errorCode = error.code;
@@ -30,13 +32,12 @@ class Login extends Component {
             console.log("Gmail login error " + errorCode + errorMessage)
         });
     }
-
     autWithFacebook() {
         app.auth().signInWithPopup(facebookProvider)
             .then(function (result) {
-                var token = result.credential.accessToken;
+                // var token = result.credential.accessToken;
                 var user = result.user;
-                console.log(user.displayName + " logged in");
+                // console.log(user.displayName + " logged in");
                 this.setState({redirect: true})
             }).catch(function (error) {
             let errorCode = error.code;
@@ -91,83 +92,60 @@ class Login extends Component {
 
 
         return (
-            <div>
+            <div className="loginForm">
                 <Toaster ref={(element) => {
                     this.toaster = element
                 }}/>
-
-                {this.props.authenticated === false ?
-                    <div><p>Kirjaudu sisään sähköpostitilillä tai rekisteröidy</p></div> : false}
-
-                <div>
-                    {this.props.authenticated === false ?
-                        <form onSubmit={(event) => {
-                            this.autWithEmailPassword(event)
-                        }} ref={(form) => {
-                            this.loginForm = form
-                        }}>
-
+                <Grid>
+                    <Row>
+                        <Col>
+                            {this.props.authenticated === false ?
+                                <p>Login with Facebook or Google:</p> : false}
                             <div>
-                                <p> Login or create a new user</p>
+                                {this.props.authenticated === false ?
+                                    <button className="btn btn-info" style={{marginRight: '10px'}} onClick={() => {
+                                        this.autWithFacebook()
+                                    }}>Login with Facebook</button>
+                                    : null}
+                                {this.props.authenticated === false ?
+                                    <button className="btn btn-info" onClick={() => {
+                                        this.autWithGoogle()
+                                    }}>Login with Google
+                                    </button>
+                                    : null}
                             </div>
-
-                            <label>
-                                <input name="email" type="email" ref={(input) => {
-                                    this.emailInput = input
-                                }} placeholder="Email"/>
-                                <input name="password" type="password" ref={(input) => {
-                                    this.passwordInput = input
-                                }} placeholder="password"/>
-
-                                <button value="Login">Login/Register</button>
-                            </label>
-                            <label>
-                                <button value="Reset" onClick={this.handleResetPassword}>Reset password</button>
-                            </label>
-
-                        </form>
-                        :
-                        <Router>
+                            <br/>
                             <div>
-                                <div>
-                                    <Switch>
-                                        <Route exact path="/logout" component={Logout}/>
-                                    </Switch>
-                                </div>
-                                <Link to="/logout">
-                                    <button>Logout</button>
-                                </Link>
+                                {this.props.authenticated === false ?
+                                    <form onSubmit={(event) => {
+                                        this.autWithEmailPassword(event)
+                                    }} ref={(form) => {
+                                        this.loginForm = form
+                                    }}><p>Create new user with email address:</p>
+
+                                        <label>
+                                            <input name="email" type="email" ref={(input) => {
+                                                this.emailInput = input
+                                            }} placeholder="Enter email"/><br/>
+                                            <input name="password" type="password" ref={(input) => {
+                                                this.passwordInput = input
+                                            }} placeholder="Password"/><br/><br/>
+                                            <button className="btn btn-info" value="Login" >Login/Register</button>
+                                        </label>
+                                    </form>
+                                    :
+                                    <Router>
+                                        <div>
+                                            <Switch>
+                                                <Route exact path="/logout" component={Logout}/>
+                                            </Switch>
+                                        </div>
+                                    </Router>
+                                }
                             </div>
-                        </Router>
-                    }
-
-                    {this.props.authenticated === false ?
-                        <div>
-                            <p> Kirjaudu sisään Facebook tai Google-tililläsi</p>
-                        </div> : null}
-
-                    <div>
-                        {this.props.authenticated === false ?
-                            <button onClick={() => {
-                                this.autWithFacebook()
-                            }}>Login with Facebook
-                            </button>
-                            : null}
-                    </div>
-
-                    <div>
-                        {this.props.authenticated === false ?
-                            <div>
-                                <button onClick={() => {
-                                    this.autWithGoogle()
-                                }}>Login with Google
-                                </button>
-
-                            </div>
-                            : null}
-                    </div>
-
-                </div>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         )
     }

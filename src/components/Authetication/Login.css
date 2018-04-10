@@ -1,0 +1,20 @@
+.loginForm {
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loginButton {
+    color: orangered;
+    background: #5ed964;
+}
+
+.show-grid {
+    font-family: Calibri;
+}
+
+.facebook {
+    /*background-image: url('../images/facebook-login.png');*/
+}

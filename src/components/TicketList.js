@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Ticket from "./Ticket";
 import {PanelGroup} from 'react-bootstrap';
 import './TicketList.css'
+import '../App.css';
 
 
 class TicketList extends Component {
@@ -23,7 +24,7 @@ class TicketList extends Component {
         }
 
         return (
-            <div>
+            <div className="default">
                 <h4>Amount of active tickets: <span className="badge">{tickets.length}</span></h4>
                 <div className="wrapper centered style-2" style={{overflow: 'auto', maxHeight: '55%'}}>
                     <PanelGroup accordion>
