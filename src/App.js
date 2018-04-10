@@ -7,7 +7,7 @@ import {fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app, base} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import { Navigation } from './components/Navigation';
+
 
 class App extends Component {
 
@@ -83,8 +83,8 @@ class App extends Component {
                     console.log(users.userRole)
                     console.log(users.courses)
                     this.setState({
-                    userRole: users.userRole,
-                    courses: users.courses
+                        userRole: users.userRole,
+                        courses: users.courses
                     })
                 }.bind(this));
 
@@ -167,15 +167,14 @@ class App extends Component {
         );
 
         return (
-            <div>
-                {/*<Authentication authenticated={this.state.authenticated}/>*/}
-                {this.state.authenticated === true ? <Navigation /> : null }
-                <Title className="default" />
-                <Login className="default" authenticated={this.state.authenticated}/>
+
+            <div className="App">
 
                 {/*DEBUG CONSOLE*/}
                 {/*<div style={style}>{stateValues}</div>*/}
 
+
+                <Login authenticated={this.state.authenticated}/>
 
 
                 <Router>
@@ -184,19 +183,26 @@ class App extends Component {
                     }}/>
                 </Router>
 
-                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
-                    <input type="text" name="kurssiId" placeholder="ID"/>
-                    <button>Find course</button></form> :
-                    <div>
-                {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
+
+                <Title/>
+
+                {this.state.courses.length !== 0 ?
+                    <form onSubmit={this.fetchCourseTickets}>
                         <input type="text" name="kurssiId" placeholder="ID"/>
                         <button>Find course</button>
-                    </form> : null}
-                {this.state.authenticated === true ?
-                    <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
-                {this.state.authenticated === true ?
-
-                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
+                    </form> :
+                    <div>
+                        {this.state.authenticated === true ?
+                            <form onSubmit={this.fetchCourseTickets}>
+                                <input type="text" name="kurssiId" placeholder="ID"/>
+                                <button>Find course</button>
+                            </form> : null}
+                        {this.state.authenticated === true ?
+                            <TicketList reFetchList={this.reFetchList} data={this.state.data}
+                                        username={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
+                        {this.state.authenticated === true ?
+                            <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
+                                      userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}
 
             </div>
