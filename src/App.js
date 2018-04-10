@@ -101,10 +101,20 @@ class App extends Component {
                     email: null
                 })
             }
-
-
         })
     }
+
+    // ALLA OLEVA KURSSILISTA HAKUUN
+
+    // componentDidUpdate (){
+    //     this.fetchUserInfoFromMysql(function (users) {
+    //         this.setState({
+    //             userRole: users.userRole,
+    //             courses: users.courses
+    //         });
+    //         console.log("käyttäjätiedot päivitetty")
+    //     }.bind(this));
+    // };
 
     componentWillUnmounth() {
         this.removeAuthListner(); // logout
