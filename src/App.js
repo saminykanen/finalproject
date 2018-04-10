@@ -161,7 +161,7 @@ class App extends Component {
         }*/
 
     showStuffBasedOnLoginAndCourseStatus(){
-        if (this.state.courses.length === 0){
+        if (this.state.courses.length === 0 && this.state.authenticated === true){
             return(
                 <form className="default" onSubmit={this.fetchCourseTickets}>
                     <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
