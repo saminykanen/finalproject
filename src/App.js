@@ -10,8 +10,28 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Navigation} from './components/Navigation';
 import nocourseimg from './images/nocourseimg.png';
 import Profile from "./components/Profile";
+import Logout from "./components/Authetication/Logout";
 
-class App extends Component {
+const App = appProps => (
+    <Router>
+        <div className="App">
+            <Switch>
+                <Route exact name="index" path="/" component={TicketService}/>
+                <Route exact path="/login" render={(props) => {
+                    return <Login setCurrentUser={this.setCurrentUser} {...props} />
+                }}/>
+                <Route exact path="/profile" component={Profile}/>
+                <Route exact path="/logout" component={Logout}/>
+            </Switch>
+            <hr/>
+        </div>
+    </Router>
+);
+
+
+export default App;
+
+class TicketService extends Component {
 
     state = {
         data: [],
@@ -276,12 +296,12 @@ class App extends Component {
 
                 <Router>
                     <Switch>
-                    <Route exact path="/login" render={(props) => {
-                        return <Login setCurrentUser={this.setCurrentUser} {...props} />
-                    }}/>
-                    <Route exact path="/profile" component={Profile} /*render={ (props) => {
+                        <Route exact path="/login" render={(props) => {
+                            return <Login setCurrentUser={this.setCurrentUser} {...props} />
+                        }}/>
+                        <Route exact path="/profile" component={Profile} /*render={ (props) => {
                         return <Profile setCurrentUser={this.setCurrentUser} {...props}*/ />
-                    }}/>
+                        }}/>
                     </Switch>
                 </Router>
 
@@ -306,7 +326,4 @@ class App extends Component {
         );
     }
 
-
 }
-
-export default App;

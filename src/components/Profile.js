@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { Navigation } from './Navigation';
+import Title from './Title';
 import "./Profile.css";
 
 class Profile extends Component {
@@ -7,6 +9,8 @@ class Profile extends Component {
 
         return (
             <div className="default">
+                <Navigation />
+                <Title />
                 <h3>Profile information</h3>
             </div>
         );
