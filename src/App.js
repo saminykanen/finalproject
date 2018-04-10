@@ -100,19 +100,19 @@ class App extends Component {
 
                 //  KÄYTTÄJÄN SQL KYSELYT ALLE
 
-              //  if (this.state.authenticated.true) {
-                    // luodaan käyttäjä myös MySQL:ään
-                    this.createNewUserToMysql() // palauttaa promisen
-                    // haetaan käyttäjä vasta kun MySQL on luotu
-                        .then(function () {
-                            this.fetchUserInfoFromMysql(function (users) {
-                                this.setState({
-                                    userRole: users.userRole,
-                                    courses: users.courses
-                                })
-                            }.bind(this));
+                //  if (this.state.authenticated.true) {
+                // luodaan käyttäjä myös MySQL:ään
+                this.createNewUserToMysql() // palauttaa promisen
+                // haetaan käyttäjä vasta kun MySQL on luotu
+                    .then(function () {
+                        this.fetchUserInfoFromMysql(function (users) {
+                            this.setState({
+                                userRole: users.userRole,
+                                courses: users.courses
+                            })
                         }.bind(this));
-              //  }
+                    }.bind(this));
+                //  }
 
             } else {
                 console.log("componentWillMount - ELSE")
@@ -183,18 +183,10 @@ class App extends Component {
             return (
                 <div>
                     <form className="default" onSubmit={this.fetchCourseTickets}>
-                        <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
-                        <button>Find course</button>
-                    </form>
-                    <img className="center-block" src={nocourseimg}/>
-                </div>
-            )
-        } else if (this.state.authenticated === true) {
-            return (
-                <div>
-                    <form className="default" onSubmit={this.fetchCourseTickets}>
-                        <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
-                        <button>Find course</button>
+                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
+                               placeholder="Course..."/>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
+                        </button>
                     </form>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}
                                 username={this.state.firebaseUserId} userRole={this.state.userRole}/>
@@ -202,9 +194,20 @@ class App extends Component {
                               userRole={this.state.userRole} username={this.state.username}/>
                 </div>
             )
+        } else if (this.state.authenticated === true) {
+            return (
+                <div>
+                    <form className="default" onSubmit={this.fetchCourseTickets}>
+                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
+                               placeholder="Course..."/>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
+                        </button>
+                    </form>
+                    <img className="center-block img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
+                </div>
+            )
         }
     }
-
 
     render() {
         console.log("App render");
