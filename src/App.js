@@ -7,7 +7,7 @@ import {fetchTickets} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import { Navigation } from './components/Navigation';
+import {Navigation} from './components/Navigation';
 import nocourseimg from './images/nocourseimg.png';
 import Profile from "./components/Profile";
 
@@ -58,16 +58,21 @@ class App extends Component {
                 return response.json();
             })
             .then(function (users) {
-                callback(users);
+
+                var currentUser = app.auth().currentUser;
+                // console.log("currentUser  fetchUserInfoFromMysql" + currentUser);
+                if (currentUser) {
+                    callback(users);
+                }
             })
     };
 
-    updateUserCourses(courseN){
+    updateUserCourses(courseN) {
         console.log("kurssinlisäyskutsu");
         var courseName = courseN;
         var api = '/api/users/addcourse/';
         var userid = this.state.firebaseUserId;
-        fetch(api+userid,{
+        fetch(api + userid, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -84,7 +89,12 @@ class App extends Component {
         // LOGIN LISTENER
         this.removeAuthListner = app.auth().onAuthStateChanged((user) => {
 
+            // var currentUser = app.auth().currentUser;
+            // console.log("currentUser " + currentUser);
+
             if (user) {
+                // console.log("componentWillMount - USER")
+                // console.log("auth tila " + this.state.authenticated.toString())
 
                 this.setState({
                     authenticated: true,
@@ -94,9 +104,12 @@ class App extends Component {
                     username: user.displayName,
                     email: user.email
                 });
-                console.log("userState päivitetty");
+                // console.log("userState päivitetty");
+                // console.log("auth tila " + this.state.authenticated.toString())
+
                 //  KÄYTTÄJÄN SQL KYSELYT ALLE
 
+                //  if (this.state.authenticated.true) {
                 // luodaan käyttäjä myös MySQL:ään
                 this.createNewUserToMysql() // palauttaa promisen
                 // haetaan käyttäjä vasta kun MySQL on luotu
@@ -108,9 +121,11 @@ class App extends Component {
                             })
                         }.bind(this));
                     }.bind(this));
-
+                //  }
 
             } else {
+                // console.log("componentWillMount - ELSE")
+                // console.log("auth tila " + this.state.authenticated.toString())
                 this.setState({
                     authenticated: false,
                     loading: false,
@@ -120,14 +135,26 @@ class App extends Component {
                     email: null
                 })
             }
-
-
         })
     }
+
+    // ALLA OLEVA KURSSILISTA HAKUUN
+
+    // componentDidUpdate (){
+    //     this.fetchUserInfoFromMysql(function (users) {
+    //         this.setState({
+    //             userRole: users.userRole,
+    //             courses: users.courses
+    //         });
+    //         console.log("käyttäjätiedot päivitetty")
+    //     }.bind(this));
+    // };
+
 
     componentWillUnmount() {
         this.removeAuthListner(); // logout
     }
+
 
     fetchTicketsAndUpdate = (courseId) => {
 
@@ -161,6 +188,7 @@ class App extends Component {
             this.fetchCoursesAndUpdate();
         }*/
 
+
     showStuffBasedOnLoginAndCourseStatus(){
 
         if (this.state.courses.length !== 0 && this.state.authenticated === true){
@@ -169,11 +197,15 @@ class App extends Component {
                 <div>
 
                     <form className="default" onSubmit={this.fetchCourseTickets}>
-                        <input className="form-control center-block input-customs" type="text" name="kurssiId" placeholder="Course..."/>
-                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/></button>
+                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
+                               placeholder="Course..."/>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
+                        </button>
                     </form>
-                    <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/>
-                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
+                    <TicketList reFetchList={this.reFetchList} data={this.state.data}
+                                username={this.state.firebaseUserId} userRole={this.state.userRole}/>
+                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
+                              userRole={this.state.userRole} username={this.state.username}/>
                 </div>
             )
         } else if (this.state.authenticated === true && this.state.courses.length === 0) {
@@ -226,13 +258,12 @@ class App extends Component {
         return (
             <div>
                 {/*<Authentication authenticated={this.state.authenticated}/>*/}
-                {this.state.authenticated === true ? <Navigation /> : null }
-                <Title className="default" />
+                {this.state.authenticated === true ? <Navigation/> : null}
+                <Title className="default"/>
                 <Login className="default" authenticated={this.state.authenticated}/>
 
                 {/*DEBUG CONSOLE*/}
                 {/*<div style={style}>{stateValues}</div>*/}
-
 
 
                 <Router>
@@ -247,7 +278,7 @@ class App extends Component {
                 </Router>
 
 
-{/*                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
+                {/*                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
                     <input type="text" name="kurssiId" placeholder="ID"/>
                     <button>Find course</button></form> :
                     <div>
@@ -266,7 +297,6 @@ class App extends Component {
             </div>
         );
     }
-
 
 
 }

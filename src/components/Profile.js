@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import "../App.css";
+import "./Profile.css";
 
 class Profile extends Component {
+
+    state= {
+
+    }
     render() {
         return(
-            <div className="defaul">
+            <div className="default">
             <h1>Moi</h1>
+                <p>username: {this.state.username}</p>
             </div>
         );
     }
