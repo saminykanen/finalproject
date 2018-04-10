@@ -20,12 +20,13 @@ class App extends Component {
         username: null, // firebase
         email: null,// firebase
         courses: [], // mySql käyttäjän kurssilista
-        userRole: null // mySql
+        userRole: null, // mySql
+        courseId: null
     };
 
     componentDidMount() {
         this.fetchTicketsAndUpdate()
-        // this.fetchCoursesAndUpdate()
+        //this.fetchCoursesAndUpdate()
     }
 
     createNewUserToMysql() {
@@ -35,7 +36,8 @@ class App extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(
                 {
-                    firebaseUserId: self.state.firebaseUserId
+                    firebaseUserId: self.state.firebaseUserId,
+                    username: self.state.username
                 })
         })
             .then(function (body) {
@@ -81,7 +83,8 @@ class App extends Component {
                     console.log(users.userRole)
                     console.log(users.courses)
                     this.setState({
-                    userRole: users.userRole
+                    userRole: users.userRole,
+                    courses: users.courses
                     })
                 }.bind(this));
 
@@ -97,14 +100,16 @@ class App extends Component {
             }
 
 
-    })}
+        })
+    }
 
     componentWillUnmounth() {
         this.removeAuthListner(); // logout
     }
 
     fetchTicketsAndUpdate = (courseId) => {
-        if (!courseId) courseId = 1;  // virhekäisttelyn voi heittää tähänkin
+
+        if (!courseId) courseId = 'Java-kurssi';  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
             console.log("Tiketit haettu. " + tickets.length)
             this.setState({data: tickets, courseId: courseId});
@@ -166,7 +171,7 @@ class App extends Component {
             <div className="App">
 
                 {/*DEBUG CONSOLE*/}
-                <div style={style}>{stateValues}</div>
+                {/*<div style={style}>{stateValues}</div>*/}
 
 
                 <Login authenticated={this.state.authenticated}/>
@@ -180,15 +185,21 @@ class App extends Component {
 
 
                 <Title/>
-                {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
-                    <input type="text" name="kurssiId" placeholder="ID"/>
-                    <button>Kirahvi</button>
-                </form> : null}
 
+                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
+                    <input type="text" name="kurssiId" placeholder="ID"/>
+                    <button>Find course</button></form> :
+                    <div>
+                {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
+                        <input type="text" name="kurssiId" placeholder="ID"/>
+                        <button>Find course</button>
+                    </form> : null}
                 {this.state.authenticated === true ?
-                    <TicketList reFetchList={this.reFetchList} data={this.state.data}/> : null}
+                    <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
                 {this.state.authenticated === true ?
-                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}/> : null}
+
+                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
+                    </div>}
 
             </div>
         );

@@ -12,7 +12,7 @@ class TicketList extends Component {
         if (this.props.data.map != null) {
             tickets = this.props.data.map(function (ticket, index) {
                 return (
-                    <Ticket index={index} ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList}/>);
+                    <Ticket index={index} ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList} username={this.props.username} userRole={this.props.userRole}/>);
             }.bind(this));
         } else {
             return (
@@ -25,7 +25,7 @@ class TicketList extends Component {
         return (
             <div>
                 <h4>Amount of active tickets: <span className="badge">{tickets.length}</span></h4>
-                <div className="wrapper centered style-2" style={{overflow: 'auto', maxHeight: '60%'}}>
+                <div className="wrapper centered style-2" style={{overflow: 'auto', maxHeight: '55%'}}>
                     <PanelGroup accordion>
                         {tickets}
                     </PanelGroup>
