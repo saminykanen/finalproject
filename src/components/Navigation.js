@@ -13,7 +13,7 @@ export const Navigation = () => (
         </Navbar.Brand>
     <Navbar.Toggle />
     </Navbar.Header>
-    <Navbar.Collapse >
+    <Navbar.Collapse>
         <Navbar.Text pullRight>
             <Navbar.Link className="glyphicon glyphicon-log-out" href="/logout"> Logout</Navbar.Link>
         </Navbar.Text>
