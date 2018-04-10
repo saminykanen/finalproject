@@ -61,6 +61,24 @@ class App extends Component {
             })
     };
 
+    updateUserCourses(courseN){
+        console.log("kurssinlisäyskutsu");
+        var courseName = courseN;
+        var api = '/api/users/addcourse/';
+        var userid = this.state.firebaseUserId;
+        fetch(api+userid,{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                courseName: courseName
+            })
+        })
+            .then(function () {
+                console.log("lähetetty body " + courseN);
+            }.bind(this));
+    }
+
+
     componentWillMount() {
         // LOGIN LISTENER
         this.removeAuthListner = app.auth().onAuthStateChanged((user) => {
@@ -132,8 +150,9 @@ class App extends Component {
     fetchCourseTickets = (e) => {
         e.preventDefault();
         const id = e.target.elements.kurssiId.value;
-        // this.setState({courseId:id});
+        this.updateUserCourses(id);
         this.fetchTicketsAndUpdate(id); // numeron voi hakea tekstikentästäkin
+
     }
 
     reFetchList = () => {
@@ -150,6 +169,28 @@ class App extends Component {
         reFetchCourses = () => {
             this.fetchCoursesAndUpdate();
         }*/
+
+    showStuffBasedOnLoginAndCourseStatus(){
+        if (this.state.courses.length === 0 && this.state.authenticated === true){
+            return(
+                <form className="default" onSubmit={this.fetchCourseTickets}>
+                    <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
+                    <button>Find course</button>
+                </form>
+            )
+        }else if(this.state.authenticated === true){
+            return(
+                <div>
+                    <form className="default" onSubmit={this.fetchCourseTickets}>
+                        <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
+                        <button>Find course</button>
+                    </form>
+                    <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/>
+                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
+                </div>
+            )
+        }
+    }
 
 
     render() {
@@ -197,27 +238,28 @@ class App extends Component {
                     }}/>
                 </Router>
 
-                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
+
+{/*                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
+                    <input type="text" name="kurssiId" placeholder="ID"/>
+                    <button>Find course</button></form> :
+                    <div>
+                {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
                         <input type="text" name="kurssiId" placeholder="ID"/>
                         <button>Find course</button>
-                    </form> :
-                    <div>
-                        {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
-                            <input type="text" name="kurssiId" placeholder="ID"/>
-                            <button>Find course</button>
-                        </form> : null}
-                        {this.state.authenticated === true ?
-                            <TicketList reFetchList={this.reFetchList} data={this.state.data}
-                                        username={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
-                        {this.state.authenticated === true ?
+                    </form> : null}
+                {this.state.authenticated === true ?
+                    <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/> : null}
+                {this.state.authenticated === true ?
 
-                            <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
-                                      userRole={this.state.userRole} username={this.state.username}/> : null}
-                    </div>}
-
+                    <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
+                    </div>}*/}
+                {this.showStuffBasedOnLoginAndCourseStatus()}
+                {this.state.courses.length}
             </div>
         );
     }
+
+
 
 }
 

@@ -32,7 +32,6 @@ class Login extends Component {
             console.log("Gmail login error " + errorCode + errorMessage)
         });
     }
-
     autWithFacebook() {
         app.auth().signInWithPopup(facebookProvider)
             .then(function (result) {
@@ -97,33 +96,33 @@ class Login extends Component {
                 <Toaster ref={(element) => {
                     this.toaster = element
                 }}/>
-
                 <Grid>
                     <Row>
-                        <Col xs={12} sm={6} md={8}>
+                        <Col>
                             {this.props.authenticated === false ?
-                                <p>Login with Facebook or Google</p> : false}
-                                <div>
-                            {this.props.authenticated === false ?
-                                        <button className="facebook" onClick={() => {
-                                            this.autWithFacebook()
-                                        }}>Facebook</button>
-                                        : null}
+                                <p>Login with Facebook or Google:</p> : false}
+                            <div>
+                                {this.props.authenticated === false ?
+                                    <button className="btn btn-info" style={{marginRight: '10px'}} onClick={() => {
+                                        this.autWithFacebook()
+                                    }}>Login with Facebook</button>
+                                    : null}
                                 {this.props.authenticated === false ?
                                     <button className="btn btn-info" onClick={() => {
                                         this.autWithGoogle()
                                     }}>Login with Google
                                     </button>
                                     : null}
-                                </div>
+                            </div>
+                            <br/>
                             <div>
-                                <p>Create new user with email address</p>
                                 {this.props.authenticated === false ?
                                     <form onSubmit={(event) => {
                                         this.autWithEmailPassword(event)
                                     }} ref={(form) => {
                                         this.loginForm = form
-                                    }}>
+                                    }}><p>Create new user with email address</p>
+
 
                                         <label>
                                             <input name="email" type="email" ref={(input) => {
@@ -131,8 +130,8 @@ class Login extends Component {
                                             }} placeholder="Enter email"/><br/>
                                             <input name="password" type="password" ref={(input) => {
                                                 this.passwordInput = input
-                                            }} placeholder="Password"/><br/>
-                                            <button value="Login">Login/Register</button>
+                                            }} placeholder="Password"/><br/><br/>
+                                            <button className="btn btn-info" value="Login" >Login/Register</button>
                                         </label>
                                     </form>
                                     :
