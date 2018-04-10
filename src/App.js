@@ -7,6 +7,8 @@ import {fetchTickets} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import { Navigation } from './components/Navigation';
+
 
 class App extends Component {
 
@@ -168,14 +170,15 @@ class App extends Component {
         );
 
         return (
-
-            <div className="App">
+            <div>
+                {/*<Authentication authenticated={this.state.authenticated}/>*/}
+                {this.state.authenticated === true ? <Navigation /> : null }
+                <Title className="default" />
+                <Login className="default" authenticated={this.state.authenticated}/>
 
                 {/*DEBUG CONSOLE*/}
-                <div style={style}>{stateValues}</div>
+                {/*<div style={style}>{stateValues}</div>*/}
 
-
-                <Login authenticated={this.state.authenticated}/>
 
 
                 <Router>
@@ -183,9 +186,6 @@ class App extends Component {
                         return <Login setCurrentUser={this.setCurrentUser} {...props} />
                     }}/>
                 </Router>
-
-
-                <Title/>
 
                 {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
                         <input type="text" name="kurssiId" placeholder="ID"/>

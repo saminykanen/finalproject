@@ -3,6 +3,8 @@ import {Toaster, Intent} from '@blueprintjs/core'
 import {app, facebookProvider, googleProvider} from "./base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import Logout from "./Logout";
+import './Login.css';
+import {Grid, Row, Col} from 'react-bootstrap';
 
 
 class Login extends Component {
@@ -91,83 +93,61 @@ class Login extends Component {
 
 
         return (
-            <div>
+            <div className="loginForm">
                 <Toaster ref={(element) => {
                     this.toaster = element
                 }}/>
 
-                {this.props.authenticated === false ?
-                    <div><p>Kirjaudu sisään sähköpostitilillä tai rekisteröidy</p></div> : false}
-
-                <div>
-                    {this.props.authenticated === false ?
-                        <form onSubmit={(event) => {
-                            this.autWithEmailPassword(event)
-                        }} ref={(form) => {
-                            this.loginForm = form
-                        }}>
-
-                            <div>
-                                <p> Login or create a new user</p>
-                            </div>
-
-                            <label>
-                                <input name="email" type="email" ref={(input) => {
-                                    this.emailInput = input
-                                }} placeholder="Email"/>
-                                <input name="password" type="password" ref={(input) => {
-                                    this.passwordInput = input
-                                }} placeholder="password"/>
-
-                                <button value="Login">Login/Register</button>
-                            </label>
-                            <label>
-                                <button value="Reset" onClick={this.handleResetPassword}>Reset password</button>
-                            </label>
-
-                        </form>
-                        :
-                        <Router>
-                            <div>
+                <Grid>
+                    <Row>
+                        <Col xs={12} sm={6} md={8}>
+                            {this.props.authenticated === false ?
+                                <p>Login with Facebook or Google</p> : false}
                                 <div>
-                                    <Switch>
-                                        <Route exact path="/logout" component={Logout}/>
-                                    </Switch>
+                            {this.props.authenticated === false ?
+                                        <button className="facebook" onClick={() => {
+                                            this.autWithFacebook()
+                                        }}>Facebook</button>
+                                        : null}
+                                {this.props.authenticated === false ?
+                                    <button className="btn btn-info" onClick={() => {
+                                        this.autWithGoogle()
+                                    }}>Login with Google
+                                    </button>
+                                    : null}
                                 </div>
-                                <Link to="/logout">
-                                    <button>Logout</button>
-                                </Link>
-                            </div>
-                        </Router>
-                    }
-
-                    {this.props.authenticated === false ?
-                        <div>
-                            <p> Kirjaudu sisään Facebook tai Google-tililläsi</p>
-                        </div> : null}
-
-                    <div>
-                        {this.props.authenticated === false ?
-                            <button onClick={() => {
-                                this.autWithFacebook()
-                            }}>Login with Facebook
-                            </button>
-                            : null}
-                    </div>
-
-                    <div>
-                        {this.props.authenticated === false ?
                             <div>
-                                <button onClick={() => {
-                                    this.autWithGoogle()
-                                }}>Login with Google
-                                </button>
+                                <p>Create new user with email address</p>
+                                {this.props.authenticated === false ?
+                                    <form onSubmit={(event) => {
+                                        this.autWithEmailPassword(event)
+                                    }} ref={(form) => {
+                                        this.loginForm = form
+                                    }}>
 
+                                        <label>
+                                            <input name="email" type="email" ref={(input) => {
+                                                this.emailInput = input
+                                            }} placeholder="Enter email"/><br/>
+                                            <input name="password" type="password" ref={(input) => {
+                                                this.passwordInput = input
+                                            }} placeholder="Password"/><br/>
+                                            <button value="Login">Login/Register</button>
+                                        </label>
+                                    </form>
+                                    :
+                                    <Router>
+                                        <div>
+                                            <Switch>
+                                                <Route exact path="/logout" component={Logout}/>
+                                            </Switch>
+                                        </div>
+                                    </Router>
+                                }
                             </div>
-                            : null}
-                    </div>
-
-                </div>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         )
     }

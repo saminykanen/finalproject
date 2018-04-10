@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Panel} from 'react-bootstrap';
 import './Ticket.css';
 import expandbutton from '../images/expandbutton.png';
+import expandbutton_vertical from '../images/expandbutton_vertical.png';
 
 
 class Ticket extends Component {
@@ -47,13 +48,16 @@ class Ticket extends Component {
                 <Panel style={{marginBottom: '10px'}} eventKey={this.props.index + 1 + ''} defaultcollapsed="true"
                        className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success" : "panel-warning"}>
                     <Panel.Heading>
+
                         <Panel.Title toggle className="text-left">
-                            <div>
-                                <span><b>{this.props.ticket.ticketTitle}</b></span>
-                                <span>{this.props.ticket.user.username}</span>
-                                <span style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
-                                <img src={expandbutton} width="45" height="12" className="center-block"
-                                     alt="expandticket"/>
+                            <div className="row">
+                                <div><span className="col-lg-10"><b>{this.props.ticket.ticketTitle}</b></span></div>
+                                <div><span className="col-lg-2" style={{float: 'right'}}><i><small>{this.props.ticket.user.username}</small></i></span></div>
+                            </div>
+                            <div className="row">
+                                <div><span className="col-lg-2"></span></div>
+                                <div><span className="col-lg-8"><img src={expandbutton} width="45" height="12" className="center-block" alt="expandticket"/></span></div>
+                                <div><span className="col-lg-2" style={{float: 'right'}}><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span></div>
                             </div>
                         </Panel.Title>
                     </Panel.Heading>
@@ -63,6 +67,7 @@ class Ticket extends Component {
                             <div className="row">
                                 <span className="col-lg-1"><b>Location:</b></span><span
                                 className="col-lg-11">{this.props.ticket.location}</span>
+
                             </div>
                             {/*<div className="row">*/}
                             {/*<span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>*/}
