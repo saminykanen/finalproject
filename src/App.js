@@ -8,7 +8,7 @@ import Login from "./components/Authetication/Login";
 import {app} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import { Navigation } from './components/Navigation';
-
+import nocourseimg from './images/nocourseimg.png';
 
 class App extends Component {
 
@@ -173,10 +173,13 @@ class App extends Component {
     showStuffBasedOnLoginAndCourseStatus(){
         if (this.state.courses.length === 0 && this.state.authenticated === true){
             return(
+                <div>
                 <form className="default" onSubmit={this.fetchCourseTickets}>
                     <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
                     <button>Find course</button>
                 </form>
+                    <img className="center-block" src={nocourseimg}/>
+                </div>
             )
         }else if(this.state.authenticated === true){
             return(
@@ -254,7 +257,6 @@ class App extends Component {
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}*/}
                 {this.showStuffBasedOnLoginAndCourseStatus()}
-                {this.state.courses.length}
             </div>
         );
     }
