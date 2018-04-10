@@ -187,12 +187,12 @@ class App extends Component {
                     }}/>
                 </Router>
 
-                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
+                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets} className="default">
                         <input type="text" name="kurssiId" placeholder="ID"/>
                         <button>Find course</button>
                     </form> :
                     <div>
-                        {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets}>
+                        {this.state.authenticated === true ? <form onSubmit={this.fetchCourseTickets} className="default">
                             <input type="text" name="kurssiId" placeholder="ID"/>
                             <button>Find course</button>
                         </form> : null}
