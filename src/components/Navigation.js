@@ -15,6 +15,9 @@ export const Navigation = () => (
     <Navbar.Text pullRight>
         <Navbar.Link className="glyphicon glyphicon-user" href="#"> Profile</Navbar.Link>
     </Navbar.Text>
+        <Navbar.Form pullLeft>
+        </Navbar.Form>
+
     </Navbar.Collapse>
 </Navbar>
 );

@@ -1,5 +1,9 @@
 .loginForm {
     text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .loginButton {
@@ -12,5 +16,5 @@
 }
 
 .facebook {
-    background: ('../images/facebook-login.png');
+    /*background-image: url('../images/facebook-login.png');*/
 }
