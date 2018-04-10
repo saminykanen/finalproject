@@ -164,22 +164,25 @@ class App extends Component {
         if (this.state.courses.length === 0 && this.state.authenticated === true){
             return(
                 <div>
-                <form className="default" onSubmit={this.fetchCourseTickets}>
-                    <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
-                    <button>Find course</button>
-                </form>
-                    <img className="img img-responsive center-block" src={nocourseimg}/>
-                </div>
-            )
-        }else if(this.state.authenticated === true){
-            return(
-                <div>
+
                     <form className="default" onSubmit={this.fetchCourseTickets}>
-                        <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
-                        <button>Find course</button>
+                        <input className="form-control center-block input-customs" type="text" name="kurssiId" placeholder="Course..."/>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/></button>
                     </form>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data} username={this.state.firebaseUserId} userRole={this.state.userRole}/>
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
+                </div>
+            )
+        } else if (this.state.authenticated === true) {
+            return (
+                <div>
+                    <form className="default" onSubmit={this.fetchCourseTickets}>
+                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
+                               placeholder="Course..."/>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
+                        </button>
+                    </form>
+                    <img className="center-block img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
                 </div>
             )
         }else{
@@ -188,14 +191,6 @@ class App extends Component {
             )
         }
     }
-
-/*    showMyTicketEvenIfTicketDataIsEmpty(){
-        if (this.state.authenticated === true && this.state.data == null){
-            return(
-            <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
-            )}
-    }*/
-
 
     render() {
         console.log("App render");

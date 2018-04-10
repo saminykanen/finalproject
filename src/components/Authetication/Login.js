@@ -125,12 +125,12 @@ class Login extends Component {
 
 
                                         <label>
-                                            <input name="email" type="email" ref={(input) => {
+                                            <input className="form-control center-block" name="email" type="email" ref={(input) => {
                                                 this.emailInput = input
-                                            }} placeholder="Enter email"/><br/>
-                                            <input name="password" type="password" ref={(input) => {
+                                            }} placeholder="Enter email"/>
+                                            <input className="form-control center-block " name="password" type="password" ref={(input) => {
                                                 this.passwordInput = input
-                                            }} placeholder="Password"/><br/><br/>
+                                            }} placeholder="Password"/><br/>
                                             <button className="btn btn-info" value="Login" >Login/Register</button>
                                         </label>
                                     </form>
