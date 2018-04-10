@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Toaster, Intent} from '@blueprintjs/core'
 import {app, facebookProvider, googleProvider} from "./base";
-import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import Logout from "./Logout";
 import './Login.css';
 import {Grid, Row, Col} from 'react-bootstrap';
@@ -13,6 +13,7 @@ class Login extends Component {
         super(props);
         this.autWithFacebook = this.autWithFacebook.bind(this);
         this.autWithEmailPassword = this.autWithEmailPassword.bind(this);
+        this.handleResetPassword = this.handleResetPassword.bind(this);
         this.state = {
             redirect: false
         }
@@ -20,24 +21,30 @@ class Login extends Component {
 
     autWithGoogle() {
         app.auth().signInWithPopup(googleProvider)
-            .then((result, error) => {
-                if (error) {
-                    this.toaster.show({intent: Intent.DANGER, message: "Unable to sign in with Google"})
-                } else {
-                    this.setState({redirect: true})
-                }
-            })
+            .then(function (result) {
+                var token = result.credential.accessToken;
+                var user = result.user;
+                console.log(user.displayName + " logged in");
+                this.setState({redirect: true})
+            }).catch(function (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            console.log("Gmail login error " + errorCode + errorMessage)
+        });
     }
 
     autWithFacebook() {
         app.auth().signInWithPopup(facebookProvider)
-            .then((result, error) => {
-                if (error) {
-                    this.toaster.show({intent: Intent.DANGER, message: "Unable to sign in with Facebook"})
-                } else {
-                    this.setState({redirect: true})
-                }
-            })
+            .then(function (result) {
+                var token = result.credential.accessToken;
+                var user = result.user;
+                console.log(user.displayName + " logged in");
+                this.setState({redirect: true})
+            }).catch(function (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            console.log("Facebook login error " + errorCode + errorMessage)
+        });
     }
 
     autWithEmailPassword(event) {
@@ -52,9 +59,8 @@ class Login extends Component {
                     // jos, niin ei tiliä, niin luodaan
                     return app.auth().createUserWithEmailAndPassword(email, password)
                 } else if (providers.indexOf("password") === -1) {
-                    // user Facebook
+                    console.log("Email login error - email in use wiht Facebook or Gmail" )
                     this.loginForm.reset();
-                    this.toaster.show({intent: Intent.WARNING, message: "Try an alternative login."})
                 } else {
                     // sign user in
                     return app.auth().signInWithEmailAndPassword(email, password)
@@ -71,14 +77,20 @@ class Login extends Component {
             })
     }
 
+    handleResetPassword() {
+        console.log('resetting password')
+
+        let auth = app.auth();
+        auth.sendPasswordResetEmail(this.emailInput.value).then(function () {
+            console.log('email sent?');
+            // Email sent.
+        }).catch(function (error) {
+            // An error happened.
+        });
+    }
 
     render() {
 
-        if (this.state.redirect === true) {
-            <Router>
-                return <Redirect to=''/>
-            </Router>
-        }
 
         return (
             <div className="loginForm">
@@ -136,52 +148,6 @@ class Login extends Component {
                         </Col>
                     </Row>
                 </Grid>
-
-                {/*<div>
-                    {this.props.authenticated === false ?
-                        <button onClick={() => {
-                            this.autWithFacebook()
-                        }}>Login with Facebook
-                        </button>
-                        : null}
-                </div>
-
-                <div>
-                    {this.props.authenticated === false ?
-                        <button onClick={() => {
-                            this.autWithGoogle()
-                        }}>Login with Google
-                        </button>
-                        : null}
-                </div>*/}
-                {/*<div>
-                                    {this.props.authenticated === false ?
-                                        <form onSubmit={(event) => {
-                                            this.autWithEmailPassword(event)
-                                        }} ref={(form) => {
-                                            this.loginForm = form
-                                        }}>
-
-                                            <label>
-                                <input name="email" type="email" ref={(input) => {
-                                    this.emailInput = input
-                                }} placeholder="Enter email"/><br/>
-                                <input name="password" type="password" ref={(input) => {
-                                    this.passwordInput = input
-                                }} placeholder="Password"/><br/>
-                                <button value="Login">Login/Register</button>
-                            </label>
-                        </form>
-                        :
-                        <Router>
-                            <div>
-                                <Switch>
-                                    <Route exact path="/logout" component={Logout}/>
-                                </Switch>
-                            </div>
-                        </Router>
-                    }
-                </div>*/}
             </div>
         )
     }

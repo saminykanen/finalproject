@@ -32,6 +32,7 @@ class TicketForm extends Component {
     handleSubmitting(e) {
         e.preventDefault();
         console.log("firebaseID " + this.props.firebaseUserId);
+        console.log("courseName" +  this.state.courseName);
         const self = this;
         fetch('/api/tickets/createticket/', {
             method: 'POST',
@@ -44,7 +45,8 @@ class TicketForm extends Component {
                         location: self.state.location
                     },
                     user: {
-                        firebaseUserId: this.props.firebaseUserId
+                        firebaseUserId: this.props.firebaseUserId,
+                        userName: this.props.username
                     },
                     course: {
                         courseName: this.state.courseName
