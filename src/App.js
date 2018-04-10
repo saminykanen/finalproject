@@ -71,7 +71,7 @@ class App extends Component {
         var courseName = courseN;
         var api = '/api/users/addcourse/';
         var userid = this.state.firebaseUserId;
-        fetch(api + userid, {
+        return fetch(api + userid, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -166,7 +166,15 @@ class App extends Component {
     fetchCourseTickets = (e) => {
         e.preventDefault();
         const id = e.target.elements.kurssiId.value;
-        this.updateUserCourses(id);
+        this.updateUserCourses(id)
+            .then(function () {
+                this.fetchUserInfoFromMysql(function (users) {
+                    this.setState({
+                        userRole: users.userRole,
+                        courses: users.courses
+                    })
+                }.bind(this));
+            }.bind(this));
         this.fetchTicketsAndUpdate(id); // numeron voi hakea tekstikentästäkin
 
     }
@@ -187,9 +195,9 @@ class App extends Component {
         }*/
 
 
-    showStuffBasedOnLoginAndCourseStatus(){
-        if (this.state.courses.length !== 0 && this.state.authenticated === true){
-            return(
+    showStuffBasedOnLoginAndCourseStatus() {
+        if (this.state.courses.length !== 0 && this.state.authenticated === true) {
+            return (
                 <div>
 
                     <form className="default" onSubmit={this.fetchCourseTickets}>
@@ -216,11 +224,12 @@ class App extends Component {
                     <img className="center-block img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
                 </div>
             )
-        }/*else{
-            return(
-                <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
-            )
-        }*/
+        }
+        /*else{
+                    return(
+                        <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
+                    )
+                }*/
     }
 
     render() {
