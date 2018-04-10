@@ -158,7 +158,7 @@ class App extends Component {
 
         if (!courseId) courseId = 'Java-kurssi';  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
-            console.log("Tiketit haettu. " + tickets.length)
+            // console.log("Tiketit haettu. " + tickets.length)
             this.setState({data: tickets, courseId: courseId});
         }.bind(this), courseId);
     }
@@ -186,10 +186,12 @@ class App extends Component {
             this.fetchCoursesAndUpdate();
         }*/
 
-    showStuffBasedOnLoginAndCourseStatus() {
-        if (this.state.courses.length === 0 && this.state.authenticated === true) {
-            return (
+
+    showStuffBasedOnLoginAndCourseStatus(){
+        if (this.state.courses.length !== 0 && this.state.authenticated === true){
+            return(
                 <div>
+
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                         <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                placeholder="Course..."/>
@@ -202,7 +204,7 @@ class App extends Component {
                               userRole={this.state.userRole} username={this.state.username}/>
                 </div>
             )
-        } else if (this.state.authenticated === true) {
+        } else if (this.state.authenticated === true && this.state.courses.length === 0) {
             return (
                 <div>
                     <form className="default" onSubmit={this.fetchCourseTickets}>
@@ -214,7 +216,11 @@ class App extends Component {
                     <img className="center-block img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
                 </div>
             )
-        }
+        }/*else{
+            return(
+                <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/>
+            )
+        }*/
     }
 
     render() {
@@ -277,6 +283,7 @@ class App extends Component {
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}*/}
                 {this.showStuffBasedOnLoginAndCourseStatus()}
+                {/*{this.showMyTicketEvenIfTicketDataIsEmpty()}*/}
             </div>
         );
     }
