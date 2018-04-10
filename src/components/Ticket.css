@@ -9,3 +9,20 @@
 .expandbutton {
     display: inline;
 }
+
+.normal {
+    margin-bottom: 10px;
+    width: 80%;
+}
+
+@media only screen and (min-width: 767px) and (max-width: 1200px) {
+    .smaller2 {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+    .smaller2 {
+        width: 100%;
+    }
+}

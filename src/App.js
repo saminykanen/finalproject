@@ -7,6 +7,7 @@ import {fetchTickets, fetchUserInfoFromMysql} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app, base} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {Navigation} from './components/Navigation';
 
 
 class App extends Component {
@@ -168,14 +169,13 @@ class App extends Component {
 
         return (
 
-            <div className="App">
+            <div>
+                {this.state.authenticated === true ? <Navigation /> : null}
+                <Title className="default" />
+                <Login className="default" authenticated={this.state.authenticated}/>
 
                 {/*DEBUG CONSOLE*/}
                 {/*<div style={style}>{stateValues}</div>*/}
-
-
-                <Login authenticated={this.state.authenticated}/>
-
 
                 <Router>
                     <Route exact path="/login" render={(props) => {
@@ -183,17 +183,14 @@ class App extends Component {
                     }}/>
                 </Router>
 
-
-                <Title/>
-
                 {this.state.courses.length !== 0 ?
-                    <form onSubmit={this.fetchCourseTickets}>
+                    <form onSubmit={this.fetchCourseTickets} className="default">
                         <input type="text" name="kurssiId" placeholder="ID"/>
                         <button>Find course</button>
                     </form> :
                     <div>
                         {this.state.authenticated === true ?
-                            <form onSubmit={this.fetchCourseTickets}>
+                            <form onSubmit={this.fetchCourseTickets}  className="default">
                                 <input type="text" name="kurssiId" placeholder="ID"/>
                                 <button>Find course</button>
                             </form> : null}
