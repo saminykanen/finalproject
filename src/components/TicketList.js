@@ -26,11 +26,11 @@ class TicketList extends Component {
         return (
             <div className="default">
                 <h4>Amount of active tickets: <span className="badge">{tickets.length}</span></h4>
-                <div className="wrapper centered style-2" style={{overflow: 'auto', maxHeight: '55%'}}>
+               {/* {this.props.data.map != null ? */}<div className="wrapper centered style-2" style={{overflow: 'auto', maxHeight: '55%'}}>
                     <PanelGroup accordion>
                         {tickets}
                     </PanelGroup>
-                </div>
+                </div>{/* : null}*/}
             </div>
         )
     }

@@ -168,10 +168,10 @@ class App extends Component {
                     <input type="text" name="kurssiId" placeholder="Kurssitunnus"/>
                     <button>Find course</button>
                 </form>
-                    <img className="center-block" src={nocourseimg}/>
+                    <img className="img img-responsive center-block" src={nocourseimg}/>
                 </div>
             )
-        }else if(this.state.authenticated === true){
+        }else if(this.state.authenticated === true && this.state.data !== nu){
             return(
                 <div>
                     <form className="default" onSubmit={this.fetchCourseTickets}>

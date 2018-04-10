@@ -1,19 +1,21 @@
-function fetchTickets(callback, courseId){
+function fetchTickets(callback, courseId) {
     var api = 'api/tickets/course/';
     var cId = courseId ? courseId : 'Java-kurssi';
-    fetch(api+cId)
-        .then(function(response) {
-          return response.json();})
-        .then(function(tickets) {
+    fetch(api + cId)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (tickets) {
             callback(tickets)
         });
 }
 
-function fetchCourses(callback){
+function fetchCourses(callback) {
     fetch('api/courses')
-        .then(function(response) {
-            return response.json();})
-        .then(function(courses) {
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (courses) {
             callback(courses)
         });
 }
