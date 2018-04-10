@@ -121,7 +121,8 @@ class Login extends Component {
                                         this.autWithEmailPassword(event)
                                     }} ref={(form) => {
                                         this.loginForm = form
-                                    }}><p>Create new user with email address:</p>
+                                    }}><p>Create new user with email address</p>
+
 
                                         <label>
                                             <input name="email" type="email" ref={(input) => {
