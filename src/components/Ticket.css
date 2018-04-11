@@ -48,3 +48,13 @@
         display: none;
     }
 }
+
+.ticketpanel{
+    background: url("../images/ticketpanelpng.png") no-repeat;
+    background-size: cover;
+}
+
+.ticketpanelActive{
+    background: url("../images/ticketpanelActive.png") no-repeat;
+    background-size: cover;
+}
