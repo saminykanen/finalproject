@@ -14,7 +14,7 @@ class Profile extends Component {
         console.log(this.props.authenticated);
 
         return (
-            <div className="default">
+            <div className="default" style={{marginTop: '40px'}}>
                 <Navigation/>
                 <Title/>
                 <h3>Profile information</h3>
