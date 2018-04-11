@@ -1,5 +1,4 @@
 {
-  //"proxy": "http://localhost:8080/",
   "proxy": "http://ticketservicerest.eu-west-3.elasticbeanstalk.com",
   "name": "tiketti",
   "version": "0.1.0",
@@ -12,6 +11,7 @@
     "react": "^16.3.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.0",
+    "react-loading-animation": "^1.4.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.2",
     "styled-bootstrap-grid": "^1.0.3-2"
