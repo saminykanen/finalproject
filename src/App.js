@@ -44,6 +44,7 @@ class TicketService extends Component {
         courses: [], // mySql käyttäjän kurssilista
         userRole: null, // mySql
         courseId: null
+
     };
 
     componentDidMount() {
@@ -215,7 +216,6 @@ class TicketService extends Component {
             this.fetchCoursesAndUpdate();
         }*/
 
-
     showStuffBasedOnLoginAndCourseStatus() {
         if (this.state.courses.length !== 0 && this.state.authenticated === true) {
             return (
@@ -320,6 +320,7 @@ class TicketService extends Component {
 
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}*/}
+
                 {this.showStuffBasedOnLoginAndCourseStatus()}
                 {/*{this.showMyTicketEvenIfTicketDataIsEmpty()}*/}
             </div>
