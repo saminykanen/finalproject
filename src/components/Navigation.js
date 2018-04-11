@@ -4,8 +4,6 @@ import { Navbar } from 'react-bootstrap';
 import academy_logo from '../images/academy_logo.png';
 import academylogo from '../images/academylogo.png';
 
-
-
 export const Navigation = () => (
 
 <Navbar className="navbar">
