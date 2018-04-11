@@ -14,6 +14,7 @@ class Login extends Component {
         this.autWithFacebook = this.autWithFacebook.bind(this);
         this.autWithEmailPassword = this.autWithEmailPassword.bind(this);
         this.handleResetPassword = this.handleResetPassword.bind(this);
+        this.createNewUserToVerify = this.createNewUserToVerify.bind(this);
         this.state = {
             redirect: false
         }
@@ -46,7 +47,73 @@ class Login extends Component {
         });
     }
 
+    async createNewUserToVerify(email, password, loginForm) {
+        await app.auth().createUserWithEmailAndPassword(email, password);
+        await app.auth().signInWithEmailAndPassword(email, password);
+
+        var user = app.auth().currentUser;
+
+        user.sendEmailVerification().then(function () {
+            // Email sent.
+            app.auth().signOut();
+
+        }).catch(function (error) {
+            // An error happened.
+        });
+
+        console.log("Testi", loginForm);
+        if (loginForm)
+            loginForm.reset();
+    }
+
+    async checkingIfEmailIsVerified(email, password, loginForm) {
+        await app.auth().signInWithEmailAndPassword(email, password)
+        var user = app.auth().currentUser;
+
+        if (user.emailVerified == true) {
+            return;
+        } else {
+            app.auth().signOut();
+            if (loginForm) {
+                loginForm.reset();
+            }
+        }
+    }
+
     autWithEmailPassword(event) {
+        event.preventDefault();
+
+        const email = this.emailInput.value;
+        const password = this.passwordInput.value;
+
+
+        app.auth().fetchProvidersForEmail(email)
+            .then((providers) => {
+                if (providers.length === 0) {
+                    // jos, niin ei tiliä, niin luodaan
+
+                    this.createNewUserToVerify(email, password, this.loginForm);
+                } else if (providers.indexOf("password") === -1) {
+                    console.log("Email login error - email in use with Facebook or Gmail")
+                    this.loginForm.reset();
+                } else {
+                    // sign user in
+
+                    this.checkingIfEmailIsVerified(email, password, this.loginForm)
+                }
+            })
+            .then((user) => {
+                if (user && user.email) {
+                    this.loginForm.reset();
+                    this.setState({redirect: true})
+                }
+            })
+            .catch((error) => {
+                this.toaster.show({intent: Intent.DANGER, message: error.message})
+            })
+    }
+
+    /*autWithEmailPassword(event) {
         event.preventDefault();
 
         const email = this.emailInput.value;
@@ -74,7 +141,7 @@ class Login extends Component {
             .catch((error) => {
                 this.toaster.show({intent: Intent.DANGER, message: error.message})
             })
-    }
+    }*/
 
     handleResetPassword() {
         console.log('resetting password')
@@ -133,7 +200,9 @@ class Login extends Component {
                                             <input className="form-control center-block " name="password" type="password" ref={(input) => {
                                                 this.passwordInput = input
                                             }} placeholder="Password"/><br/>
-                                            <button className="btn btn-info" value="Login" >Login/Register</button>
+                                            <button className="btn btn-info" style={{marginRight: '10px'}} value="Login" >Login/Register</button>
+
+                                            <button className="btn btn-info" value="Reset" onClick={this.handleResetPassword}>Reset password</button>
                                         </label>
                                     </form>
                                     :
