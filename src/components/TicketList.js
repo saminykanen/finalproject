@@ -27,7 +27,7 @@ class TicketList extends Component {
         return (
             <div className="default">
                 <h4>Amount of active tickets: <span className="badge">{tickets.length}</span></h4>
-                <div className="wrapper centered style-2 smaller2" style={{overflow: 'auto', maxHeight: '55%'}}>
+                <div className="wrapper centered style-2 smaller2 scroller">
                     <PanelGroup accordion>
                         {tickets}
                     </PanelGroup>
