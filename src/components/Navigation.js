@@ -6,7 +6,7 @@ import academylogo from '../images/academylogo.png';
 
 export const Navigation = () => (
 
-<Navbar className="navbar">
+<Navbar fixedTop className="navbar">
     <Navbar.Header>
         <Navbar.Link href="/" ><img className="logo" src={academylogo}/>
         </Navbar.Link>

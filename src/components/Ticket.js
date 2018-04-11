@@ -7,15 +7,7 @@ import expandbutton from '../images/expandbutton.png';
 class Ticket extends Component {
 
     showDeleteButton(userInfo) {
-        if (userInfo === 'teacher') {
-            return (
-                <span>
-                    <button className="btn btn-danger btn-md" style={{marginRight: '10px'}}
-                            onClick={this.handleChangeToPassive.bind(this)}>DELETE
-                    </button>
-                </span>
-            )
-        }else if(userInfo === this.props.ticket.user.firebaseUserId){
+        if (userInfo === 'teacher' || userInfo === this.props.ticket.user.firebaseUserId) {
             return (
                 <span>
                     <button className="btn btn-danger btn-md" style={{marginRight: '10px'}}
@@ -56,7 +48,6 @@ class Ticket extends Component {
                                 <div><span className="col-lg-3 col-md-3 col-sm-3 col-xs-3"></span></div>
                                 <div><span className="col-lg-6 col-md-6 col-sm-6 col-xs-6"><img src={expandbutton} width="22.5" height="6" className="center-block hideWhenSmallest" alt="expandticket"/></span></div>
                                 <div><span className="col-lg-3 col-md-3 col-sm-3 col-xs-3 rightFloat"><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span></div>
-                                <div><span className="col-xs-12 leftFloat"><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span></div>
                             </div>
                         </Panel.Title>
                     </Panel.Heading>
@@ -68,15 +59,16 @@ class Ticket extends Component {
                                 className="col-lg-10 col-md-10 col-sm-10 col-xs-8 leftFloat">{this.props.ticket.user.username}</span>
                             </div>
                             <div className="row">
-                                <span className="col-lg-2 col-md-2 col-sm-2 col-xs-4"><b>Location:</b></span><span
-                                className="col-lg-10 col-md-10 col-sm-10 col-xs-8">{this.props.ticket.location}</span>
+                                <span className="col-lg-2 col-md-2 col-sm-2 col-xs-4 leftFloat"><b>Time:</b></span><span
+                                className="col-lg-10 col-md-10 col-sm-10 col-xs-8 leftFloat"><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
                             </div>
-                            {/*<div className="row">*/}
-                            {/*<span className="col-md-1"><b>Date&Time:</b></span><span className="col-md-11">{this.props.ticket.timestamp}</span>*/}
-                            {/*</div>*/}
                             <div className="row">
                                 <span className="col-lg-2 col-md-2 col-sm-2 col-xs-4"><b>Description:</b></span><span
                                 className="col-lg-10 col-md-10 col-sm-10 col-xs-8">{this.props.ticket.ticketDescription}</span>
+                            </div>
+                            <div className="row">
+                                <span className="col-lg-2 col-md-2 col-sm-2 col-xs-4"><b>Location:</b></span><span
+                                className="col-lg-10 col-md-10 col-sm-10 col-xs-8">{this.props.ticket.location}</span>
                             </div>
                             <br/>
                             <div>
@@ -107,7 +99,7 @@ class Ticket extends Component {
             method: 'PUT'
         })
             .then(function () {
-                this.props.reFetchList();
+                this.props.reFetchList(this.props.courseId);
             }.bind(this));
     }
 

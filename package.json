@@ -1,5 +1,6 @@
 {
   "proxy": "http://localhost:8080/",
+  //"proxy": "http://ticketservicerest.eu-west-3.elasticbeanstalk.com",
   "name": "tiketti",
   "version": "0.1.0",
   "private": true,
