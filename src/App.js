@@ -248,10 +248,10 @@ class TicketService extends Component {
 
                 <div>
                     <form className="default" onSubmit={this.fetchCourseTickets}>
-                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
-                               placeholder="Course..."/>
-                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
-                        </button>
+                            <input className="form-control center-block input-customs" type="text" name="kurssiId"
+                                   placeholder="Course..."/>
+                            <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
+                            </button>
                     </form>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}
                                 username={this.state.firebaseUserId} userRole={this.state.userRole} courseId={this.state.courseId}/>

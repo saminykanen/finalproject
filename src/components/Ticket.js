@@ -37,7 +37,7 @@ class Ticket extends Component {
         return (
             <div className="container">
                 <Panel style={{marginBottom: '10px'}} eventKey={this.props.index + 1 + ''} defaultcollapsed="true"
-                       className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success center-block smaller2 normal" : "panel-warning center-block smaller2 normal"}>
+                       className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success center-block" : "panel-warning center-block"}>
                     <Panel.Heading>
                         <Panel.Title toggle className="text-left">
                             <div className="row">
