@@ -9,3 +9,43 @@
 .expandbutton {
     display: inline;
 }
+
+.normal {
+    width: 80%;
+}
+
+@media only screen and (min-width: 1201px) {
+    .rightFloat {
+        float: right;
+    }
+    .leftFloat {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+    .smaller2 {
+        width: 100%;
+    }
+    .rightFloat {
+        float: right;
+    }
+    .leftFloat {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+    .smaller2 {
+        width: 100%;
+    }
+    .hideWhenSmallest {
+        display: none;
+    }
+    .leftFloat {
+        float: left;
+    }
+    .rightFloat {
+        display: none;
+    }
+}

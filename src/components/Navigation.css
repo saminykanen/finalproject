@@ -1,0 +1,22 @@
+.navbar {
+    background-color: white;
+    color: black;
+    border-radius: 0;
+    border: #222222;
+}
+
+.a {
+    display: flex;
+    align-items: center;
+}
+.navbar-brand>img {
+    padding: 7px 14px;
+}
+
+.logo {
+    padding: 7px 14px;
+    float: left;
+    max-width: 120px;
+    margin-top: 7px;
+
+}

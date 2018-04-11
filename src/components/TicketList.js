@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 import Ticket from "./Ticket";
 import {PanelGroup} from 'react-bootstrap';
 import './TicketList.css'
+import '../App.css';
+import notickets from '../images/notickets.png';
 
 
 class TicketList extends Component {
 
     render() {
         var tickets = '';
-        console.log("TicketList render" + this.props.data.length);
-        if (this.props.data.map != null) {
+        // console.log("TicketList render" + this.props.data.length);
+        if (this.props.data != null) {
             tickets = this.props.data.map(function (ticket, index) {
                 return (
                     <Ticket index={index} ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList} username={this.props.username} userRole={this.props.userRole}/>);
@@ -17,15 +19,15 @@ class TicketList extends Component {
         } else {
             return (
                 <div className="container">
-                    <h4 className="blockquote">Could not load tickets.</h4>
+                    <img className="img img-responsive center-block" src={notickets}/>
                 </div>
             );
         }
 
         return (
-            <div>
+            <div className="default">
                 <h4>Amount of active tickets: <span className="badge">{tickets.length}</span></h4>
-                <div className="wrapper centered style-2" style={{overflow: 'auto', maxHeight: '55%'}}>
+                <div className="wrapper centered style-2 smaller2" style={{overflow: 'auto', maxHeight: '55%'}}>
                     <PanelGroup accordion>
                         {tickets}
                     </PanelGroup>

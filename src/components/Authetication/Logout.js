@@ -6,15 +6,14 @@ class Logout extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-        }
+        this.state = {}
     }
 
     componentWillMount() {
         app.auth().signOut()
-            .then((user) => {
-            this.props.history.push("/");
-        })
+            .then(() => {
+                this.props.history.push("/");
+            })
     }
 
     render() {
