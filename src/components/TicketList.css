@@ -5,20 +5,6 @@
 @media only screen and (min-width: 768px) {
     .centered {
         position: fixed;
-        top: 55%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .scroller {
-        overflow: auto;
-        max-height: 60%;
-    }
-}
-
-@media only screen and (min-width: 0px) and (max-width: 767px) {
-    .centered {
-        position: fixed;
         top: 60%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -29,11 +15,53 @@
         max-height: 60%;
     }
 }
+
+@media only screen and (min-width: 586px) and (max-width: 767px) {
+    .centered {
+        position: fixed;
+        top: 57.5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .scroller {
+        overflow: auto;
+        max-height: 60%;
+    }
+}
+
+@media only screen and (min-width: 363px) and (max-width: 585px) {
+    .centered {
+        position: fixed;
+        top: 62.5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .scroller {
+        overflow: auto;
+        max-height: 57.5%;
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 362px) {
+    .centered {
+        position: fixed;
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .scroller {
+        overflow: auto;
+        max-height: 50%;
+    }
+}
 /*iPhone Plus*/
 @media only screen and (width: 414px) and (height: 736px) {
     .centered {
         position: fixed;
-        top: 65%;
+        top: 67%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
@@ -47,6 +75,20 @@
 @media only screen and (width: 375px) and (height: 667px) {
     .centered {
         position: fixed;
+        top: 69%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .scroller {
+        overflow: auto;
+        max-height: 40%;
+    }
+}
+/*iPhone X*/
+@media only screen and (width: 375px) and (height: 812px) {
+    .centered {
+        position: fixed;
         top: 65%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -54,21 +96,7 @@
 
     .scroller {
         overflow: auto;
-        max-height: 45%;
-    }
-}
-/*iPhone X*/
-@media only screen and (width: 375px) and (height: 812px) {
-    .centered {
-        position: fixed;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .scroller {
-        overflow: auto;
-        max-height: 45%;
+        max-height: 50%;
     }
 }
 

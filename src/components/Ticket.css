@@ -10,9 +10,9 @@
     display: inline;
 }
 
-@media only screen and (min-width: 1201px) {
+@media only screen and (min-width: 1200px) {
     .normal {
-        width: 80%;
+        width: 100%;
     }
     .rightFloat {
         float: right;
@@ -22,7 +22,7 @@
     }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1200px) {
+@media only screen and (min-width: 630px) and (max-width: 1199px) {
     .smaller2 {
         width: 100%;
     }
@@ -34,7 +34,7 @@
     }
 }
 
-@media only screen and (min-width: 0px) and (max-width: 767px) {
+@media only screen and (min-width: 0px) and (max-width: 629px) {
     .smaller2 {
         width: 100%;
     }
