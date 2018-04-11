@@ -16,54 +16,62 @@ class Profile extends Component {
 
     state = {
         kurssilista: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"],
-        countryData: [
-            {courseId: 1, courseName: "Java-kurssi"},
-            {courseId: 2, courseName: "React-kurssi"}
-        ],
-        userlist: [
-            {
-                firebaseUserId: "uediACnXUXezVoHjJIrpzqXoQfU2",
-                userRole: "teacher",
-                username: "admin",
-                courses: [
-                    {
-                        courseId: 1,
-                        courseName: "Java-kurssi"
-                    },
-                    {
-                        courseId: 2,
-                        courseName: "React-kurssi"
-                    }
-                ]
-            },
-            {
-                firebaseUserId: "s6cq6NBFojdUnQWL44sqL9709c02",
-                userRole: "student",
-                username: "Tommi",
-                courses: []
-            },
-            {
-                firebaseUserId: "GGWiEnFIRqTRwQngxESZouEnlX23",
-                userRole: "student",
-                username: "Veli-Pekka Nurmi",
-                courses: [
-                    {
-                        courseId: 1,
-                        courseName: "Java-kurssi"
-                    }
-                ]
-            }
-        ]
+        userlist: []
+        //     {
+        //         firebaseUserId: "uediACnXUXezVoHjJIrpzqXoQfU2",
+        //         userRole: "teacher",
+        //         username: "admin",
+        //         courses: [
+        //             {
+        //                 courseId: 1,
+        //                 courseName: "Java-kurssi"
+        //             },
+        //             {
+        //                 courseId: 2,
+        //                 courseName: "React-kurssi"
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         firebaseUserId: "s6cq6NBFojdUnQWL44sqL9709c02",
+        //         userRole: "student",
+        //         username: "Tommi",
+        //         courses: []
+        //     },
+        //     {
+        //         firebaseUserId: "GGWiEnFIRqTRwQngxESZouEnlX23",
+        //         userRole: "student",
+        //         username: "Veli-Pekka Nurmi",
+        //         courses: [
+        //             {
+        //                 courseId: 1,
+        //                 courseName: "Java-kurssi"
+        //             }
+        //         ]
+        //     }
+        // ]
     };
 
 
-    // Ei vielä toteutettu deletoimista databasesta
-    deleteCourse = (e) => {
-        // e = kurssin nimi
-        //var ind = this.state.kurssilista.findIndex((i) => i.id === e);
-        //this.state.kurssilista.splice(ind, 1); // poista sanonta
-        console.log(e);
-        //this.setState(this.state);
+    deleteCourse = (courseName) => {
+        // e.preventDefault(); // tarvitaanko
+        //const courseName = e.target.elements.newCourseName.value;
+        console.log(courseName)
+
+        var userId = app.auth().currentUser.uid;
+        var api = '/api/users/removecourse/';
+
+        console.log(userId)
+
+
+        fetch(api + userId, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    courseName: courseName
+                })
+        });
     };
 
     deleteAccount = (e) => {
@@ -86,7 +94,6 @@ class Profile extends Component {
 
         // logOut käyttäjä
         this.props.history.push("/");
-
     };
 
     deleteUserFromMysql(userId) {
@@ -133,8 +140,7 @@ class Profile extends Component {
 
     };
 
-
-    getUserNamesFromSQL() {
+    getUserNamesFromSQL = (callback) => {
         // get all users from MySQL
         var api = '/api/users/';
         return fetch(api, {
@@ -143,12 +149,11 @@ class Profile extends Component {
             .then(function (response) {
                 return response.json();
             })
-            .then(function (allUsers) {
-                this.setState(
-                    {userlist: allUsers}
-                )
+            .then(function (response) {
+                callback(response)
             })
-    }
+    };
+
 
     toggleUserRights = (e) => {
         // anna REST:in kautta käyttäjälle admin oikeudet TAI muuta takaisin studentiksi
@@ -163,17 +168,35 @@ class Profile extends Component {
         var api = '/api/users/togglerole/';
         return fetch(api + userid, {
             method: 'PUT'
-        }).then(console.log("User rights updated"))
-            .then(this.forceUpdate())
+        }).then(
+            this.forceUpdate()
+            //console.log("User rights updated")
+        )
     };
 
+    componentWillMount() {
+        // ADMIN
+        console.log("componentWillMount");
+        // hakee käyttäjät jotta niiden oikeuksia voidaan muokata
+        this.getUserNamesFromSQL(function (allUsers) {
+            this.setState(
+                {userlist: allUsers}
+            );
+            console.log("käyttäjät haettu");
+        }.bind(this))
+    }
+
+    componentWillUpdate() {
+        console.log("componentWillUpdate");
+    }
 
     render() {
+        console.log("render");
 
         // USER
 
         // tekee listan käyttäjän omista kursseista
-        var deleteCourse = this.deleteCourse;
+        var deleteCourse = this.deleteCourse; // muuttuja
         var courseList = this.state.kurssilista.map(
             function (course, index) {
                 return (
@@ -277,6 +300,7 @@ class Course extends Component {
     removeCourse = (e) => {
         e.preventDefault(); // tarvitaanko
         this.props.deleteCourse(this.props.coursename);
+
     };
 
     render() {
