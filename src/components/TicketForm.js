@@ -64,7 +64,7 @@ class TicketForm extends Component {
     render() {
         return (
             <div className="formi">
-                <h1>Add new ticket</h1>
+                <h1 style={{fontFamily: 'Pacifico, cursive'}}>Add new ticket</h1>
                 <form onSubmit={this.handleSubmitting}>
                     <div className="form-group">
                         <input name="ticketTitle"

@@ -8,7 +8,7 @@
     cursor: pointer;
 }
 
-@media only screen and (min-width: 0px) and (max-width: 750px) {
+@media only screen and (min-width: 0px) and (max-width: 629px) {
     .button1 {
         border-radius: 20px;
         width: 45px;
@@ -20,10 +20,10 @@
     }
 }
 
-@media only screen and (min-width: 751px) {
+@media only screen and (min-width: 630px) {
     .button1 {
         border-radius: 15px;
-        padding: 10px;
+        padding: 10px 0px 10px 0px;
         margin: 4px 2px;
     }
 
