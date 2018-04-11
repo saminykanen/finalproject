@@ -58,12 +58,43 @@ class Profile extends Component {
         });
     }
 
-    // ADMIN TOIMINNOT
+    // ADMIN TOIMINNOT *******************
 
-    createANewCourse = () => {
+    createANewCourse = (e) => {
+        e.preventDefault();
+        const newCourseName = e.target.elements.newCourseName.value;
+
         // luo kurssi MySQLään
+        var api = '/api/courses/createcourse/';
+        fetch(api, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    courseName: newCourseName
+                }
+            )
+        });
+        console.log("kurssi luotu")
+
+
+
         // lisää kurssi omaan listaan
+        var userid = app.auth().currentUser.uid;
+        //var userid = user.uid;
+
+        var api = '/api/users/addcourse/';
+        return fetch(api + userid, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                courseName: newCourseName
+            })
+        })
+        console.log("kurssi lisätty omaan listaan")
+
     };
+
 
     toggleUserRights = () => {
         // anna REST:in kautta käyttäjälle admin oikeudet TAI muuta takaisin studentiksi
@@ -115,8 +146,8 @@ class Profile extends Component {
                 </div>
                 <div>
                     <h4>Create a new course</h4>
-                    <form className="default">
-                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
+                    <form className="default" onSubmit={this.createANewCourse}>
+                        <input className="form-control center-block input-customs" type="text" name="newCourseName"
                                placeholder="Name of new course..."/>
                         <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Create course
                         </button>
