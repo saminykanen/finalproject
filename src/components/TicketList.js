@@ -14,7 +14,7 @@ class TicketList extends Component {
         if (this.props.data != null) {
             tickets = this.props.data.map(function (ticket, index) {
                 return (
-                    <Ticket index={index} ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList} username={this.props.username} userRole={this.props.userRole}/>);
+                    <Ticket index={index} ticket={ticket} key={ticket.ticketId} reFetchList={this.props.reFetchList} username={this.props.username} userRole={this.props.userRole} courseId={this.props.courseId}/>);
             }.bind(this));
         } else {
             return (

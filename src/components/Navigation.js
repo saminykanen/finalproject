@@ -16,10 +16,10 @@ export const Navigation = () => (
     </Navbar.Header>
     <Navbar.Collapse>
         <Navbar.Text pullRight>
-            <Navbar.Link className="glyphicon glyphicon-user not-transparent" href="/profile"> Profile</Navbar.Link>
+            <Navbar.Link className="glyphicon glyphicon-user" href="/profile"> Profile</Navbar.Link>
         </Navbar.Text>
         <Navbar.Text pullRight>
-            <Navbar.Link className="glyphicon glyphicon-log-out not-transparent" href="/logout"> Logout</Navbar.Link>
+            <Navbar.Link className="glyphicon glyphicon-log-out" href="/logout"> Logout</Navbar.Link>
         </Navbar.Text>
     </Navbar.Collapse>
 </Navbar>

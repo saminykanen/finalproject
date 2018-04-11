@@ -100,7 +100,8 @@ class Login extends Component {
                     <Row>
                         <Col>
                             {this.props.authenticated === false ?
-                                <p>Login with Facebook or Google:</p> : false}
+                                <h3>Login with Facebook or Google:</h3> : false}
+                                <br/>
                             <div>
                                 {this.props.authenticated === false ?
                                     <button className="btn btn-info" style={{marginRight: '10px'}} onClick={() => {
@@ -121,7 +122,7 @@ class Login extends Component {
                                         this.autWithEmailPassword(event)
                                     }} ref={(form) => {
                                         this.loginForm = form
-                                    }}><p>Create new user with email address</p>
+                                    }}><h3>Create new user with email address</h3><br/>
 
 
                                         <label>

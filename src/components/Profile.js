@@ -27,7 +27,7 @@ class Profile extends Component {
 
 
         return (
-            <div className="default">
+            <div className="default" style={{marginTop: '40px'}}>
                 <Navigation/>
                 <Title/>
                 <div>
