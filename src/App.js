@@ -229,7 +229,7 @@ class TicketService extends Component {
                         </button>
                     </form>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}
-                                username={this.state.firebaseUserId} userRole={this.state.userRole}/>
+                                username={this.state.firebaseUserId} userRole={this.state.userRole} courseId={this.state.courseId}/>
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
                               userRole={this.state.userRole} username={this.state.username}
                               courseId={this.state.courseId}/>

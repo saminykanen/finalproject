@@ -7,15 +7,7 @@ import expandbutton from '../images/expandbutton.png';
 class Ticket extends Component {
 
     showDeleteButton(userInfo) {
-        if (userInfo === 'teacher') {
-            return (
-                <span>
-                    <button className="btn btn-danger btn-md" style={{marginRight: '10px'}}
-                            onClick={this.handleChangeToPassive.bind(this)}>DELETE
-                    </button>
-                </span>
-            )
-        }else if(userInfo === this.props.ticket.user.firebaseUserId){
+        if (userInfo === 'teacher' || userInfo === this.props.ticket.user.firebaseUserId) {
             return (
                 <span>
                     <button className="btn btn-danger btn-md" style={{marginRight: '10px'}}
@@ -110,7 +102,7 @@ class Ticket extends Component {
             method: 'PUT'
         })
             .then(function () {
-                this.props.reFetchList();
+                this.props.reFetchList(this.props.courseId);
             }.bind(this));
     }
 
