@@ -19,7 +19,7 @@ const App = appProps => (
             <Switch>
                 <Route exact name="index" path="/" component={TicketService}/>
                 <Route exact path="/login" render={(props) => {
-                    return <Login setCurrentUser={this.setCurrentUser} {...props} />
+                    return <Login {...props} />
                 }}/>
                 <Route exact path="/profile" component={Profile}/>
                 <Route exact path="/logout" component={Logout}/>
