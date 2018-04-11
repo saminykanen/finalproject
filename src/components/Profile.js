@@ -3,6 +3,7 @@ import {Navigation} from './Navigation';
 import Title from './Title';
 import "./Profile.css";
 import {app} from "../components/Authetication/base";
+import {DropdownButton} from 'react-bootstrap';
 
 class Profile extends Component {
 
@@ -14,8 +15,47 @@ class Profile extends Component {
     //Opettajalle lisäominaisuus: lisää uusia oppilaita opettajiksi
 
     state = {
-        kurssilista: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"]
+        kurssilista: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"],
+        countryData: [
+            {courseId: 1, courseName: "Java-kurssi"},
+            {courseId: 2, courseName: "React-kurssi"}
+        ],
+        userlist: [
+            {
+                firebaseUserId: "uediACnXUXezVoHjJIrpzqXoQfU2",
+                userRole: "teacher",
+                username: "admin",
+                courses: [
+                    {
+                        courseId: 1,
+                        courseName: "Java-kurssi"
+                    },
+                    {
+                        courseId: 2,
+                        courseName: "React-kurssi"
+                    }
+                ]
+            },
+            {
+                firebaseUserId: "s6cq6NBFojdUnQWL44sqL9709c02",
+                userRole: "student",
+                username: "Tommi",
+                courses: []
+            },
+            {
+                firebaseUserId: "GGWiEnFIRqTRwQngxESZouEnlX23",
+                userRole: "student",
+                username: "Veli-Pekka Nurmi",
+                courses: [
+                    {
+                        courseId: 1,
+                        courseName: "Java-kurssi"
+                    }
+                ]
+            }
+        ]
     };
+
 
     // Ei vielä toteutettu deletoimista databasesta
     deleteCourse = (e) => {
@@ -77,8 +117,6 @@ class Profile extends Component {
         });
         console.log("kurssi luotu")
 
-
-
         // lisää kurssi omaan listaan
         var userid = app.auth().currentUser.uid;
         //var userid = user.uid;
@@ -96,8 +134,37 @@ class Profile extends Component {
     };
 
 
-    toggleUserRights = () => {
+    getUserNamesFromSQL() {
+        // get all users from MySQL
+        var api = '/api/users/';
+        return fetch(api, {
+            method: 'GET'
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (allUsers) {
+                this.setState(
+                    {userlist: allUsers}
+                )
+            })
+    }
+
+    toggleUserRights = (e) => {
         // anna REST:in kautta käyttäjälle admin oikeudet TAI muuta takaisin studentiksi
+
+        e.preventDefault();
+        const userToBeModified = e.target.elements.selectedUser.value;
+        console.log(userToBeModified);
+
+        var userid = userToBeModified
+        //var userid = user.uid;
+
+        var api = '/api/users/togglerole/';
+        return fetch(api + userid, {
+            method: 'PUT'
+        }).then(console.log("User rights updated"))
+            .then(this.forceUpdate())
     };
 
 
@@ -155,18 +222,49 @@ class Profile extends Component {
                 </div>
 
                 <div>
-                    <h4>Give user teacher rights</h4>
-                    <form className="default">
-                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
-                               placeholder="find user my email etc."/>
-                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/> Search
+                    <h4>Give teacher rights to student</h4>
+                    <form className="default" onSubmit={this.toggleUserRights}>
+                        {/*<p>Select course</p>*/}
+                        {/*<select name="courseDropdown">*/}
+                        {/*{this.state.countryData.map((e, key) => {*/}
+                        {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                        {/*})}*/}
+                        {/*</select>*/}
+                        <select name="selectedUser">
+                            {this.state.userlist.map((e, key) => {
+                                if (e.userRole == "student") {
+                                    return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                }
+                            })}
+                        </select>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Give teacher
+                            rights
                         </button>
                     </form>
-                </div>
+                    <h4>Give student rights to teacher</h4>
+                    <form className="default" onSubmit={this.toggleUserRights}>
+                        {/*<p>Select course</p>*/}
+                        {/*<select name="courseDropdown">*/}
+                        {/*{this.state.countryData.map((e, key) => {*/}
+                        {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                        {/*})}*/}
+                        {/*</select>*/}
+                        <select name="selectedUser">
+                            {this.state.userlist.map((e, key) => {
+                                if (e.userRole == "teacher") {
+                                    return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                }
+                            })}
+                        </select>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Give student
+                            rights
+                        </button>
+                    </form>
 
+                </div>
             </div>
         );
-        /*}*/
+
     }
 
 }
@@ -184,7 +282,7 @@ class Course extends Component {
     render() {
         return (
             <div>
-                <p>{this.props.coursename} <br/>
+                <p>{this.props.coursename}
                     <button className="btn btn-info btn-customs" onClick={this.removeCourse}><i
                         className="glyphicon glyphicon"/> Remove
                     </button>
