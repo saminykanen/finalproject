@@ -3,6 +3,8 @@ import './Navigation.css';
 import { Navbar } from 'react-bootstrap';
 import academy_logo from '../images/academy_logo.png';
 import academylogo from '../images/academylogo.png';
+import {app} from "./Authetication/base";
+
 
 export const Navigation = () => (
 
@@ -14,10 +16,10 @@ export const Navigation = () => (
     </Navbar.Header>
     <Navbar.Collapse>
         <Navbar.Text pullRight>
-            <Navbar.Link className="glyphicon glyphicon-user" href="/profile"> Profile</Navbar.Link>
+            <Navbar.Link className="glyphicon glyphicon-log-out" href="/logout"> Logout</Navbar.Link>
         </Navbar.Text>
         <Navbar.Text pullRight>
-            <Navbar.Link className="glyphicon glyphicon-log-out" href="/logout"> Logout</Navbar.Link>
+            <Navbar.Link className="glyphicon glyphicon-user" href="/profile"> Profile </Navbar.Link>
         </Navbar.Text>
     </Navbar.Collapse>
 </Navbar>
