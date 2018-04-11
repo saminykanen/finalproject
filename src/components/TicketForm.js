@@ -11,8 +11,8 @@ class TicketForm extends Component {
             userName: '',
             ticketStatus: 'queue',
             timestamp: '',
-            courseName: "Java-kurssi", // pitää muokata dymaamiseksi,
-            courseId: '',
+            courseName: '', // pitää muokata dymaamiseksi,
+            // courseId: '',
             location: ''
 
         }
@@ -32,7 +32,7 @@ class TicketForm extends Component {
     handleSubmitting(e) {
         e.preventDefault();
         console.log("firebaseID " + this.props.firebaseUserId);
-        console.log("courseName" +  this.state.courseName);
+        console.log("courseName" +  this.props.courseId);
         const self = this;
         fetch('/api/tickets/createticket/', {
             method: 'POST',
@@ -49,14 +49,14 @@ class TicketForm extends Component {
                         userName: this.props.username
                     },
                     course: {
-                        courseName: this.state.courseName
+                        courseName: this.props.courseId
                     }
                 })
         })
             .then(function () {
                 this.props.onClose();
                 this.setState({ticketTitle: '', ticketDescription: '', location: ''});
-                this.props.reFetchList();
+                this.props.reFetchList(this.props.courseId);
             }.bind(this));
 
     }

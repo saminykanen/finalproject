@@ -32,7 +32,7 @@ class MyTicket extends Component {
             <div className="container">
                 {this.showAddNewTicket(this.props.userRole)}
                 <Modal show={this.state.isOpen}>
-                    <TicketForm reFetchList={this.props.reFetchList} onClose={this.toggleModal} firebaseUserId={this.props.firebaseUserId} username={this.props.username} />
+                    <TicketForm reFetchList={this.props.reFetchList} onClose={this.toggleModal} firebaseUserId={this.props.firebaseUserId} username={this.props.username} courseId={this.props.courseId}/>
                 </Modal>
             </div>
         );
