@@ -15,7 +15,8 @@ class Profile extends Component {
     //Opettajalle lisäominaisuus: lisää uusia oppilaita opettajiksi
 
     state = {
-        kurssilista: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"],
+        user: null,
+        courses: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"],
         userlist: []
         //     {
         //         firebaseUserId: "uediACnXUXezVoHjJIrpzqXoQfU2",
@@ -51,6 +52,25 @@ class Profile extends Component {
         //     }
         // ]
     };
+
+    //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
+    getUserCoursesFromSQL = (callback) => {
+        // get all users fcourses from MYSQL
+        var userid = this.state.user.currentUser.uid;
+
+        var api = '/api/users/';
+        return fetch(api + userid, {
+            method: 'GET'
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (response) {
+                callback(response)
+            })
+    };
+
+    //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
 
 
     deleteCourse = (courseName) => {
@@ -184,6 +204,24 @@ class Profile extends Component {
             );
             console.log("käyttäjät haettu");
         }.bind(this))
+
+        //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
+
+        // this.setState({
+        //     user: app.auth().currentUser.uid
+        // });
+
+        /*
+        this.getUserCoursesFromSQL(function (courses) {
+            this.setState(
+                {courses: courses}
+            );
+            console.log("käyttähän kurssit haettu");
+        }.bind(this))
+        */
+
+        //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
+
     }
 
     componentWillUpdate() {
@@ -197,7 +235,7 @@ class Profile extends Component {
 
         // tekee listan käyttäjän omista kursseista
         var deleteCourse = this.deleteCourse; // muuttuja
-        var courseList = this.state.kurssilista.map(
+        var courseList = this.state.courses.map(
             function (course, index) {
                 return (
                     <Course coursename={course} key={index} deleteCourse={deleteCourse}/>
@@ -289,6 +327,7 @@ class Profile extends Component {
         );
 
     }
+
 
 }
 
