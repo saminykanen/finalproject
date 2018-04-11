@@ -245,7 +245,7 @@ class TicketService extends Component {
                         <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
                         </button>
                     </form>
-                    <img className="center-block img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
+                    <img className="centered img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
                 </div>
             )
         }
