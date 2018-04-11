@@ -8,22 +8,38 @@ class Profile extends Component {
 
     state = {
         kurssilista: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"]
-    }
 
+    };
+
+    // Ei vielä toteutettu deletoimista databasesta
     deleteCourse = (e) => {
-        var ind = this.state.kurssilista.findIndex((i) => i.id === e);
-        this.state.kurssilista.splice(ind, 1); // poista sanonta
-        this.setState(this.state);
-    }
+        // e = kurssin nimi
+        //var ind = this.state.kurssilista.findIndex((i) => i.id === e);
+        //this.state.kurssilista.splice(ind, 1); // poista sanonta
+        console.log(e);
+        //this.setState(this.state);
+    };
+
+    deleteAccount = () => {
+        // poista firebasesta
+        // poista MySQL:stä
+    };
+
 
     render() {
 
-        /*var currentUser = app.auth().currentUser;
-        console.log("currentUser " + currentUser);*/
+        // USER
 
-        var courseList = this.state.kurssilista.map(function (course, index) {
-            return (<Course coursename={course} key={index}/>);
-        })
+        // tekee listan käyttäjän omista kursseista
+        var deleteCourse = this.deleteCourse;
+        var courseList = this.state.kurssilista.map(
+            function (course, index) {
+                return (
+                    <Course coursename={course} key={index} deleteCourse={deleteCourse}/>
+                );
+            });
+
+        // ADMIN
 
 
         return (
@@ -37,11 +53,10 @@ class Profile extends Component {
                 </div>
                 <div>
                     <h4>Your courses</h4>
-
                     <div>
                         {courseList}
                     </div>
-                    
+
                 </div>
                 <div>
                     <h4>Delete your account</h4>
@@ -86,15 +101,17 @@ export default Profile;
 class Course extends Component {
 
     removeCourse = (e) => {
-        //  e.preventDefault();
-        this.props.removeCourseFromList(this.props.coursename);
+        e.preventDefault(); // tarvitaanko
+        this.props.deleteCourse(this.props.coursename);
     };
 
     render() {
         return (
             <div>
                 <p>{this.props.coursename} <br/>
-                    <button className="btn btn-info btn-customs" onClick={this.removeCourse} ><i className="glyphicon glyphicon" /> Remove</button>
+                    <button className="btn btn-info btn-customs" onClick={this.removeCourse}><i
+                        className="glyphicon glyphicon"/> Remove
+                    </button>
                 </p>
             </div>
         )
