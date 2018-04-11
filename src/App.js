@@ -47,8 +47,7 @@ class TicketService extends Component {
     };
 
     componentDidMount() {
-        this.fetchTicketsAndUpdate()
-        //this.fetchCoursesAndUpdate()
+            this.fetchTicketsAndUpdate();
     }
 
     createNewUserToMysql() {
@@ -178,7 +177,7 @@ class TicketService extends Component {
 
     fetchTicketsAndUpdate = (courseId) => {
 
-        if (!courseId) courseId = 'Java-kurssi';  // virhekäisttelyn voi heittää tähänkin
+        //   if (!courseId) courseId = 'Java-kurssi';  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
             // console.log("Tiketit haettu. " + tickets.length)
             this.setState({data: tickets, courseId: courseId});
@@ -201,8 +200,8 @@ class TicketService extends Component {
 
     }
 
-    reFetchList = () => {
-        this.fetchTicketsAndUpdate();
+    reFetchList = (courseId) => {
+        this.fetchTicketsAndUpdate(courseId);
     }
 
     /*    fetchCoursesAndUpdate = () => {
@@ -232,7 +231,8 @@ class TicketService extends Component {
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}
                                 username={this.state.firebaseUserId} userRole={this.state.userRole}/>
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
-                              userRole={this.state.userRole} username={this.state.username}/>
+                              userRole={this.state.userRole} username={this.state.username}
+                              courseId={this.state.courseId}/>
                 </div>
             )
         } else if (this.state.authenticated === true && this.state.courses.length === 0) {
