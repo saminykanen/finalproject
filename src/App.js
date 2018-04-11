@@ -284,7 +284,7 @@ class TicketService extends Component {
         );
 
         return (
-            <div>
+            <div style={{marginTop: '40px'}}>
                 {/*<Authentication authenticated={this.state.authenticated}/>*/}
                 {this.state.authenticated === true ? <Navigation/> : null}
                 <Title className="default"/>
