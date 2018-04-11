@@ -13,21 +13,47 @@ import Profile from "./components/Profile";
 import Logout from "./components/Authetication/Logout";
 import bgimg from './images/background.jpg';
 
-const App = appProps => (
-    <Router>
-        <div>
-            <Switch>
-                <Route exact name="index" path="/" component={TicketService}/>
-                <Route exact path="/login" render={(props) => {
-                    return <Login {...props} />
-                }}/>
-                <Route exact path="/profile" component={Profile}/>
-                <Route exact path="/logout" component={Logout}/>
-            </Switch>
-        </div>
-    </Router>
-);
+class App extends Component {
 
+    state = {
+        data: [],
+        loading: true, // estää välkkymisen kun sivu latautuu
+        authenticated: false, // kirjautunut tai ei
+        user: null, // firebase object
+        firebaseUserId: '', // firebase
+        username: null, // firebase
+        email: null,// firebase
+        courses: [], // mySql käyttäjän kurssilista
+        userRole: null, // mySql
+        courseId: null
+    };
+
+    render() {
+
+        const MyProfile = (props) => {
+            return (
+                <Profile
+                    userRole = {this.state.userRole}
+                    username = {this.state.username}
+                    {...props}
+                />
+            );
+        }
+
+        return(
+            <Router>
+                <div className="App">
+                    <Switch>
+                        <Route exact name="index" path="/" component={TicketService}/>
+                        <Route exact path="/login" render={(props) => {
+                            return <Login {...props} /> }}/>
+                        <Route exact path="/profile" render={MyProfile} />
+                        <Route exact path="/logout" component={Logout}/>
+                    </Switch>
+                </div>
+            </Router>);
+    }
+}
 
 export default App;
 
@@ -221,7 +247,6 @@ class TicketService extends Component {
             return (
 
                 <div>
-
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                         <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                placeholder="Course..."/>
@@ -261,10 +286,12 @@ class TicketService extends Component {
 
         // jos lataa, niin ei vielä näytä mtn.
         if (this.state.loading === true) {
+            const Loading = require('react-loading-animation');
             return (
                 // Näyttää tämän kunnes sivu on latautunut - näin ei tule välähdyksiä väärästä sisällöstä ennen sisäänkirjautumista
+                //jos virhe latautumisessa, lataa komentoriviltä: npm i react-loading-animation
                 <div>
-                    <p>Loading...</p>
+                    <Loading className="load"/>
                 </div>
             );
         }
@@ -292,18 +319,6 @@ class TicketService extends Component {
 
                 {/*DEBUG CONSOLE*/}
                 {/*<div style={style}>{stateValues}</div>*/}
-
-
-                <Router>
-                    <Switch>
-                        <Route exact path="/login" render={(props) => {
-                            return <Login setCurrentUser={this.setCurrentUser} {...props} />
-                        }}/>
-                        <Route exact path="/profile" component={Profile} /*render={ (props) => {
-                        return <Profile setCurrentUser={this.setCurrentUser} {...props}*/ />
-                        }}/>
-                    </Switch>
-                </Router>
 
 
                 {/*                {this.state.courses.length !== 0 ? <form onSubmit={this.fetchCourseTickets}>
