@@ -15,7 +15,6 @@ class Profile extends Component {
 
     state = {
         kurssilista: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"]
-
     };
 
     // Ei vielä toteutettu deletoimista databasesta
@@ -27,9 +26,47 @@ class Profile extends Component {
         //this.setState(this.state);
     };
 
-    deleteAccount = () => {
+    deleteAccount = (e) => {
+        e.preventDefault(); // tarvitaanko
+
         // poista firebasesta
+        var user = app.auth().currentUser;
+        console.log(user.displayName)
+
+        user.delete().then(function () {
+            console.log("User deletoitu firebasesta");
+        }).catch(function (error) {
+            console.log("Error in deleting user from firebase");
+        });
+
         // poista MySQL:stä
+        var userid = user.uid;
+        console.log(userid);
+        this.deleteUserFromMysql(userid);
+
+        // logOut käyttäjä
+        this.props.history.push("/");
+
+    };
+
+    deleteUserFromMysql(userId) {
+        console.log("Deleteuser function");
+        var userId = userId;
+        var api = '/api/users/deleteuser/';
+        return fetch(api + userId, {
+            method: 'DELETE'
+        });
+    }
+
+    // ADMIN TOIMINNOT
+
+    createANewCourse = () => {
+        // luo kurssi MySQLään
+        // lisää kurssi omaan listaan
+    };
+
+    toggleUserRights = () => {
+        // anna REST:in kautta käyttäjälle admin oikeudet TAI muuta takaisin studentiksi
     };
 
 
@@ -67,7 +104,8 @@ class Profile extends Component {
                 </div>
                 <div>
                     <h4>Delete your account</h4>
-                    <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Remove account
+                    <button className="btn btn-info btn-customs" onClick={this.deleteAccount}><i
+                        className="glyphicon glyphicon"/> Remove account
                     </button>
                 </div>
 
