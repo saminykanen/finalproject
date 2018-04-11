@@ -221,7 +221,6 @@ class TicketService extends Component {
             return (
 
                 <div>
-
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                         <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                placeholder="Course..."/>
