@@ -19,7 +19,7 @@ class TicketList extends Component {
         } else {
             return (
                 <div className="container">
-                    <img className="img img-responsive center-block" src={notickets}/>
+                    <img className="img img-responsive centered" src={notickets}/>
                 </div>
             );
         }
