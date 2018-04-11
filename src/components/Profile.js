@@ -113,7 +113,7 @@ class Profile extends Component {
 
         // luo kurssi MySQLään
         var api = '/api/courses/createcourse/';
-        fetch(api, {
+        return fetch(api, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(
@@ -121,23 +121,23 @@ class Profile extends Component {
                     courseName: newCourseName
                 }
             )
-        });
-        console.log("kurssi luotu")
+        }).then(function () {
+            console.log("kurssi luotu")
 
-        // lisää kurssi omaan listaan
-        var userid = app.auth().currentUser.uid;
-        //var userid = user.uid;
+            // lisää kurssi omaan listaan
+            var userid = app.auth().currentUser.uid;
+            //var userid = user.uid;
 
-        var api = '/api/users/addcourse/';
-        return fetch(api + userid, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                courseName: newCourseName
+            var api = '/api/users/addcourse/';
+            return fetch(api + userid, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    courseName: newCourseName
+                })
             })
+            console.log("kurssi lisätty omaan listaan")
         })
-        console.log("kurssi lisätty omaan listaan")
-
     };
 
     getUserNamesFromSQL = (callback) => {
