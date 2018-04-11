@@ -11,19 +11,19 @@ import {Navigation} from './components/Navigation';
 import nocourseimg from './images/nocourseimg.png';
 import Profile from "./components/Profile";
 import Logout from "./components/Authetication/Logout";
+import bgimg from './images/background.jpg';
 
 const App = appProps => (
     <Router>
-        <div className="App">
+        <div>
             <Switch>
                 <Route exact name="index" path="/" component={TicketService}/>
                 <Route exact path="/login" render={(props) => {
-                    return <Login setCurrentUser={this.setCurrentUser} {...props} />
+                    return <Login {...props} />
                 }}/>
                 <Route exact path="/profile" component={Profile}/>
                 <Route exact path="/logout" component={Logout}/>
             </Switch>
-            <hr/>
         </div>
     </Router>
 );
@@ -221,7 +221,6 @@ class TicketService extends Component {
             return (
 
                 <div>
-
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                         <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                placeholder="Course..."/>
@@ -229,7 +228,7 @@ class TicketService extends Component {
                         </button>
                     </form>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}
-                                username={this.state.firebaseUserId} userRole={this.state.userRole}/>
+                                username={this.state.firebaseUserId} userRole={this.state.userRole} courseId={this.state.courseId}/>
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
                               userRole={this.state.userRole} username={this.state.username}
                               courseId={this.state.courseId}/>
@@ -238,14 +237,14 @@ class TicketService extends Component {
         } else if (this.state.authenticated === true && this.state.courses.length === 0) {
 
             return (
-                <div>
+                <div className="transparent">
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                         <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                placeholder="Course..."/>
                         <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
                         </button>
                     </form>
-                    <img className="center-block img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
+                    <img className="centered img-responsive" style={{padding: '0px'}} src={nocourseimg}/>
                 </div>
             )
         }
@@ -284,7 +283,7 @@ class TicketService extends Component {
         );
 
         return (
-            <div>
+            <div style={{marginTop: '40px'}}>
                 {/*<Authentication authenticated={this.state.authenticated}/>*/}
                 {this.state.authenticated === true ? <Navigation/> : null}
                 <Title className="default"/>

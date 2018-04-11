@@ -6,7 +6,7 @@ class Title extends Component {
         return (
             <div className="container">
                 <div className="default">
-                    <h1>Academy Ticket Service</h1>
+                    <h1 className="titleFont">Academy Ticket Service</h1>
                 </div>
 
             </div>

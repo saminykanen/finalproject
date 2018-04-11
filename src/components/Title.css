@@ -1,5 +1,5 @@
-.jumbotron {
-    /*background-image: url(../images/tickets2.jpg);*/
-    /*background-size: cover;*/
-    /*background-position: center center;*/
+.titleFont {
+    font-family: 'Pacifico', cursive;
+    font-size: 400%;
+    margin-bottom: 30px;
 }
