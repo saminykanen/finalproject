@@ -11,10 +11,11 @@ import {Navigation} from './components/Navigation';
 import nocourseimg from './images/nocourseimg.png';
 import Profile from "./components/Profile";
 import Logout from "./components/Authetication/Logout";
+import bgimg from './images/background.jpg';
 
 const App = appProps => (
     <Router>
-        <div className="App">
+        <div>
             <Switch>
                 <Route exact name="index" path="/" component={TicketService}/>
                 <Route exact path="/login" render={(props) => {
@@ -23,7 +24,6 @@ const App = appProps => (
                 <Route exact path="/profile" component={Profile}/>
                 <Route exact path="/logout" component={Logout}/>
             </Switch>
-            <hr/>
         </div>
     </Router>
 );
@@ -238,7 +238,7 @@ class TicketService extends Component {
         } else if (this.state.authenticated === true && this.state.courses.length === 0) {
 
             return (
-                <div>
+                <div className="transparent">
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                         <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                placeholder="Course..."/>
