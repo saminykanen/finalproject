@@ -114,7 +114,7 @@ class Ticket extends Component {
             method: 'PUT'
         })
             .then(function () {
-                this.props.reFetchList();
+                this.props.reFetchList(this.props.courseId);
             }.bind(this));
     }
 
