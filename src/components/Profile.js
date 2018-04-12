@@ -102,24 +102,33 @@ class Profile extends Component {
                     courseName: newCourseName
                 }
             )
-        }).then(function () {
-            console.log("kurssi luotu")
-            // lisää kurssi omaan listaan
-            var userid = app.auth().currentUser.uid;
-            //var userid = user.uid;
+        }).then(
+            this.addCourseToUsersOwnList(newCourseName)
+        )
 
-            var api = '/api/users/addcourse/';
-            return fetch(api + userid, {
+        // }).then(//function (callback) {
+        //     console.log("JUUKELI EI LAUKEA") ///////////////////// EI TÄLLÄ HETKELLÄ TOIMI
+        //    // callback();}
+        // );
+    };
+
+    addCourseToUsersOwnList = (newCourseName) => {
+        let userid = app.auth().currentUser.uid;
+        let api = '/api/users/addcourse/';
+
+        console.log("kurssi lisätty sun ilstaan");
+        console.log("UID kurssin lisäys" + userid);
+
+        fetch(api + userid, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     courseName: newCourseName
                 })
-            })
-        }).then(function (callback) {
-            console.log("JUUKELI EI LAUKEA"); ///////////////////// EI TÄLLÄ HETKELLÄ TOIMI
-            callback();
-        });
+            }
+        );
+        this.forceThePageRefresh();
+        console.log("JUUKELI")
     };
 
 
