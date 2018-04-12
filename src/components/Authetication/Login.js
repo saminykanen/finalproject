@@ -5,6 +5,8 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Logout from "./Logout";
 import './Login.css';
 import {Grid, Row, Col} from 'react-bootstrap';
+// import {fblogin} from '../../images/FacebookButton.png';
+import '../../bootstrap-social.css';
 
 
 class Login extends Component {
@@ -174,15 +176,14 @@ class Login extends Component {
                                 <br/>
                             <div>
                                 {this.props.authenticated === false ?
-                                    <button className="btn btn-info" style={{marginLeft: '5px', marginTop: '10px', marginRight: '5px'}} onClick={() => {
+                                    <button className="btn btn-social-icon btn-facebook" style={{marginLeft: '5px', marginTop: '10px', marginRight: '5px'}} onClick={() => {
                                         this.autWithFacebook()
-                                    }}>Login with Facebook</button>
+                                    }}></button>
                                     : null}
                                 {this.props.authenticated === false ?
-                                    <button className="btn btn-info" style={{marginLeft: '5px', marginTop: '10px', marginRight: '5px'}} onClick={() => {
+                                    <button className="btn btn-social-icon btn-google " style={{marginLeft: '5px', marginTop: '10px', marginRight: '5px'}} onClick={() => {
                                         this.autWithGoogle()
-                                    }}>Login with Google
-                                    </button>
+                                    }}></button>
                                     : null}
                             </div>
                             <br/>
