@@ -176,14 +176,15 @@ class Login extends Component {
                                 <br/>
                             <div>
                                 {this.props.authenticated === false ?
-                                    <button className="btn btn-social-icon btn-facebook" style={{marginLeft: '5px', marginTop: '10px', marginRight: '5px'}} onClick={() => {
+                                    <a className="btn btn-social btn-facebook" style={{marginLeft: '5px', marginTop: '10px', marginRight: '5px'}} onClick={() => {
                                         this.autWithFacebook()
-                                    }}></button>
+                                    }}><span className="fa fa-facebook"></span> Login with Facebook</a>
                                     : null}
                                 {this.props.authenticated === false ?
-                                    <button className="btn btn-social-icon btn-google " style={{marginLeft: '5px', marginTop: '10px', marginRight: '5px'}} onClick={() => {
+                                    <a className="btn btn-social btn-google " style={{marginLeft: '5px', marginTop: '10px', marginRight: '5px'}} onClick={() => {
                                         this.autWithGoogle()
-                                    }}></button>
+                                    }}><span className="fa fa-google"></span> Login with Google
+                                    </a>
                                     : null}
                             </div>
                             <br/>
