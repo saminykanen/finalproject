@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Navigation} from './Navigation';
+import Navigation from './Navigation';
 import Title from './Title';
 import "./Profile.css";
 import {app} from "../components/Authetication/base";
