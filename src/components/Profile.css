@@ -2,18 +2,33 @@
     margin-top: 40px;
 }
 
+.default2 {
+    margin-right: 10%;
+}
 
-.profile {
-    text-align: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
+@media only screen and (min-width: 587px) {
+    .profile {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 586px) {
+    .profile {
+        position: fixed;
+        top: 57.5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+    }
 }
 
 @media only screen and (min-width: 950px) {
     .profileStyle {
+        text-align: left;
         background-color: rgba(255,255,255, 0.9);
         width: 40%;
         padding-bottom: 20px;
@@ -23,6 +38,7 @@
 
 @media only screen and (min-width: 695px) and (max-width: 949px) {
     .profileStyle {
+        text-align: left;
         background-color: rgba(255,255,255, 0.9);
         width: 60%;
         padding-bottom: 20px;
@@ -32,6 +48,7 @@
 
 @media only screen and (min-width: 0px) and (max-width: 694px) {
     .profileStyle {
+        text-align: left;
         background-color: rgba(255,255,255, 0.9);
         width: 90%;
         padding-bottom: 20px;
@@ -43,7 +60,6 @@
     border: none;
     background: none;
     color: red;
-
 }
 
 .add {
@@ -53,5 +69,18 @@
 }
 
 .stylish {
-    width: 200px;
+    width: 170px;
+}
+
+h2, h3 {
+    margin-left: 25%;
+    text-decoration: underline;
+}
+
+h4 {
+    margin-left: 30%;
+}
+
+.similarToh4 {
+    margin-left: 30%;
 }
