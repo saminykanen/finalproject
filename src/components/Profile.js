@@ -13,7 +13,10 @@ class Profile extends Component {
     //Opettajalle lisäominaisuus: lisää uusia oppilaita opettajiksi
 
     state = {
-        user: null,
+        user: null, // firebaseuser
+        username: null,
+        userRole: null,
+        firebaseUserId: null,
         courses: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"],
         userlist: []
         //     {
@@ -52,10 +55,11 @@ class Profile extends Component {
     };
 
     //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
-    getUserCoursesFromSQL = (callback) => {
+    getUserInfoFromSQL = (callback) => {
         // get all users fcourses from MYSQL
-        var userid = this.state.user.currentUser.uid;
-
+        // var userid = this.state.user.currentUser.uid;
+        var userid = this.state.firebaseUserId;
+        console.log("userid " + this.state.user.currentUser.uid);
         var api = '/api/users/';
         return fetch(api + userid, {
             method: 'GET'
@@ -67,6 +71,7 @@ class Profile extends Component {
                 callback(response)
             })
     };
+
 
     //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
 
@@ -169,6 +174,7 @@ class Profile extends Component {
             .then(function (response) {
                 callback(response)
             })
+        console.log("käyttäjät haettu UUDESTAAN");
     };
 
 
@@ -177,35 +183,59 @@ class Profile extends Component {
 
         e.preventDefault();
         const userToBeModified = e.target.elements.selectedUser.value;
-        console.log(userToBeModified);
+        console.log("tätä käyttäjää muokataan " + userToBeModified);
 
         var userid = userToBeModified
         //var userid = user.uid;
 
         var api = '/api/users/togglerole/';
-        return fetch(api + userid, {
-            method: 'PUT'
-        }).then(
-            // haetaan uudestaan käyttäjät jotta voidaan rakentaa uudestaan drop-downlista
-            this.getUserNamesFromSQL(function (allUsers) {
-                this.setState(
-                    {userlist: allUsers}
-                );
-                console.log("käyttäjät haettu UUDESTAAN", allUsers);
-            }.bind(this))
-        )
+        return fetch(api + userid, {method: 'PUT'})
+            .then(
+                // haetaan uudestaan käyttäjät jotta voidaan rakentaa uudestaan drop-downlista
+                this.getUserNamesFromSQL(function (allUsers) {
+                    this.setState(
+                        {userlist: allUsers}
+                    );
+                }.bind(this))
+            )
     };
 
     componentWillMount() {
+
         // ADMIN
         console.log("componentWillMount");
+
+        // asettaa firebase ID:n
+        app.auth().onAuthStateChanged((user) => {
+            this.setState({
+                firebaseUserId: user.uid,
+                username: user.displayName,
+                user: user
+            });
+            // console.log("user" + user.displayName)
+            // console.log("uid" + user.uid)
+            // console.log("firebaseUserId" + this.state.firebaseUserId)
+        });
+
+
         // hakee käyttäjät jotta niiden oikeuksia voidaan muokata
         this.getUserNamesFromSQL(function (allUsers) {
             this.setState(
                 {userlist: allUsers}
             );
-            console.log("käyttäjät haettu");
+            console.log("käyttäjät haettu TESTII");
+            console.log(allUsers);
         }.bind(this))
+
+        // HAETTAAN KÄYTTÄJÄN PERUSTIEDOT
+        /*
+        this.getUserInfoFromSQL(function (user) {
+            this.setState(
+                {user: user}
+            )
+        }.bind(this))
+        */
+
 
         //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
 
@@ -254,8 +284,8 @@ class Profile extends Component {
                 <Title/>
                 <div>
                     <h3>Profile information</h3>
-                    <p>Username: [Hessu Hopo]</p>
-                    <p>User role: [Teacher / student]</p>
+                    <p>Username: {this.state.username}</p>
+                    <p>User role: [Teacher / student]</p>   
                 </div>
                 <div>
                     <h4>Your courses</h4>
