@@ -6,12 +6,6 @@ import {app} from "../components/Authetication/base";
 
 class Profile extends Component {
 
-    //Tietojen suojaus!! ei näy, jos ei ole kirjautunut sissään!
-    //Tänne tulee profiilin tiedot, käyttäjätunnus ja email
-    //Omat kurssit, rooli -> Selostus, että mitä voi tehdä oppilaana? Saako sellasta infopalkkia esim?
-    //Uuden kurssin lisääminen
-    //Opettajalle lisäominaisuus: lisää uusia oppilaita opettajiksi
-
     state = {
         user: null, // firebaseuser
         username: null,
@@ -19,39 +13,6 @@ class Profile extends Component {
         firebaseUserId: null,
         courses: [],
         userlist: []
-        //     {
-        //         firebaseUserId: "uediACnXUXezVoHjJIrpzqXoQfU2",
-        //         userRole: "teacher",
-        //         username: "admin",
-        //         courses: [
-        //             {
-        //                 courseId: 1,
-        //                 courseName: "Java-kurssi"
-        //             },
-        //             {
-        //                 courseId: 2,
-        //                 courseName: "React-kurssi"
-        //             }
-        //         ]
-        //     },
-        //     {
-        //         firebaseUserId: "s6cq6NBFojdUnQWL44sqL9709c02",
-        //         userRole: "student",
-        //         username: "Tommi",
-        //         courses: []
-        //     },
-        //     {
-        //         firebaseUserId: "GGWiEnFIRqTRwQngxESZouEnlX23",
-        //         userRole: "student",
-        //         username: "Veli-Pekka Nurmi",
-        //         courses: [
-        //             {
-        //                 courseId: 1,
-        //                 courseName: "Java-kurssi"
-        //             }
-        //         ]
-        //     }
-        // ]
     };
 
     //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
@@ -72,10 +33,7 @@ class Profile extends Component {
             })
     };
 
-
     //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
-
-
     deleteCourse = (courseName) => {
         // e.preventDefault(); // tarvitaanko
         //const courseName = e.target.elements.newCourseName.value;
@@ -86,7 +44,6 @@ class Profile extends Component {
 
         console.log(userId)
 
-
         fetch(api + userId, {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json'},
@@ -95,6 +52,7 @@ class Profile extends Component {
                     courseName: courseName
                 })
         });
+        this.forceThePageRefresh();
     };
 
     deleteAccount = (e) => {
@@ -146,7 +104,6 @@ class Profile extends Component {
             )
         }).then(function () {
             console.log("kurssi luotu")
-
             // lisää kurssi omaan listaan
             var userid = app.auth().currentUser.uid;
             //var userid = user.uid;
@@ -158,9 +115,13 @@ class Profile extends Component {
                 body: JSON.stringify({
                     courseName: newCourseName
                 })
-            });
-        })
+            })
+        }).then(function (callback) {
+            console.log("JUUKELI EI LAUKEA"); ///////////////////// EI TÄLLÄ HETKELLÄ TOIMI
+            callback();
+        });
     };
+
 
     getUserNamesFromSQL = (callback) => {
         // get all users from MySQL
@@ -182,7 +143,7 @@ class Profile extends Component {
 
         e.preventDefault();
         const userToBeModified = e.target.elements.selectedUser.value;
-        console.log("tätä käyttäjää muokataan " + userToBeModified);
+        //console.log("tätä käyttäjää muokataan " + userToBeModified);
 
         var userid = userToBeModified
         //var userid = user.uid;
@@ -196,6 +157,8 @@ class Profile extends Component {
                         {userlist: allUsers}
                     );
                 }.bind(this))
+            ).then(
+                this.forceThePageRefresh()
             )
     };
 
@@ -234,24 +197,6 @@ class Profile extends Component {
             console.log(allUsers);
         }.bind(this))
 
-
-        //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
-
-        // this.setState({
-        //     user: app.auth().currentUser.uid
-        // });
-
-        /*
-        this.getUserCoursesFromSQL(function (courses) {
-            this.setState(
-                {courses: courses}
-            );
-            console.log("käyttähän kurssit haettu");
-        }.bind(this))
-        */
-
-        //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
-
     }
 
     componentWillUpdate() {
@@ -259,8 +204,32 @@ class Profile extends Component {
 
     }
 
+    // tämä ajetaan aina kun halutaan päivittää sivu - eli kun käyttäjä tekee jonkun muuton
+    forceThePageRefresh = (e) => {
+
+        // päivitä userin kurssit
+        this.getUserInfoFromSQL(function (user) {
+            this.setState({
+                courses: user.courses,
+                userRole: user.userRole
+            });
+        }.bind(this));
+
+        // hakee käyttäjät jotta niiden oikeuksia voidaan muokata
+        this.getUserNamesFromSQL(function (allUsers) {
+            this.setState(
+                {userlist: allUsers}
+            );
+            console.log("käyttäjät haettu TESTII");
+            console.log(allUsers);
+        }.bind(this))
+
+
+        this.setState(this.state) // dumb easy: triggers render
+    };
+
     render() {
-        console.log(this.props.username)
+        console.log("render username" + this.props.username)
         console.log("render");
 
         // USER
@@ -361,6 +330,9 @@ class Profile extends Component {
                             <button className="glyphicon glyphicon-plus add"/>
                         </form>
                     </div>
+
+                    <button onClick={this.forceThePageRefresh}>Refresh!</button>
+
                 </div>
             </div>
         );
