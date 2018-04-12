@@ -7,4 +7,5 @@
 .bgwhite {
     background: white;
     width: 100vw;
+    border-bottom: 5px solid white;
 }

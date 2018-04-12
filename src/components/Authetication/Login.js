@@ -159,16 +159,18 @@ class Login extends Component {
 
 
         return (
-            <div className="loginForm">
+            <div>
+            {this.props.authenticated === false ?
+                <div>
                 <Toaster ref={(element) => {
                     this.toaster = element
                 }}/>
 
-                <Grid>
-                    <Row>
+                <Grid className="loginForm" >
+                    <Row className="center-block bgLoginForm">
                         <Col>
                             {this.props.authenticated === false ?
-                                <h3>Login with Facebook or Google:</h3> : false}
+                                <h3>Login:</h3> : false}
                                 <br/>
                             <div>
                                 {this.props.authenticated === false ?
@@ -190,7 +192,8 @@ class Login extends Component {
                                         this.autWithEmailPassword(event)
                                     }} ref={(form) => {
                                         this.loginForm = form
-                                    }}><h3>Create new user with email address</h3><br/>
+                                    }}> <h4>OR</h4>
+                                        <h3>Create new user with email address</h3><br/>
 
 
                                         <label>
@@ -219,6 +222,8 @@ class Login extends Component {
                         </Col>
                     </Row>
                 </Grid>
+            </div>
+            : null}
             </div>
         )
     }
