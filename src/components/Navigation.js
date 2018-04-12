@@ -47,6 +47,9 @@ class Navigation extends Component {
                         <Navbar.Link className="glyphicon glyphicon-user letterSpacing"
                                      href="/profile"> {this.state.username} </Navbar.Link>
                     </Navbar.Text>
+                    <Navbar.Text pullRight>
+                        <Navbar.Link className="glyphicon glyphicon-home letterSpacing" href="/"> Home</Navbar.Link>
+                    </Navbar.Text>
                 </Navbar.Collapse>
             </Navbar>
 
