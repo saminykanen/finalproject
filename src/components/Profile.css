@@ -1,3 +1,57 @@
 .default {
     text-align: center;
 }
+
+.profile {
+    text-align: center;
+    /*position: fixed;*/
+    /*top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);*/
+    width: 100%;
+}
+
+@media only screen and (min-width: 950px) {
+    .profileStyle {
+        background-color: rgba(255,255,255, 0.9);
+        width: 40%;
+        padding-bottom: 20px;
+        border-radius: 10px;
+    }
+}
+
+@media only screen and (min-width: 695px) and (max-width: 949px) {
+    .profileStyle {
+        background-color: rgba(255,255,255, 0.9);
+        width: 60%;
+        padding-bottom: 20px;
+        border-radius: 10px;
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 694px) {
+    .profileStyle {
+        background-color: rgba(255,255,255, 0.9);
+        width: 90%;
+        padding-bottom: 20px;
+        border-radius: 10px;
+    }
+}
+
+.trash {
+    border: none;
+    background: none;
+    color: red;
+
+}
+
+.add {
+    border: none;
+    background: none;
+    color: #46a14a;
+}
+
+.stylish {
+    width: 200px;
+}
+

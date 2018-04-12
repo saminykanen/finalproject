@@ -291,26 +291,24 @@ class Profile extends Component {
 
 
         return (
-            <div className="default" style={{marginTop: '40px'}}>
+            <div className="profile" style={{marginTop: '40px'}}>
                 <Navigation/>
                 <Title/>
+                <div className= "profileStyle">
                 <div>
-                    <h3>Profile information</h3>
+                    <h2>Profile information</h2>
                     <p>Username: {this.state.username}</p>
                     <p>User role: [Teacher / student]</p>
                 </div>
                 <div>
-                    <h4>Your courses</h4>
+                    <h3>Your courses</h3>
                     <div>
                         {courseList}
                     </div>
 
                 </div>
                 <div>
-                    <h4>Delete your account</h4>
-                    <button className="btn btn-info btn-customs" onClick={this.deleteAccount}><i
-                        className="glyphicon glyphicon"/> Remove account
-                    </button>
+                    <h3>Delete your account <button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}> </button></h3>
                 </div>
 
                 {/*ADMIN*/}
@@ -319,12 +317,10 @@ class Profile extends Component {
                 </div>
                 <div>
                     <h4>Create a new course</h4>
-                    <form className="default" onSubmit={this.createANewCourse}>
-                        <input className="form-control center-block input-customs" type="text" name="newCourseName"
-                               placeholder="Name of new course..."/>
-                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Create course
-                        </button>
-                    </form>
+                    <form onSubmit={this.createANewCourse}>
+                        <input className="form-control center-block input-customs stylish" type="text" name="newCourseName"
+                               placeholder="Name of new course..."/></form>
+                    <button className="glyphicon glyphicon-plus add" />
                 </div>
 
                 <div>
@@ -343,9 +339,7 @@ class Profile extends Component {
                                 }
                             })}
                         </select>
-                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Give teacher
-                            rights
-                        </button>
+                        <button className="glyphicon glyphicon-plus add" />
                     </form>
                     <h4>Give student rights to teacher</h4>
                     <form className="default" onSubmit={this.toggleUserRights}>
@@ -362,11 +356,10 @@ class Profile extends Component {
                                 }
                             })}
                         </select>
-                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Give student
-                            rights
-                        </button>
+                        <button className="glyphicon glyphicon-plus add" />
                     </form>
 
+                </div>
                 </div>
             </div>
         );
@@ -390,11 +383,8 @@ class Course extends Component {
     render() {
         return (
             <div>
-                <p>{this.props.coursename}
-                    <button className="btn btn-info btn-customs" onClick={this.removeCourse}><i
-                        className="glyphicon glyphicon"/> Remove
-                    </button>
-                </p>
+                <h4>{this.props.coursename}  <button className="glyphicon glyphicon-trash trash" onClick={this.removeCourse}> </button>
+                </h4>
             </div>
         )
     };
