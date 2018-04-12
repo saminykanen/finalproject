@@ -47,3 +47,7 @@
     max-width: 120px;
     margin-top: 4px;
 }
+
+.letterSpacing{
+    word-spacing: -10px;
+}
