@@ -272,71 +272,62 @@ class Profile extends Component {
                 <Title/>
                 <div className="profileStyle profile">
                     <div>
-                        <h2>Profile information</h2>
-                        <h4>Username: {this.state.username}</h4>
-                        <h4>User role: {this.state.userRole}</h4>
+                        <h2 className="header23Style">Profile information</h2>
+                        <h4 className="header4Style"><b>Username:</b> {this.state.username}</h4>
+                        <h4 className="header4Style"><b>User role:</b> {this.state.userRole}</h4>
+                        <h4 className="header4Style"><b>Delete your account: </b><button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>
+                        </h4>
                     </div>
                     <div>
-                        <h3>Your courses</h3>
-                        <div>
+                        <h3 className="header23Style">Your courses</h3>
+                        <div className="similarToh4">
                             {courseList}
                         </div>
 
                     </div>
-                    <div>
-                        <h3>Delete your account
-                            <button className="glyphicon glyphicon-trash trash"
-                                    onClick={this.deleteAccount}/></h3>
-                    </div>
 
                     {/*ADMIN*/}
                     <div>
-                        <h3>Administrator</h3>
+                        <h2 className="header23Style">Administrator</h2>
                     </div>
                     <div>
-                        <h4>Create a new course</h4>
+                        <h4 className="header4Style">Create new course:</h4>
                         <form onSubmit={this.createANewCourse}>
-                            <input className="form-control center-block input-customs stylish" type="text"
-                                   name="newCourseName"
+                            <input className="form-control similarToh4 input-customs stylish" type="text"
+                                   name="newCourseName" style={{display: 'inline-block'}}
                                    placeholder="Name of new course..."/>
-                            <button className="glyphicon glyphicon-plus add"/>
+                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>CREATE</button>
                         </form>
                     </div>
 
                     <div>
-                        <h4>Give teacher rights to student</h4>
-                        <form className="default" onSubmit={this.toggleUserRights}>
-                            {/*<p>Select course</p>*/}
-                            {/*<select name="courseDropdown">*/}
-                            {/*{this.state.countryData.map((e, key) => {*/}
-                            {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
-                            {/*})}*/}
-                            {/*</select>*/}
-                            <select name="selectedUser">
+                        <h4 className="header4Style">Give teacher rights to student:</h4>
+                        <form onSubmit={this.toggleUserRights}>
+                            <select style={{display: 'inline-block'}} className="form-control similarToh4 input-customs stylish" name="selectedUser">
                                 {this.state.userlist.map((e, key) => {
                                     if (e.userRole === "student") {
                                         return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                     }
                                 })}
                             </select>
-                            <button className="glyphicon glyphicon-plus add"/>
+                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>GRANT</button>
                         </form>
-                        <h4>Give student rights to teacher</h4>
-                        <form className="default" onSubmit={this.toggleUserRights}>
+                        <h4 className="header4Style">Give student rights to teacher:</h4>
+                        <form onSubmit={this.toggleUserRights}>
                             {/*<p>Select course</p>*/}
                             {/*<select name="courseDropdown">*/}
                             {/*{this.state.countryData.map((e, key) => {*/}
                             {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
                             {/*})}*/}
                             {/*</select>*/}
-                            <select name="selectedUser">
+                            <select style={{display: 'inline-block'}} className="form-control similarToh4 input-customs stylish" name="selectedUser">
                                 {this.state.userlist.map((e, key) => {
                                     if (e.userRole === "teacher") {
                                         return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                     }
                                 })}
                             </select>
-                            <button className="glyphicon glyphicon-plus add"/>
+                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>GRANT</button>
                         </form>
                     </div>
 

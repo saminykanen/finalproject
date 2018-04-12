@@ -17,7 +17,7 @@ class MyTicket extends Component {
     showAddNewTicket(userInfo){
         if(userInfo === 'student'){
             return(
-                <button className="btn btn-info button button1 buttonStyle" onClick={this.toggleModal}>
+                <button className="btn button button1 buttonStyle" onClick={this.toggleModal}>
                     <i className="plus">+</i>
                     <span className="button-text">TICKET!</span>
                 </button>
