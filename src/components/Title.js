@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+ import React, {Component} from 'react';
 import './Title.css';
 
 class Title extends Component {

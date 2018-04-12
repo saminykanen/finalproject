@@ -130,7 +130,6 @@ class Profile extends Component {
     createANewCourse = (e) => {
         e.preventDefault();
         const newCourseName = e.target.elements.newCourseName.value;
-
         // luo kurssi MySQLään
         var api = '/api/courses/createcourse/';
         return fetch(api, {

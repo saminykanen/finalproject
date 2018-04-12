@@ -32,6 +32,9 @@ class TicketList extends Component {
                         {tickets}
                     </PanelGroup>
                 </div>
+                <div>
+                    {this.props.courseId}
+                </div>
             </div>
         )
     }
