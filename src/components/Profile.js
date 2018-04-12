@@ -3,6 +3,7 @@ import {Navigation} from './Navigation';
 import Title from './Title';
 import "./Profile.css";
 import {app} from "../components/Authetication/base";
+import {DropdownButton} from 'react-bootstrap';
 
 class Profile extends Component {
 
@@ -14,23 +15,234 @@ class Profile extends Component {
     //Opettajalle lisäominaisuus: lisää uusia oppilaita opettajiksi
 
     state = {
-        kurssilista: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"]
+        user: null,
+        courses: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"],
+        userlist: []
+        //     {
+        //         firebaseUserId: "uediACnXUXezVoHjJIrpzqXoQfU2",
+        //         userRole: "teacher",
+        //         username: "admin",
+        //         courses: [
+        //             {
+        //                 courseId: 1,
+        //                 courseName: "Java-kurssi"
+        //             },
+        //             {
+        //                 courseId: 2,
+        //                 courseName: "React-kurssi"
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         firebaseUserId: "s6cq6NBFojdUnQWL44sqL9709c02",
+        //         userRole: "student",
+        //         username: "Tommi",
+        //         courses: []
+        //     },
+        //     {
+        //         firebaseUserId: "GGWiEnFIRqTRwQngxESZouEnlX23",
+        //         userRole: "student",
+        //         username: "Veli-Pekka Nurmi",
+        //         courses: [
+        //             {
+        //                 courseId: 1,
+        //                 courseName: "Java-kurssi"
+        //             }
+        //         ]
+        //     }
+        // ]
+    };
+
+    //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
+    getUserCoursesFromSQL = (callback) => {
+        // get all users fcourses from MYSQL
+        var userid = this.state.user.currentUser.uid;
+
+        var api = '/api/users/';
+        return fetch(api + userid, {
+            method: 'GET'
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (response) {
+                callback(response)
+            })
+    };
+
+    //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
+
+
+    deleteCourse = (courseName) => {
+        // e.preventDefault(); // tarvitaanko
+        //const courseName = e.target.elements.newCourseName.value;
+        console.log(courseName)
+
+        var userId = app.auth().currentUser.uid;
+        var api = '/api/users/removecourse/';
+
+        console.log(userId)
+
+
+        fetch(api + userId, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    courseName: courseName
+                })
+        });
+    };
+
+    deleteAccount = (e) => {
+        e.preventDefault(); // tarvitaanko
+
+        // poista firebasesta
+        var user = app.auth().currentUser;
+        console.log(user.displayName)
+
+        user.delete().then(function () {
+            console.log("User deletoitu firebasesta");
+        }).catch(function (error) {
+            console.log("Error in deleting user from firebase");
+        });
+
+        // poista MySQL:stä
+        var userid = user.uid;
+        console.log(userid);
+        this.deleteUserFromMysql(userid);
+
+        // logOut käyttäjä
+        this.props.history.push("/");
+    };
+
+    deleteUserFromMysql(userId) {
+        console.log("Deleteuser function");
+        var userId = userId;
+        var api = '/api/users/deleteuser/';
+        return fetch(api + userId, {
+            method: 'DELETE'
+        });
     }
 
-    deleteCourse = (e) => {
-        var ind = this.state.kurssilista.findIndex((i) => i.id === e);
-        this.state.kurssilista.splice(ind, 1); // poista sanonta
-        this.setState(this.state);
+    // ADMIN TOIMINNOT *******************
+
+    createANewCourse = (e) => {
+        e.preventDefault();
+        const newCourseName = e.target.elements.newCourseName.value;
+
+        // luo kurssi MySQLään
+        var api = '/api/courses/createcourse/';
+        return fetch(api, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    courseName: newCourseName
+                }
+            )
+        }).then(function () {
+            console.log("kurssi luotu")
+
+            // lisää kurssi omaan listaan
+            var userid = app.auth().currentUser.uid;
+            //var userid = user.uid;
+
+            var api = '/api/users/addcourse/';
+            return fetch(api + userid, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    courseName: newCourseName
+                })
+            })
+            console.log("kurssi lisätty omaan listaan")
+        })
+    };
+
+    getUserNamesFromSQL = (callback) => {
+        // get all users from MySQL
+        var api = '/api/users/';
+        return fetch(api, {
+            method: 'GET'
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (response) {
+                callback(response)
+            })
+    };
+
+
+    toggleUserRights = (e) => {
+        // anna REST:in kautta käyttäjälle admin oikeudet TAI muuta takaisin studentiksi
+
+        e.preventDefault();
+        const userToBeModified = e.target.elements.selectedUser.value;
+        console.log(userToBeModified);
+
+        var userid = userToBeModified
+        //var userid = user.uid;
+
+        var api = '/api/users/togglerole/';
+        return fetch(api + userid, {
+            method: 'PUT'
+        }).then(
+            this.forceUpdate()
+            //console.log("User rights updated")
+        )
+    };
+
+    componentWillMount() {
+        // ADMIN
+        console.log("componentWillMount");
+        // hakee käyttäjät jotta niiden oikeuksia voidaan muokata
+        this.getUserNamesFromSQL(function (allUsers) {
+            this.setState(
+                {userlist: allUsers}
+            );
+            console.log("käyttäjät haettu");
+        }.bind(this))
+
+        //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
+
+        // this.setState({
+        //     user: app.auth().currentUser.uid
+        // });
+
+        /*
+        this.getUserCoursesFromSQL(function (courses) {
+            this.setState(
+                {courses: courses}
+            );
+            console.log("käyttähän kurssit haettu");
+        }.bind(this))
+        */
+
+        //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
+
+    }
+
+    componentWillUpdate() {
+        console.log("componentWillUpdate");
     }
 
     render() {
+        console.log("render");
 
-        /*var currentUser = app.auth().currentUser;
-        console.log("currentUser " + currentUser);*/
+        // USER
 
-        var courseList = this.state.kurssilista.map(function (course, index) {
-            return (<Course coursename={course} key={index}/>);
-        })
+        // tekee listan käyttäjän omista kursseista
+        var deleteCourse = this.deleteCourse; // muuttuja
+        var courseList = this.state.courses.map(
+            function (course, index) {
+                return (
+                    <Course coursename={course} key={index} deleteCourse={deleteCourse}/>
+                );
+            });
+
+        // ADMIN
 
 
         return (
@@ -44,15 +256,15 @@ class Profile extends Component {
                 </div>
                 <div>
                     <h4>Your courses</h4>
-
                     <div>
                         {courseList}
                     </div>
-                    
+
                 </div>
                 <div>
                     <h4>Delete your account</h4>
-                    <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Remove account
+                    <button className="btn btn-info btn-customs" onClick={this.deleteAccount}><i
+                        className="glyphicon glyphicon"/> Remove account
                     </button>
                 </div>
 
@@ -62,8 +274,8 @@ class Profile extends Component {
                 </div>
                 <div>
                     <h4>Create a new course</h4>
-                    <form className="default">
-                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
+                    <form className="default" onSubmit={this.createANewCourse}>
+                        <input className="form-control center-block input-customs" type="text" name="newCourseName"
                                placeholder="Name of new course..."/>
                         <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Create course
                         </button>
@@ -71,19 +283,51 @@ class Profile extends Component {
                 </div>
 
                 <div>
-                    <h4>Give user teacher rights</h4>
-                    <form className="default">
-                        <input className="form-control center-block input-customs" type="text" name="kurssiId"
-                               placeholder="find user my email etc."/>
-                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/> Search
+                    <h4>Give teacher rights to student</h4>
+                    <form className="default" onSubmit={this.toggleUserRights}>
+                        {/*<p>Select course</p>*/}
+                        {/*<select name="courseDropdown">*/}
+                        {/*{this.state.countryData.map((e, key) => {*/}
+                        {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                        {/*})}*/}
+                        {/*</select>*/}
+                        <select name="selectedUser">
+                            {this.state.userlist.map((e, key) => {
+                                if (e.userRole == "student") {
+                                    return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                }
+                            })}
+                        </select>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Give teacher
+                            rights
                         </button>
                     </form>
-                </div>
+                    <h4>Give student rights to teacher</h4>
+                    <form className="default" onSubmit={this.toggleUserRights}>
+                        {/*<p>Select course</p>*/}
+                        {/*<select name="courseDropdown">*/}
+                        {/*{this.state.countryData.map((e, key) => {*/}
+                        {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                        {/*})}*/}
+                        {/*</select>*/}
+                        <select name="selectedUser">
+                            {this.state.userlist.map((e, key) => {
+                                if (e.userRole == "teacher") {
+                                    return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                }
+                            })}
+                        </select>
+                        <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Give student
+                            rights
+                        </button>
+                    </form>
 
+                </div>
             </div>
         );
-        /*}*/
+
     }
+
 
 }
 
@@ -93,15 +337,18 @@ export default Profile;
 class Course extends Component {
 
     removeCourse = (e) => {
-        //  e.preventDefault();
-        this.props.removeCourseFromList(this.props.coursename);
+        e.preventDefault(); // tarvitaanko
+        this.props.deleteCourse(this.props.coursename);
+
     };
 
     render() {
         return (
             <div>
-                <p>{this.props.coursename} <br/>
-                    <button className="btn btn-info btn-customs" onClick={this.removeCourse} ><i className="glyphicon glyphicon" /> Remove</button>
+                <p>{this.props.coursename}
+                    <button className="btn btn-info btn-customs" onClick={this.removeCourse}><i
+                        className="glyphicon glyphicon"/> Remove
+                    </button>
                 </p>
             </div>
         )

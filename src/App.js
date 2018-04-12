@@ -134,14 +134,9 @@ class TicketService extends Component {
     componentWillMount() {
         // LOGIN LISTENER
         this.removeAuthListner = app.auth().onAuthStateChanged((user) => {
-
             // var currentUser = app.auth().currentUser;
             // console.log("currentUser " + currentUser);
-
             if (user) {
-                // console.log("componentWillMount - USER")
-                // console.log("auth tila " + this.state.authenticated.toString())
-
                 this.setState({
                     authenticated: true,
                     loading: false,
@@ -155,7 +150,6 @@ class TicketService extends Component {
 
                 //  KÄYTTÄJÄN SQL KYSELYT ALLE
 
-                //  if (this.state.authenticated.true) {
                 // luodaan käyttäjä myös MySQL:ään
                 this.createNewUserToMysql() // palauttaa promisen
                 // haetaan käyttäjä vasta kun MySQL on luotu
@@ -167,11 +161,8 @@ class TicketService extends Component {
                             })
                         }.bind(this));
                     }.bind(this));
-                //  }
 
             } else {
-                // console.log("componentWillMount - ELSE")
-                // console.log("auth tila " + this.state.authenticated.toString())
                 this.setState({
                     authenticated: false,
                     loading: false,
@@ -184,23 +175,10 @@ class TicketService extends Component {
         })
     }
 
-    // ALLA OLEVA KURSSILISTA HAKUUN
-
-    // componentDidUpdate (){
-    //     this.fetchUserInfoFromMysql(function (users) {
-    //         this.setState({
-    //             userRole: users.userRole,
-    //             courses: users.courses
-    //         });
-    //         console.log("käyttäjätiedot päivitetty")
-    //     }.bind(this));
-    // };
-
 
     componentWillUnmount() {
         this.removeAuthListner(); // logout
     }
-
 
     fetchTicketsAndUpdate = (courseId) => {
 
