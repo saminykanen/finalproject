@@ -11,7 +11,7 @@ class Ticket extends Component {
             return (
                 <span>
                     <button className="btn btn-danger btn-md buttons delete" style={{marginRight: '10px'}}
-                            onClick={this.handleChangeToPassive.bind(this)}>DELETE
+                            onClick={this.handleChangeToPassive.bind(this)}>SOLVED
                     </button>
                 </span>
             )
