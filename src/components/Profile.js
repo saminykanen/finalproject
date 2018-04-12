@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import {Navigation} from './Navigation';
+import Navigation from './Navigation';
 import Title from './Title';
 import "./Profile.css";
 import {app} from "../components/Authetication/base";
-import {DropdownButton} from 'react-bootstrap';
 
 class Profile extends Component {
-
 
     //Tietojen suojaus!! ei näy, jos ei ole kirjautunut sissään!
     //Tänne tulee profiilin tiedot, käyttäjätunnus ja email
@@ -15,7 +13,10 @@ class Profile extends Component {
     //Opettajalle lisäominaisuus: lisää uusia oppilaita opettajiksi
 
     state = {
-        user: null,
+        user: null, // firebaseuser
+        username: null,
+        userRole: null,
+        firebaseUserId: null,
         courses: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"],
         userlist: []
         //     {
@@ -54,10 +55,11 @@ class Profile extends Component {
     };
 
     //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
-    getUserCoursesFromSQL = (callback) => {
+    getUserInfoFromSQL = (callback) => {
         // get all users fcourses from MYSQL
-        var userid = this.state.user.currentUser.uid;
-
+        // var userid = this.state.user.currentUser.uid;
+        var userid = this.state.firebaseUserId;
+        console.log("userid " + this.state.firebaseUserId);
         var api = '/api/users/';
         return fetch(api + userid, {
             method: 'GET'
@@ -69,6 +71,7 @@ class Profile extends Component {
                 callback(response)
             })
     };
+
 
     //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
 
@@ -118,7 +121,6 @@ class Profile extends Component {
 
     deleteUserFromMysql(userId) {
         console.log("Deleteuser function");
-        var userId = userId;
         var api = '/api/users/deleteuser/';
         return fetch(api + userId, {
             method: 'DELETE'
@@ -130,6 +132,8 @@ class Profile extends Component {
     createANewCourse = (e) => {
         e.preventDefault();
         const newCourseName = e.target.elements.newCourseName.value;
+        e.target.elements.newCourseName.value = null;
+
         // luo kurssi MySQLään
         var api = '/api/courses/createcourse/';
         return fetch(api, {
@@ -154,8 +158,7 @@ class Profile extends Component {
                 body: JSON.stringify({
                     courseName: newCourseName
                 })
-            })
-            console.log("kurssi lisätty omaan listaan")
+            });
         })
     };
 
@@ -171,6 +174,7 @@ class Profile extends Component {
             .then(function (response) {
                 callback(response)
             })
+        console.log("käyttäjät haettu UUDESTAAN");
     };
 
 
@@ -179,30 +183,58 @@ class Profile extends Component {
 
         e.preventDefault();
         const userToBeModified = e.target.elements.selectedUser.value;
-        console.log(userToBeModified);
+        console.log("tätä käyttäjää muokataan " + userToBeModified);
 
         var userid = userToBeModified
         //var userid = user.uid;
 
         var api = '/api/users/togglerole/';
-        return fetch(api + userid, {
-            method: 'PUT'
-        }).then(
-            this.forceUpdate()
-            //console.log("User rights updated")
-        )
+        return fetch(api + userid, {method: 'PUT'})
+            .then(
+                // haetaan uudestaan käyttäjät jotta voidaan rakentaa uudestaan drop-downlista
+                this.getUserNamesFromSQL(function (allUsers) {
+                    this.setState(
+                        {userlist: allUsers}
+                    );
+                }.bind(this))
+            )
     };
 
     componentWillMount() {
+
         // ADMIN
         console.log("componentWillMount");
+
+        // asettaa firebase ID:n
+        app.auth().onAuthStateChanged((user) => {
+            this.setState({
+                firebaseUserId: user.uid,
+                username: user.displayName,
+                user: user
+            });
+            // console.log("user" + user.displayName)
+            // console.log("uid" + user.uid)
+            // console.log("firebaseUserId" + this.state.firebaseUserId)
+
+            // hakee käyttäjä tiedot MySQL:stä
+            this.getUserInfoFromSQL(function (user) {
+                this.setState({
+                    courses: user.courses,
+                    userRole: user.userRole
+                });
+            }.bind(this));
+        });
+
+
         // hakee käyttäjät jotta niiden oikeuksia voidaan muokata
         this.getUserNamesFromSQL(function (allUsers) {
             this.setState(
                 {userlist: allUsers}
             );
-            console.log("käyttäjät haettu");
+            console.log("käyttäjät haettu TESTII");
+            console.log(allUsers);
         }.bind(this))
+
 
         //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
 
@@ -225,9 +257,11 @@ class Profile extends Component {
 
     componentWillUpdate() {
         console.log("componentWillUpdate");
+
     }
 
     render() {
+        console.log(this.props.username)
         console.log("render");
 
         // USER
@@ -237,9 +271,20 @@ class Profile extends Component {
         var courseList = this.state.courses.map(
             function (course, index) {
                 return (
+                    <Course coursename={course.courseName} key={index} deleteCourse={deleteCourse}/>
+                );
+            });
+
+        /*
+        // userstatukset asetus purkkakoodilla
+        var userstatus = this.state.userlist.map(
+            function (user, index) {
+                return (
                     <Course coursename={course} key={index} deleteCourse={deleteCourse}/>
                 );
             });
+
+*/
 
         // ADMIN
 
@@ -250,8 +295,8 @@ class Profile extends Component {
                 <Title/>
                 <div>
                     <h3>Profile information</h3>
-                    <p>Username: [Hessu Hopo]</p>
-                    <p>User role: [Teacher / student]</p>
+                    <p>Username: {this.state.username}</p>
+                    <p>User role: {this.state.userRole}</p>
                 </div>
                 <div>
                     <h4>Your courses</h4>
@@ -292,7 +337,7 @@ class Profile extends Component {
                         {/*</select>*/}
                         <select name="selectedUser">
                             {this.state.userlist.map((e, key) => {
-                                if (e.userRole == "student") {
+                                if (e.userRole === "student") {
                                     return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                 }
                             })}
@@ -311,7 +356,7 @@ class Profile extends Component {
                         {/*</select>*/}
                         <select name="selectedUser">
                             {this.state.userlist.map((e, key) => {
-                                if (e.userRole == "teacher") {
+                                if (e.userRole === "teacher") {
                                     return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                 }
                             })}

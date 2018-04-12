@@ -4,7 +4,7 @@ function fetchTickets(callback, courseId) {
     fetch(api + cId)
         .then(function (response) {
             console.log(response);
-            if (response.status == 200) {
+            if (response.status === 200) {
                 console.log('response 200');
                 return response.json();
             } else {

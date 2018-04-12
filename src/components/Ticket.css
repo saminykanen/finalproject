@@ -10,6 +10,12 @@
     display: inline;
 }
 
+@media only screen and (min-width: 768px) {
+    .fontSizeLargerWhenLargeScreen {
+        font-size: medium;
+    }
+}
+
 @media only screen and (min-width: 1200px) {
     .normal {
         width: 100%;
@@ -48,3 +54,30 @@
         display: none;
     }
 }
+
+.buttons {
+    background: #46a14a;
+    border: none;
+}
+
+.delete:hover {
+    background: red;
+}
+
+.activate:hover {
+    background: #54c45a;
+    color: white;
+}
+.panel-success > .greenBackground {
+    background: #46a14a;
+    color: white;
+    border: none;
+}
+
+.panel-warning > .greenBackground {
+    background: #b8b8b8;
+    color: white;
+    border: none;
+}
+
+

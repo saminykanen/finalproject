@@ -4,7 +4,33 @@
     border-radius: 0;
     border: #222222;
     opacity: 0.9;
-    font-family: "Gill Sans Nova";
+}
+
+.toggleStyle {
+    height: 30px;
+    width: auto;
+    padding: 2px 4px;
+    margin-top: 5px;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+    .navbar {
+        background-color: white;
+        color: black;
+        border-radius: 0;
+        border: #222222;
+        opacity: 0.9;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .navbar {
+        background-color: white;
+        color: black;
+        border-radius: 0;
+        border: #222222;
+        opacity: 1;
+    }
 }
 
 .a {
@@ -19,6 +45,5 @@
     padding: 7px 14px;
     float: left;
     max-width: 120px;
-    margin-top: 7px;
-
+    margin-top: 4px;
 }
