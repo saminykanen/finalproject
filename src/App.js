@@ -237,6 +237,8 @@ class TicketService extends Component {
                             <button className="btn buttonStyle btn-customs"><i className="glyphicon glyphicon-search"/>
                             </button>
                     </form>
+                    <div>
+                    </div>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}
                                 username={this.state.firebaseUserId} userRole={this.state.userRole} courseId={this.state.courseId}/>
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
