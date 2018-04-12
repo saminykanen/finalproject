@@ -288,9 +288,9 @@ class Profile extends Component {
                         <h2 className="header23Style">Profile information</h2>
                         <h4 className="header4Style"><b>Username:</b> {this.state.username}</h4>
                         <h4 className="header4Style"><b>User role:</b> {this.state.userRole}</h4>
-                        <h4 className="header4Style"><b>Delete your account: </b>
-                            <button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>
-                        </h4>
+                        {/*<h4 className="header4Style"><b>Delete your account: </b>*/}
+                            {/*<button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>*/}
+                        {/*</h4>*/}
                     </div>
                     <div>
                         <h3 className="header23Style">Your courses</h3>
