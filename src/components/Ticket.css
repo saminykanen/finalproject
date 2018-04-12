@@ -20,6 +20,9 @@
     .leftFloat {
         display: none;
     }
+    .fontSizeLargerWhenLargeScreen {
+        font-size: medium;
+    }
 }
 
 @media only screen and (min-width: 630px) and (max-width: 1199px) {
@@ -49,12 +52,12 @@
     }
 }
 
-.ticketpanel{
-    background: url("../images/ticketpanelpng.png") no-repeat;
-    background-size: cover;
-}
+/*.ticketpanel{*/
+    /*background: url("../images/ticketpanelpng.png") no-repeat;*/
+    /*background-size: cover;*/
+/*}*/
 
-.ticketpanelActive{
-    background: url("../images/ticketpanelActive.png") no-repeat;
-    background-size: cover;
-}
+/*.ticketpanelActive{*/
+    /*background: url("../images/ticketpanelActive.png") no-repeat;*/
+    /*background-size: cover;*/
+/*}*/

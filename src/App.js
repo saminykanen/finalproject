@@ -224,7 +224,7 @@ class TicketService extends Component {
         if (this.state.courses.length !== 0 && this.state.authenticated === true) {
             return (
 
-                <div>
+                <div className="bgwhite">
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                             <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                    placeholder="Course..."/>
@@ -241,7 +241,7 @@ class TicketService extends Component {
         } else if (this.state.authenticated === true && this.state.courses.length === 0) {
 
             return (
-                <div className="transparent">
+                <div className="bgwhite">
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                         <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                placeholder="Course..."/>
@@ -291,7 +291,7 @@ class TicketService extends Component {
         return (
             <div style={{marginTop: '40px'}}>
                 {/*<Authentication authenticated={this.state.authenticated}/>*/}
-                {this.state.authenticated === true ? <Navigation/> : null}
+                {this.state.authenticated === true ? <Navigation /> : null}
                 <Title className="default"/>
                 <Login className="default" authenticated={this.state.authenticated}/>
 

@@ -52,7 +52,7 @@ class Ticket extends Component {
                         </Panel.Title>
                     </Panel.Heading>
                     <Panel.Collapse>
-                        <Panel.Body className="text-left">
+                        <Panel.Body className="text-left fontSizeLargerWhenLargeScreen">
                             <br/>
                             <div className="row">
                                 <span className="col-lg-2 col-md-2 col-sm-2 col-xs-4 leftFloat"><b>Username:</b></span><span
@@ -60,7 +60,7 @@ class Ticket extends Component {
                             </div>
                             <div className="row">
                                 <span className="col-lg-2 col-md-2 col-sm-2 col-xs-4 leftFloat"><b>Time:</b></span><span
-                                className="col-lg-10 col-md-10 col-sm-10 col-xs-8 leftFloat"><i><small>{this.props.ticket.timestamp.substring(0, 10)}</small></i> <i><small>{this.props.ticket.timestamp.substring(11)}</small></i></span>
+                                className="col-lg-10 col-md-10 col-sm-10 col-xs-8 leftFloat"><i>{this.props.ticket.timestamp.substring(0, 10)}</i> <i>{this.props.ticket.timestamp.substring(11)}</i></span>
                             </div>
                             <div className="row">
                                 <span className="col-lg-2 col-md-2 col-sm-2 col-xs-4"><b>Description:</b></span><span
