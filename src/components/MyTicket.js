@@ -19,7 +19,7 @@ class MyTicket extends Component {
             return(
                 <button className="btn button button1 buttonStyle" onClick={this.toggleModal}>
                     <i className="plus">+</i>
-                    <span className="button-text">TICKET!</span>
+                    <span className="button-text">CREATE NEW TICKET</span>
                 </button>
             )
         }else{
