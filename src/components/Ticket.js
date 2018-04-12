@@ -10,7 +10,7 @@ class Ticket extends Component {
         if (userInfo === 'teacher' || userInfo === this.props.ticket.user.firebaseUserId) {
             return (
                 <span>
-                    <button className="btn btn-danger btn-md buttonStyle" style={{marginRight: '10px'}}
+                    <button className="btn btn-danger btn-md buttons delete" style={{marginRight: '10px'}}
                             onClick={this.handleChangeToPassive.bind(this)}>DELETE
                     </button>
                 </span>
@@ -24,7 +24,7 @@ class Ticket extends Component {
     showActivateButton(userInfo){
         if (userInfo === 'teacher'){
             return(
-                <button className="btn btn-warning btn-md float-right buttonStyle"
+                <button className="btn btn-warning btn-md float-right buttons activate"
                         onClick={this.handleChangeToActive.bind(this)}>ACTIVATE
                 </button>
             )

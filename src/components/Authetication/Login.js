@@ -200,9 +200,9 @@ class Login extends Component {
                                             <input className="form-control center-block " name="password" type="password" ref={(input) => {
                                                 this.passwordInput = input
                                             }} placeholder="Password"/><br/>
-                                            <button className="btn btn-info" style={{marginRight: '10px'}} value="Login" >Login/Register</button>
+                                            <button className="btn buttonStyle" style={{marginRight: '10px'}} value="Login" >Login/Register</button>
 
-                                            <button className="btn btn-info" value="Reset" onClick={this.handleResetPassword}>Reset password</button>
+                                            <button className="btn btn-info buttonStyle" value="Reset" onClick={this.handleResetPassword}>Reset password</button>
                                         </label>
                                     </form>
                                     :

@@ -64,3 +64,14 @@
 .transparent {
     background-color: rgba(0,0,0,0.7);
 }
+
+.buttonStyle {
+    background: #4bad50;
+    border: none;
+    color: white;
+}
+
+.buttonStyle:hover {
+    background: #54c45a;
+    color: white;
+}

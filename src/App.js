@@ -228,7 +228,7 @@ class TicketService extends Component {
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                             <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                    placeholder="Course..."/>
-                            <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
+                            <button className="btn buttonStyle btn-customs"><i className="glyphicon glyphicon-search"/>
                             </button>
                     </form>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}

@@ -49,7 +49,16 @@
     }
 }
 
-.buttonStyle {
+.buttons {
     background: #46a14a;
     border: none;
+}
+
+.delete:hover {
+    background: red;
+}
+
+.activate:hover {
+    background: #54c45a;
+    color: white;
 }
