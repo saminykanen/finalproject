@@ -72,12 +72,12 @@
     width: 170px;
 }
 
-h2, h3 {
+.header23Style {
     margin-left: 25%;
     text-decoration: underline;
 }
 
-h4 {
+.header4Style {
     margin-left: 30%;
 }
 

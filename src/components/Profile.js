@@ -295,15 +295,15 @@ class Profile extends Component {
                 <Title/>
                 <div className="profileStyle profile">
                     <div>
-                        <h2>Profile information</h2>
-                        <h4><b>Username:</b> {this.state.username}</h4>
-                        <h4><b>User role:</b> {this.state.userRole}</h4>
-                        <h4><b>Delete your account</b><button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>
+                        <h2 className="header23Style">Profile information</h2>
+                        <h4 className="header4Style"><b>Username:</b> {this.state.username}</h4>
+                        <h4 className="header4Style"><b>User role:</b> {this.state.userRole}</h4>
+                        <h4 className="header4Style"><b>Delete your account</b><button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>
                         </h4>
                     </div>
                     <div>
-                        <h3>Your courses</h3>
-                        <div>
+                        <h3 className="header23Style">Your courses</h3>
+                        <div className="similarToh4">
                             {courseList}
                         </div>
 
@@ -311,10 +311,10 @@ class Profile extends Component {
 
                     {/*ADMIN*/}
                     <div>
-                        <h2>Administrator</h2>
+                        <h2 className="header23Style">Administrator</h2>
                     </div>
                     <div>
-                        <h4>Create new course:</h4>
+                        <h4 className="header4Style">Create new course:</h4>
                         <form onSubmit={this.createANewCourse}>
                             <input className="form-control similarToh4 input-customs stylish" type="text"
                                    name="newCourseName"
@@ -324,7 +324,7 @@ class Profile extends Component {
                     </div>
 
                     <div>
-                        <h4>Give teacher rights to student:</h4>
+                        <h4 className="header4Style">Give teacher rights to student:</h4>
                         <form onSubmit={this.toggleUserRights}>
                             {/*<p>Select course</p>*/}
                             {/*<select name="courseDropdown">*/}
@@ -341,7 +341,7 @@ class Profile extends Component {
                             </select>
                             <button className="btn buttonStyle btn-sm similarToh4" style={{marginTop: '5px'}}>ADD</button>
                         </form>
-                        <h4>Give student rights to teacher:</h4>
+                        <h4 className="header4Style">Give student rights to teacher:</h4>
                         <form onSubmit={this.toggleUserRights}>
                             {/*<p>Select course</p>*/}
                             {/*<select name="courseDropdown">*/}
