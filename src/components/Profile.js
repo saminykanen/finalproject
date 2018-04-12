@@ -102,7 +102,7 @@ class Profile extends Component {
 
         // poista firebasesta
         var user = app.auth().currentUser;
-        console.log(user.displayName)
+        console.log("poistosta halloo " + user.displayName)
 
         user.delete().then(function () {
             console.log("User deletoitu firebasesta");
