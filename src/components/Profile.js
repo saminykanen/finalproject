@@ -320,8 +320,9 @@ class Profile extends Component {
                         <form onSubmit={this.createANewCourse}>
                             <input className="form-control center-block input-customs stylish" type="text"
                                    name="newCourseName"
-                                   placeholder="Name of new course..."/></form>
-                        <button className="glyphicon glyphicon-plus add"/>
+                                   placeholder="Name of new course..."/>
+                            <button className="glyphicon glyphicon-plus add"/>
+                        </form>
                     </div>
 
                     <div>
