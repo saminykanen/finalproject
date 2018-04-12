@@ -117,6 +117,12 @@ class TicketService extends Component {
         var courseName = courseN;
         var api = '/api/users/addcourse/';
         var userid = this.state.firebaseUserId;
+
+        console.log("DEBUG coursename " + courseName);
+        console.log("DEBUG api " + api);
+        console.log("DEBUG userid " + userid);
+
+
         return fetch(api + userid, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},

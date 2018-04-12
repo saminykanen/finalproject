@@ -3,10 +3,8 @@ import {Navigation} from './Navigation';
 import Title from './Title';
 import "./Profile.css";
 import {app} from "../components/Authetication/base";
-import {DropdownButton} from 'react-bootstrap';
 
 class Profile extends Component {
-
 
     //Tietojen suojaus!! ei näy, jos ei ole kirjautunut sissään!
     //Tänne tulee profiilin tiedot, käyttäjätunnus ja email
@@ -118,7 +116,6 @@ class Profile extends Component {
 
     deleteUserFromMysql(userId) {
         console.log("Deleteuser function");
-        var userId = userId;
         var api = '/api/users/deleteuser/';
         return fetch(api + userId, {
             method: 'DELETE'
@@ -130,6 +127,7 @@ class Profile extends Component {
     createANewCourse = (e) => {
         e.preventDefault();
         const newCourseName = e.target.elements.newCourseName.value;
+        e.target.elements.newCourseName.value = null;
 
         // luo kurssi MySQLään
         var api = '/api/courses/createcourse/';
@@ -155,8 +153,7 @@ class Profile extends Component {
                 body: JSON.stringify({
                     courseName: newCourseName
                 })
-            })
-            console.log("kurssi lisätty omaan listaan")
+            });
         })
     };
 
@@ -189,8 +186,13 @@ class Profile extends Component {
         return fetch(api + userid, {
             method: 'PUT'
         }).then(
-            this.forceUpdate()
-            //console.log("User rights updated")
+            // haetaan uudestaan käyttäjät jotta voidaan rakentaa uudestaan drop-downlista
+            this.getUserNamesFromSQL(function (allUsers) {
+                this.setState(
+                    {userlist: allUsers}
+                );
+                console.log("käyttäjät haettu UUDESTAAN", allUsers);
+            }.bind(this))
         )
     };
 
@@ -226,6 +228,7 @@ class Profile extends Component {
 
     componentWillUpdate() {
         console.log("componentWillUpdate");
+
     }
 
     render() {
@@ -293,7 +296,7 @@ class Profile extends Component {
                         {/*</select>*/}
                         <select name="selectedUser">
                             {this.state.userlist.map((e, key) => {
-                                if (e.userRole == "student") {
+                                if (e.userRole === "student") {
                                     return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                 }
                             })}
@@ -312,7 +315,7 @@ class Profile extends Component {
                         {/*</select>*/}
                         <select name="selectedUser">
                             {this.state.userlist.map((e, key) => {
-                                if (e.userRole == "teacher") {
+                                if (e.userRole === "teacher") {
                                     return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                 }
                             })}
