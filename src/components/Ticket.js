@@ -36,9 +36,9 @@ class Ticket extends Component {
     render() {
         return (
             <div className="container">
-                <Panel style={{marginBottom: '10px'}} eventKey={this.props.index + 1 + ''} defaultcollapsed="true"
+                <Panel style={{marginBottom: '10px', borderRadius: '10px', border: 'none'}} eventKey={this.props.index + 1 + ''} defaultcollapsed="true"
                        className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success center-block" : "panel-warning center-block"}>
-                    <Panel.Heading>
+                    <Panel.Heading className="greenBackground" style={{borderRadius: '10px'}}>
                         <Panel.Title toggle className="text-left">
                             <div className="row">
                                 <div><span className="col-lg-9 col-md-9 col-sm-9 col-xs-9"><b>{this.props.ticket.ticketTitle}</b></span></div>
@@ -52,7 +52,7 @@ class Ticket extends Component {
                         </Panel.Title>
                     </Panel.Heading>
                     <Panel.Collapse>
-                        <Panel.Body className="text-left fontSizeLargerWhenLargeScreen">
+                        <Panel.Body style={{borderRadius: '10px', borderColor: 'white'}} className="text-left fontSizeLargerWhenLargeScreen">
                             <br/>
                             <div className="row">
                                 <span className="col-lg-2 col-md-2 col-sm-2 col-xs-4 leftFloat"><b>Username:</b></span><span

@@ -27,7 +27,7 @@ class TicketList extends Component {
 
         return (
             <div className="default">
-                <h4>Amount of active tickets: <span className="badge">{tickets.length}</span></h4>
+                <h4>Amount of active tickets in <span><b>{this.props.courseId}</b></span>: <span className="badge">{tickets.length}</span></h4>
                 <div className="wrapper centered style-2 smaller2 normal scroller">
                     <PanelGroup accordion>
                         {tickets}

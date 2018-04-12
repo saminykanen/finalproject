@@ -7,7 +7,7 @@ import {fetchTickets} from "./components/Fetch";
 import Login from "./components/Authetication/Login";
 import {app} from "./components/Authetication/base";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import {Navigation} from './components/Navigation';
+import Navigation from './components/Navigation';
 import nocourseimg from './images/nocourseimg.png';
 import Profile from "./components/Profile";
 import Logout from "./components/Authetication/Logout";
@@ -237,6 +237,8 @@ class TicketService extends Component {
                             <button className="btn buttonStyle btn-customs"><i className="glyphicon glyphicon-search"/>
                             </button>
                     </form>
+                    <div>
+                    </div>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}
                                 username={this.state.firebaseUserId} userRole={this.state.userRole} courseId={this.state.courseId}/>
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId}
