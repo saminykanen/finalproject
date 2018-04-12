@@ -291,75 +291,78 @@ class Profile extends Component {
 
 
         return (
-            <div className="profile" style={{marginTop: '40px'}}>
+            <div className="height">
                 <Navigation/>
                 <Title/>
-                <div className= "profileStyle">
-                <div>
-                    <h2>Profile information</h2>
-                    <p>Username: {this.state.username}</p>
-                    <p>User role: [Teacher / student]</p>
-                </div>
-                <div>
-                    <h3>Your courses</h3>
+                <div className="profileStyle profile">
                     <div>
-                        {courseList}
+                        <h2>Profile information</h2>
+                        <p>Username: {this.state.username}</p>
+                        <p>User role: [Teacher / student]</p>
+                    </div>
+                    <div>
+                        <h3>Your courses</h3>
+                        <div>
+                            {courseList}
+                        </div>
+
+                    </div>
+                    <div>
+                        <h3>Delete your account
+                            <button className="glyphicon glyphicon-trash trash"
+                                    onClick={this.deleteAccount} /></h3>
                     </div>
 
-                </div>
-                <div>
-                    <h3>Delete your account <button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}> </button></h3>
-                </div>
+                    {/*ADMIN*/}
+                    <div>
+                        <h3>Administrator</h3>
+                    </div>
+                    <div>
+                        <h4>Create a new course</h4>
+                        <form onSubmit={this.createANewCourse}>
+                            <input className="form-control center-block input-customs stylish" type="text"
+                                   name="newCourseName"
+                                   placeholder="Name of new course..."/></form>
+                        <button className="glyphicon glyphicon-plus add"/>
+                    </div>
 
-                {/*ADMIN*/}
-                <div>
-                    <h3>Administrator</h3>
-                </div>
-                <div>
-                    <h4>Create a new course</h4>
-                    <form onSubmit={this.createANewCourse}>
-                        <input className="form-control center-block input-customs stylish" type="text" name="newCourseName"
-                               placeholder="Name of new course..."/></form>
-                    <button className="glyphicon glyphicon-plus add" />
-                </div>
+                    <div>
+                        <h4>Give teacher rights to student</h4>
+                        <form className="default" onSubmit={this.toggleUserRights}>
+                            {/*<p>Select course</p>*/}
+                            {/*<select name="courseDropdown">*/}
+                            {/*{this.state.countryData.map((e, key) => {*/}
+                            {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                            {/*})}*/}
+                            {/*</select>*/}
+                            <select name="selectedUser">
+                                {this.state.userlist.map((e, key) => {
+                                    if (e.userRole === "student") {
+                                        return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                    }
+                                })}
+                            </select>
+                            <button className="glyphicon glyphicon-plus add"/>
+                        </form>
+                        <h4>Give student rights to teacher</h4>
+                        <form className="default" onSubmit={this.toggleUserRights}>
+                            {/*<p>Select course</p>*/}
+                            {/*<select name="courseDropdown">*/}
+                            {/*{this.state.countryData.map((e, key) => {*/}
+                            {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                            {/*})}*/}
+                            {/*</select>*/}
+                            <select name="selectedUser">
+                                {this.state.userlist.map((e, key) => {
+                                    if (e.userRole === "teacher") {
+                                        return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                    }
+                                })}
+                            </select>
+                            <button className="glyphicon glyphicon-plus add"/>
+                        </form>
 
-                <div>
-                    <h4>Give teacher rights to student</h4>
-                    <form className="default" onSubmit={this.toggleUserRights}>
-                        {/*<p>Select course</p>*/}
-                        {/*<select name="courseDropdown">*/}
-                        {/*{this.state.countryData.map((e, key) => {*/}
-                        {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
-                        {/*})}*/}
-                        {/*</select>*/}
-                        <select name="selectedUser">
-                            {this.state.userlist.map((e, key) => {
-                                if (e.userRole === "student") {
-                                    return <option key={key} value={e.firebaseUserId}>{e.username}</option>
-                                }
-                            })}
-                        </select>
-                        <button className="glyphicon glyphicon-plus add" />
-                    </form>
-                    <h4>Give student rights to teacher</h4>
-                    <form className="default" onSubmit={this.toggleUserRights}>
-                        {/*<p>Select course</p>*/}
-                        {/*<select name="courseDropdown">*/}
-                        {/*{this.state.countryData.map((e, key) => {*/}
-                        {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
-                        {/*})}*/}
-                        {/*</select>*/}
-                        <select name="selectedUser">
-                            {this.state.userlist.map((e, key) => {
-                                if (e.userRole === "teacher") {
-                                    return <option key={key} value={e.firebaseUserId}>{e.username}</option>
-                                }
-                            })}
-                        </select>
-                        <button className="glyphicon glyphicon-plus add" />
-                    </form>
-
-                </div>
+                    </div>
                 </div>
             </div>
         );
