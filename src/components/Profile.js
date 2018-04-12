@@ -296,7 +296,7 @@ class Profile extends Component {
                 <div>
                     <h3>Profile information</h3>
                     <p>Username: {this.state.username}</p>
-                    <p>User role: [Teacher / student]</p>
+                    <p>User role: {this.state.userRole}</p>
                 </div>
                 <div>
                     <h4>Your courses</h4>
