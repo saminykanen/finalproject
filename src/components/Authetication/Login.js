@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Toaster, Intent} from '@blueprintjs/core'
 import {app, facebookProvider, googleProvider} from "./base";
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Logout from "./Logout";
 import './Login.css';
 import {Grid, Row, Col} from 'react-bootstrap';
@@ -24,7 +24,7 @@ class Login extends Component {
         app.auth().signInWithPopup(googleProvider)
             .then(function (result) {
                 // token = result.credential.accessToken;
-                var user = result.user;
+                //var user = result.user;
                 // console.log(user.displayName + " logged in");
                 this.setState({redirect: true})
             }).catch(function (error) {
@@ -37,7 +37,7 @@ class Login extends Component {
         app.auth().signInWithPopup(facebookProvider)
             .then(function (result) {
                 // var token = result.credential.accessToken;
-                var user = result.user;
+                //var user = result.user;
                 // console.log(user.displayName + " logged in");
                 this.setState({redirect: true})
             }).catch(function (error) {
@@ -70,7 +70,7 @@ class Login extends Component {
         await app.auth().signInWithEmailAndPassword(email, password)
         var user = app.auth().currentUser;
 
-        if (user.emailVerified == true) {
+        if (user.emailVerified === true) {
             return;
         } else {
             app.auth().signOut();

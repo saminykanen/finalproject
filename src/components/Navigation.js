@@ -17,7 +17,7 @@ class Navigation extends Component {
     componentWillMount() {
         app.auth().onAuthStateChanged((user) => {
 
-            console.log("navigaation tiedot päivittyi");
+            // console.log("navigaation tiedot päivittyi");
             if (user.displayName) {
                 this.setState({
                     username: user.displayName,

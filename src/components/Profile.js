@@ -174,7 +174,6 @@ class Profile extends Component {
             .then(function (response) {
                 callback(response)
             })
-        console.log("käyttäjät haettu UUDESTAAN");
     };
 
 
@@ -340,6 +339,7 @@ class Profile extends Component {
                                 if (e.userRole === "student") {
                                     return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                 }
+                                return null
                             })}
                         </select>
                         <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Give teacher
@@ -359,6 +359,7 @@ class Profile extends Component {
                                 if (e.userRole === "teacher") {
                                     return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                 }
+                                return null
                             })}
                         </select>
                         <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon"/> Give student
