@@ -59,7 +59,7 @@ class Profile extends Component {
         // get all users fcourses from MYSQL
         // var userid = this.state.user.currentUser.uid;
         var userid = this.state.firebaseUserId;
-        console.log("userid " + this.state.user.currentUser.uid);
+        console.log("userid " + this.state.firebaseUserId);
         var api = '/api/users/';
         return fetch(api + userid, {
             method: 'GET'
@@ -215,6 +215,14 @@ class Profile extends Component {
             // console.log("user" + user.displayName)
             // console.log("uid" + user.uid)
             // console.log("firebaseUserId" + this.state.firebaseUserId)
+
+            // hakee käyttäjä tiedot MySQL:stä
+            this.getUserInfoFromSQL(function (user) {
+                this.setState({
+                    courses: user.courses,
+                    userRole: user.userRole
+                });
+            }.bind(this));
         });
 
 
@@ -226,15 +234,6 @@ class Profile extends Component {
             console.log("käyttäjät haettu TESTII");
             console.log(allUsers);
         }.bind(this))
-
-        // HAETTAAN KÄYTTÄJÄN PERUSTIEDOT
-        /*
-        this.getUserInfoFromSQL(function (user) {
-            this.setState(
-                {user: user}
-            )
-        }.bind(this))
-        */
 
 
         //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
@@ -272,7 +271,7 @@ class Profile extends Component {
         var courseList = this.state.courses.map(
             function (course, index) {
                 return (
-                    <Course coursename={course} key={index} deleteCourse={deleteCourse}/>
+                    <Course coursename={course.courseName} key={index} deleteCourse={deleteCourse}/>
                 );
             });
 
