@@ -9,6 +9,7 @@ import notickets from '../images/notickets.png';
 class TicketList extends Component {
 
     render() {
+
         var tickets = '';
         // console.log("TicketList render" + this.props.data.length);
         if (this.props.data != null) {

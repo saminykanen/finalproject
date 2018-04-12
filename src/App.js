@@ -70,6 +70,7 @@ class TicketService extends Component {
         courses: [], // mySql käyttäjän kurssilista
         userRole: null, // mySql
         courseId: null
+
     };
 
     componentDidMount() {
@@ -225,16 +226,15 @@ class TicketService extends Component {
             this.fetchCoursesAndUpdate();
         }*/
 
-
     showStuffBasedOnLoginAndCourseStatus() {
         if (this.state.courses.length !== 0 && this.state.authenticated === true) {
             return (
 
-                <div>
+                <div className="bgwhite">
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                             <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                    placeholder="Course..."/>
-                            <button className="btn btn-info btn-customs"><i className="glyphicon glyphicon-search"/>
+                            <button className="btn buttonStyle btn-customs"><i className="glyphicon glyphicon-search"/>
                             </button>
                     </form>
                     <TicketList reFetchList={this.reFetchList} data={this.state.data}
@@ -247,7 +247,7 @@ class TicketService extends Component {
         } else if (this.state.authenticated === true && this.state.courses.length === 0) {
 
             return (
-                <div className="transparent">
+                <div className="bgwhite">
                     <form className="default" onSubmit={this.fetchCourseTickets}>
                         <input className="form-control center-block input-customs" type="text" name="kurssiId"
                                placeholder="Course..."/>
@@ -297,7 +297,7 @@ class TicketService extends Component {
         return (
             <div style={{marginTop: '40px'}}>
                 {/*<Authentication authenticated={this.state.authenticated}/>*/}
-                {this.state.authenticated === true ? <Navigation/> : null}
+                {this.state.authenticated === true ? <Navigation /> : null}
                 <Title className="default"/>
                 <Login className="default" authenticated={this.state.authenticated}/>
 
@@ -319,6 +319,7 @@ class TicketService extends Component {
 
                     <MyTicket reFetchList={this.reFetchList} firebaseUserId={this.state.firebaseUserId} userRole={this.state.userRole} username={this.state.username}/> : null}
                     </div>}*/}
+
                 {this.showStuffBasedOnLoginAndCourseStatus()}
                 {/*{this.showMyTicketEvenIfTicketDataIsEmpty()}*/}
             </div>
