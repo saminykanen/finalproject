@@ -288,7 +288,6 @@ class Profile extends Component {
 
         // ADMIN
 
-
         return (
             <div className="height">
                 <Navigation/>
@@ -313,57 +312,62 @@ class Profile extends Component {
                     </div>
 
                     {/*ADMIN*/}
+                    {this.state.userRole === "teacher" &&
                     <div>
-                        <h3>Administrator</h3>
-                    </div>
-                    <div>
-                        <h4>Create a new course</h4>
-                        <form onSubmit={this.createANewCourse}>
-                            <input className="form-control center-block input-customs stylish" type="text"
-                                   name="newCourseName"
-                                   placeholder="Name of new course..."/></form>
-                        <button className="glyphicon glyphicon-plus add"/>
-                    </div>
-
-                    <div>
-                        <h4>Give teacher rights to student</h4>
-                        <form className="default" onSubmit={this.toggleUserRights}>
-                            {/*<p>Select course</p>*/}
-                            {/*<select name="courseDropdown">*/}
-                            {/*{this.state.countryData.map((e, key) => {*/}
-                            {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
-                            {/*})}*/}
-                            {/*</select>*/}
-                            <select name="selectedUser">
-                                {this.state.userlist.map((e, key) => {
-                                    if (e.userRole === "student") {
-                                        return <option key={key} value={e.firebaseUserId}>{e.username}</option>
-                                    }
-                                })}
-                            </select>
+                        <div>
+                            <h3>Administrator</h3>
+                        </div>
+                        <div>
+                            <h4>Create a new course</h4>
+                            <form onSubmit={this.createANewCourse}>
+                                <input className="form-control center-block input-customs stylish" type="text"
+                                       name="newCourseName"
+                                       placeholder="Name of new course..."/></form>
                             <button className="glyphicon glyphicon-plus add"/>
-                        </form>
-                        <h4>Give student rights to teacher</h4>
-                        <form className="default" onSubmit={this.toggleUserRights}>
-                            {/*<p>Select course</p>*/}
-                            {/*<select name="courseDropdown">*/}
-                            {/*{this.state.countryData.map((e, key) => {*/}
-                            {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
-                            {/*})}*/}
-                            {/*</select>*/}
-                            <select name="selectedUser">
-                                {this.state.userlist.map((e, key) => {
-                                    if (e.userRole === "teacher") {
-                                        return <option key={key} value={e.firebaseUserId}>{e.username}</option>
-                                    }
-                                })}
-                            </select>
-                            <button className="glyphicon glyphicon-plus add"/>
-                        </form>
+                        </div>
 
-                    </div>
+                        <div>
+                            <h4>Give teacher rights to student</h4>
+                            <form className="default" onSubmit={this.toggleUserRights}>
+                                {/*<p>Select course</p>*/}
+                                {/*<select name="courseDropdown">*/}
+                                {/*{this.state.countryData.map((e, key) => {*/}
+                                {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                                {/*})}*/}
+                                {/*</select>*/}
+                                <select name="selectedUser">
+                                    {this.state.userlist.map((e, key) => {
+                                        if (e.userRole === "student") {
+                                            return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                        }
+                                    })}
+                                </select>
+                                <button className="glyphicon glyphicon-plus add"/>
+                            </form>
+
+                            <h4>Give student rights to teacher</h4>
+                            <form className="default" onSubmit={this.toggleUserRights}>
+                                {/*<p>Select course</p>*/}
+                                {/*<select name="courseDropdown">*/}
+                                {/*{this.state.countryData.map((e, key) => {*/}
+                                {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                                {/*})}*/}
+                                {/*</select>*/}
+                                <select name="selectedUser">
+                                    {this.state.userlist.map((e, key) => {
+                                        if (e.userRole === "teacher") {
+                                            return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                        }
+                                    })}
+                                </select>
+                                <button className="glyphicon glyphicon-plus add"/>
+                            </form>
+
+                        </div>
+                    </div>}
                 </div>
             </div>
+
         );
 
     }
