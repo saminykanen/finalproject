@@ -190,10 +190,17 @@ class Profile extends Component {
 
             // hakee käyttäjä tiedot MySQL:stä
             this.getUserInfoFromSQL(function (user) {
-                this.setState({
-                    courses: user.courses,
-                    userRole: user.userRole
-                });
+                if (user.courses === true) {
+                    this.setState({
+                        courses: user.courses,
+                        userRole: user.userRole
+                    });
+                } else {
+                    this.setState({
+                        userRole: null,
+                        userRole: user.userRole
+                    });
+                }
             }.bind(this));
         });
 
@@ -292,53 +299,67 @@ class Profile extends Component {
                     <div>
                         <div>
 
-                        <h2 className="header23Style">Administrator</h2>
-                    </div>
-                    <div>
-                        <h4 className="header4Style">Create new course:</h4>
-                        <form onSubmit={this.createANewCourse}>
-                            <input className="form-control similarToh4 input-customs stylish" type="text"
-                                   name="newCourseName" style={{display: 'inline-block'}}
-                                   placeholder="Name of new course..."/>
-                            <button className="btn buttonStyle btn-md"
-                                    style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>CREATE
-                            </button>
-                        </form>
-                    </div>
+                            <h2 className="header23Style">Administrator</h2>
+                        </div>
+                        <div>
+                            <h4 className="header4Style">Create new course:</h4>
+                            <form onSubmit={this.createANewCourse}>
+                                <input className="form-control similarToh4 input-customs stylish" type="text"
+                                       name="newCourseName" style={{display: 'inline-block'}}
+                                       placeholder="Name of new course..."/>
+                                <button className="btn buttonStyle btn-md"
+                                        style={{
+                                            marginLeft: '10px',
+                                            marginBottom: '3px',
+                                            display: 'inline-block'
+                                        }}>CREATE
+                                </button>
+                            </form>
+                        </div>
 
-                    <div>
-                        <h4 className="header4Style">Upgrade to teacher:</h4>
-                        <form onSubmit={this.toggleUserRights}>
-                            <select style={{display: 'inline-block'}}
-                                    className="form-control similarToh4 input-customs stylish" name="selectedUser">
-                                {this.state.userlist.map((e, key) => {
-                                    if (e.userRole === "student") {
-                                        return <option key={key} value={e.firebaseUserId}>{e.username}</option>
-                                    }
-                                })}
-                            </select>
+                        <div>
+                            <h4 className="header4Style">Upgrade to teacher:</h4>
+                            <form onSubmit={this.toggleUserRights}>
+                                <select style={{display: 'inline-block'}}
+                                        className="form-control similarToh4 input-customs stylish" name="selectedUser">
+                                    {this.state.userlist.map((e, key) => {
+                                        if (e.userRole === "student") {
+                                            return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                        }
+                                    })}
+                                </select>
 
-                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>UPGRADE</button>
-                        </form>
-                        <h4 className="header4Style">Downgrade to student:</h4>
-                        <form onSubmit={this.toggleUserRights}>
-                            {/*<p>Select course</p>*/}
-                            {/*<select name="courseDropdown">*/}
-                            {/*{this.state.countryData.map((e, key) => {*/}
-                            {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
-                            {/*})}*/}
-                            {/*</select>*/}
-                            <select style={{display: 'inline-block'}}
-                                    className="form-control similarToh4 input-customs stylish" name="selectedUser">
-                                {this.state.userlist.map((e, key) => {
-                                    if (e.userRole === "teacher") {
-                                        return <option key={key} value={e.firebaseUserId}>{e.username}</option>
-                                    }
-                                })}
-                            </select>
+                                <button className="btn buttonStyle btn-md" style={{
+                                    marginLeft: '10px',
+                                    marginBottom: '3px',
+                                    display: 'inline-block'
+                                }}>UPGRADE
+                                </button>
+                            </form>
+                            <h4 className="header4Style">Downgrade to student:</h4>
+                            <form onSubmit={this.toggleUserRights}>
+                                {/*<p>Select course</p>*/}
+                                {/*<select name="courseDropdown">*/}
+                                {/*{this.state.countryData.map((e, key) => {*/}
+                                {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
+                                {/*})}*/}
+                                {/*</select>*/}
+                                <select style={{display: 'inline-block'}}
+                                        className="form-control similarToh4 input-customs stylish" name="selectedUser">
+                                    {this.state.userlist.map((e, key) => {
+                                        if (e.userRole === "teacher") {
+                                            return <option key={key} value={e.firebaseUserId}>{e.username}</option>
+                                        }
+                                    })}
+                                </select>
 
-                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>DOWNGRADE</button>
-                        </form>
+                                <button className="btn buttonStyle btn-md" style={{
+                                    marginLeft: '10px',
+                                    marginBottom: '3px',
+                                    display: 'inline-block'
+                                }}>DOWNGRADE
+                                </button>
+                            </form>
                         </div>
                     </div>}
                 </div>
@@ -346,7 +367,7 @@ class Profile extends Component {
 
         );
 
-}
+    }
 
 
 }
