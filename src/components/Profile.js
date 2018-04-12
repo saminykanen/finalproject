@@ -229,6 +229,7 @@ class Profile extends Component {
     }
 
     render() {
+        console.log(this.props.username)
         console.log("render");
 
         // USER

@@ -48,3 +48,8 @@
         display: none;
     }
 }
+
+.buttonStyle {
+    background: #46a14a;
+    border: none;
+}
