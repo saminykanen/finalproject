@@ -275,6 +275,17 @@ class Profile extends Component {
                 );
             });
 
+        /*
+        // userstatukset asetus purkkakoodilla
+        var userstatus = this.state.userlist.map(
+            function (user, index) {
+                return (
+                    <Course coursename={course} key={index} deleteCourse={deleteCourse}/>
+                );
+            });
+
+*/
+
         // ADMIN
 
 
@@ -285,7 +296,7 @@ class Profile extends Component {
                 <div>
                     <h3>Profile information</h3>
                     <p>Username: {this.state.username}</p>
-                    <p>User role: [Teacher / student]</p>   
+                    <p>User role: [Teacher / student]</p>
                 </div>
                 <div>
                     <h4>Your courses</h4>
