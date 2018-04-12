@@ -26,8 +26,6 @@ class Navigation extends Component {
                     username: "Profile"
                 });
             }
-
-
         });
     }
 
@@ -38,14 +36,14 @@ class Navigation extends Component {
                 <Navbar.Header>
                     <Navbar.Link href="/"><img className="logo" src={academylogo}/>
                     </Navbar.Link>
-                    <Navbar.Toggle/>
+                    <Navbar.Toggle className="toggleStyle"/>
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Navbar.Text pullRight>
-                        <Navbar.Link className="glyphicon glyphicon-log-out" href="/logout"> Logout</Navbar.Link>
+                        <Navbar.Link className="glyphicon glyphicon-log-out letterSpacing" href="/logout"> Logout</Navbar.Link>
                     </Navbar.Text>
                     <Navbar.Text pullRight>
-                        <Navbar.Link className="glyphicon glyphicon-user"
+                        <Navbar.Link className="glyphicon glyphicon-user letterSpacing"
                                      href="/profile"> {this.state.username} </Navbar.Link>
                     </Navbar.Text>
                 </Navbar.Collapse>
