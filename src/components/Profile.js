@@ -326,7 +326,7 @@ class Profile extends Component {
                     </div>
 
                     <div>
-                        <h4 className="header4Style">Give teacher rights to student:</h4>
+                        <h4 className="header4Style">Upgrade to teacher:</h4>
                         <form onSubmit={this.toggleUserRights}>
                             <select style={{display: 'inline-block'}} className="form-control similarToh4 input-customs stylish" name="selectedUser">
                                 {this.state.userlist.map((e, key) => {
@@ -335,9 +335,9 @@ class Profile extends Component {
                                     }
                                 })}
                             </select>
-                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>GRANT</button>
+                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>UPGRADE</button>
                         </form>
-                        <h4 className="header4Style">Give student rights to teacher:</h4>
+                        <h4 className="header4Style">Downgrade to student:</h4>
                         <form onSubmit={this.toggleUserRights}>
                             {/*<p>Select course</p>*/}
                             {/*<select name="courseDropdown">*/}
@@ -352,7 +352,7 @@ class Profile extends Component {
                                     }
                                 })}
                             </select>
-                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>GRANT</button>
+                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>DOWNGRADE</button>
                         </form>
                         </div>
                     </div>}

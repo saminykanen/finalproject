@@ -93,7 +93,7 @@ class TicketForm extends Component {
                                onChange={this.handleInputChange}
                                placeholder={"Location"}/>
                     </div>
-                    <button type="submit" className="btn btn-primary btn-lg buttonStyle">Add ticket</button>
+                    <button type="submit" className="btn btn-lg buttonStyle">Add ticket</button>
                 </form>
                 <button type="close" className="btn btn-danger btn-lg" style={{marginTop: '5px'}}
                         onClick={this.props.onClose}>Cancel
