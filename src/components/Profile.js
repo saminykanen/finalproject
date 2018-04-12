@@ -6,52 +6,13 @@ import {app} from "../components/Authetication/base";
 
 class Profile extends Component {
 
-    //Tietojen suojaus!! ei näy, jos ei ole kirjautunut sissään!
-    //Tänne tulee profiilin tiedot, käyttäjätunnus ja email
-    //Omat kurssit, rooli -> Selostus, että mitä voi tehdä oppilaana? Saako sellasta infopalkkia esim?
-    //Uuden kurssin lisääminen
-    //Opettajalle lisäominaisuus: lisää uusia oppilaita opettajiksi
-
     state = {
         user: null, // firebaseuser
         username: null,
         userRole: null,
         firebaseUserId: null,
-        courses: ["Java-kurssi", "React-kurssi", "Pelle-kurssi"],
+        courses: [],
         userlist: []
-        //     {
-        //         firebaseUserId: "uediACnXUXezVoHjJIrpzqXoQfU2",
-        //         userRole: "teacher",
-        //         username: "admin",
-        //         courses: [
-        //             {
-        //                 courseId: 1,
-        //                 courseName: "Java-kurssi"
-        //             },
-        //             {
-        //                 courseId: 2,
-        //                 courseName: "React-kurssi"
-        //             }
-        //         ]
-        //     },
-        //     {
-        //         firebaseUserId: "s6cq6NBFojdUnQWL44sqL9709c02",
-        //         userRole: "student",
-        //         username: "Tommi",
-        //         courses: []
-        //     },
-        //     {
-        //         firebaseUserId: "GGWiEnFIRqTRwQngxESZouEnlX23",
-        //         userRole: "student",
-        //         username: "Veli-Pekka Nurmi",
-        //         courses: [
-        //             {
-        //                 courseId: 1,
-        //                 courseName: "Java-kurssi"
-        //             }
-        //         ]
-        //     }
-        // ]
     };
 
     //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
@@ -72,10 +33,7 @@ class Profile extends Component {
             })
     };
 
-
     //********* POISTETAAN JOS SAADAAN STATESTA / PROPSEISTA  *************
-
-
     deleteCourse = (courseName) => {
         // e.preventDefault(); // tarvitaanko
         //const courseName = e.target.elements.newCourseName.value;
@@ -86,7 +44,6 @@ class Profile extends Component {
 
         console.log(userId)
 
-
         fetch(api + userId, {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json'},
@@ -95,6 +52,7 @@ class Profile extends Component {
                     courseName: courseName
                 })
         });
+        this.forceThePageRefresh();
     };
 
     deleteAccount = (e) => {
@@ -102,7 +60,7 @@ class Profile extends Component {
 
         // poista firebasesta
         var user = app.auth().currentUser;
-        console.log(user.displayName)
+        console.log("poistosta halloo " + user.displayName)
 
         user.delete().then(function () {
             console.log("User deletoitu firebasesta");
@@ -144,23 +102,36 @@ class Profile extends Component {
                     courseName: newCourseName
                 }
             )
-        }).then(function () {
-            console.log("kurssi luotu")
+        }).then(
+            this.addCourseToUsersOwnList(newCourseName)
+        ).then(
+            this.forceThePageRefresh()
+            // console.log("LAUKES!")
+        )
 
-            // lisää kurssi omaan listaan
-            var userid = app.auth().currentUser.uid;
-            //var userid = user.uid;
+        // }).then(//function (callback) {
+        //     console.log("JUUKELI EI LAUKEA") ///////////////////// EI TÄLLÄ HETKELLÄ TOIMI
+        //    // callback();}
+        // );
+    };
 
-            var api = '/api/users/addcourse/';
-            return fetch(api + userid, {
+    addCourseToUsersOwnList = (newCourseName) => {
+        let userid = app.auth().currentUser.uid;
+        let api = '/api/users/addcourse/';
+
+        console.log("kurssi lisätty sun ilstaan");
+        console.log("UID kurssin lisäys" + userid);
+
+        return fetch(api + userid, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     courseName: newCourseName
                 })
-            });
-        })
+            }
+        )
     };
+
 
     getUserNamesFromSQL = (callback) => {
         // get all users from MySQL
@@ -174,7 +145,6 @@ class Profile extends Component {
             .then(function (response) {
                 callback(response)
             })
-        console.log("käyttäjät haettu UUDESTAAN");
     };
 
 
@@ -183,7 +153,7 @@ class Profile extends Component {
 
         e.preventDefault();
         const userToBeModified = e.target.elements.selectedUser.value;
-        console.log("tätä käyttäjää muokataan " + userToBeModified);
+        //console.log("tätä käyttäjää muokataan " + userToBeModified);
 
         var userid = userToBeModified
         //var userid = user.uid;
@@ -197,6 +167,8 @@ class Profile extends Component {
                         {userlist: allUsers}
                     );
                 }.bind(this))
+            ).then(
+                this.forceThePageRefresh()
             )
     };
 
@@ -235,24 +207,6 @@ class Profile extends Component {
             console.log(allUsers);
         }.bind(this))
 
-
-        //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
-
-        // this.setState({
-        //     user: app.auth().currentUser.uid
-        // });
-
-        /*
-        this.getUserCoursesFromSQL(function (courses) {
-            this.setState(
-                {courses: courses}
-            );
-            console.log("käyttähän kurssit haettu");
-        }.bind(this))
-        */
-
-        //************* POISTETAAN JOS SAADAAN STATEEN/PROPSIIN KURSSILISTA! *******//
-
     }
 
     componentWillUpdate() {
@@ -260,8 +214,32 @@ class Profile extends Component {
 
     }
 
+    // tämä ajetaan aina kun halutaan päivittää sivu - eli kun käyttäjä tekee jonkun muuton
+    forceThePageRefresh = (e) => {
+
+        // päivitä userin kurssit
+        this.getUserInfoFromSQL(function (user) {
+            this.setState({
+                courses: user.courses,
+                userRole: user.userRole
+            });
+        }.bind(this));
+
+        // hakee käyttäjät jotta niiden oikeuksia voidaan muokata
+        this.getUserNamesFromSQL(function (allUsers) {
+            this.setState(
+                {userlist: allUsers}
+            );
+            console.log("käyttäjät haettu TESTII");
+            console.log(allUsers);
+        }.bind(this))
+
+
+        this.setState(this.state) // dumb easy: triggers render
+    };
+
     render() {
-        console.log(this.props.username)
+        console.log("render username" + this.props.username)
         console.log("render");
 
         // USER
@@ -288,7 +266,6 @@ class Profile extends Component {
 
         // ADMIN
 
-
         return (
             <div className="height">
                 <Navigation/>
@@ -298,7 +275,8 @@ class Profile extends Component {
                         <h2 className="header23Style">Profile information</h2>
                         <h4 className="header4Style"><b>Username:</b> {this.state.username}</h4>
                         <h4 className="header4Style"><b>User role:</b> {this.state.userRole}</h4>
-                        <h4 className="header4Style"><b>Delete your account</b><button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>
+                        <h4 className="header4Style"><b>Delete your account: </b>
+                            <button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>
                         </h4>
                     </div>
                     <div>
@@ -310,38 +288,39 @@ class Profile extends Component {
                     </div>
 
                     {/*ADMIN*/}
+                    {this.state.userRole === "teacher" &&
                     <div>
+                        <div>
+
                         <h2 className="header23Style">Administrator</h2>
                     </div>
                     <div>
                         <h4 className="header4Style">Create new course:</h4>
                         <form onSubmit={this.createANewCourse}>
                             <input className="form-control similarToh4 input-customs stylish" type="text"
-                                   name="newCourseName"
+                                   name="newCourseName" style={{display: 'inline-block'}}
                                    placeholder="Name of new course..."/>
-                            <button className="btn buttonStyle btn-sm similarToh4" style={{marginTop: '5px'}}>ADD</button>
+                            <button className="btn buttonStyle btn-md"
+                                    style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>CREATE
+                            </button>
                         </form>
                     </div>
 
                     <div>
-                        <h4 className="header4Style">Give teacher rights to student:</h4>
+                        <h4 className="header4Style">Upgrade to teacher:</h4>
                         <form onSubmit={this.toggleUserRights}>
-                            {/*<p>Select course</p>*/}
-                            {/*<select name="courseDropdown">*/}
-                            {/*{this.state.countryData.map((e, key) => {*/}
-                            {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
-                            {/*})}*/}
-                            {/*</select>*/}
-                            <select className="form-control similarToh4 input-customs stylish" name="selectedUser">
+                            <select style={{display: 'inline-block'}}
+                                    className="form-control similarToh4 input-customs stylish" name="selectedUser">
                                 {this.state.userlist.map((e, key) => {
                                     if (e.userRole === "student") {
                                         return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                     }
                                 })}
                             </select>
-                            <button className="btn buttonStyle btn-sm similarToh4" style={{marginTop: '5px'}}>ADD</button>
+
+                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>UPGRADE</button>
                         </form>
-                        <h4 className="header4Style">Give student rights to teacher:</h4>
+                        <h4 className="header4Style">Downgrade to student:</h4>
                         <form onSubmit={this.toggleUserRights}>
                             {/*<p>Select course</p>*/}
                             {/*<select name="courseDropdown">*/}
@@ -349,22 +328,25 @@ class Profile extends Component {
                             {/*return <option key={key} value={e.courseId}>{e.courseName}</option>;*/}
                             {/*})}*/}
                             {/*</select>*/}
-                            <select className="form-control similarToh4 input-customs stylish" name="selectedUser">
+                            <select style={{display: 'inline-block'}}
+                                    className="form-control similarToh4 input-customs stylish" name="selectedUser">
                                 {this.state.userlist.map((e, key) => {
                                     if (e.userRole === "teacher") {
                                         return <option key={key} value={e.firebaseUserId}>{e.username}</option>
                                     }
                                 })}
                             </select>
-                            <button className="btn buttonStyle btn-sm similarToh4" style={{marginTop: '5px'}}>ADD</button>
-                        </form>
 
-                    </div>
+                            <button className="btn buttonStyle btn-md" style={{marginLeft: '10px', marginBottom: '3px', display: 'inline-block'}}>DOWNGRADE</button>
+                        </form>
+                        </div>
+                    </div>}
                 </div>
             </div>
+
         );
 
-    }
+}
 
 
 }
@@ -383,7 +365,8 @@ class Course extends Component {
     render() {
         return (
             <div>
-                <h4>{this.props.coursename}  <button className="glyphicon glyphicon-trash trash" onClick={this.removeCourse}> </button>
+                <h4>{this.props.coursename}
+                    <button className="glyphicon glyphicon-trash trash" onClick={this.removeCourse}></button>
                 </h4>
             </div>
         )

@@ -22,7 +22,7 @@ class Ticket extends Component {
     }
 
     showActivateButton(userInfo){
-        if (userInfo === 'teacher'){
+        if (userInfo === 'teacher' && this.props.ticket.ticketStatus === "queue"){
             return(
                 <button className="btn btn-warning btn-md float-right buttons activate"
                         onClick={this.handleChangeToActive.bind(this)}>ACTIVATE
@@ -37,7 +37,7 @@ class Ticket extends Component {
         return (
             <div className="container">
                 <Panel style={{marginBottom: '10px', borderRadius: '10px', border: 'none'}} eventKey={this.props.index + 1 + ''} defaultcollapsed="true"
-                       className={this.props.ticket.ticketStatus.startsWith('a') ? "panel panel-success center-block" : "panel-warning center-block"}>
+                       className={this.props.ticket.ticketStatus === "active" ? "panel panel-success center-block" : "panel-warning center-block"}>
                     <Panel.Heading className="greenBackground" style={{borderRadius: '10px'}}>
                         <Panel.Title toggle className="text-left">
                             <div className="row">
