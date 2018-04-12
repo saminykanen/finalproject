@@ -4,7 +4,7 @@ import './Title.css';
 class Title extends Component {
     render() {
         return (
-            <div className="container">
+            <div className="container bgwhite">
                 <div className="default">
                     <h1 className="titleFont">Academy Ticket Service</h1>
                 </div>

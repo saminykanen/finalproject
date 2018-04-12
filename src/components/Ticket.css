@@ -20,6 +20,9 @@
     .leftFloat {
         display: none;
     }
+    .fontSizeLargerWhenLargeScreen {
+        font-size: medium;
+    }
 }
 
 @media only screen and (min-width: 630px) and (max-width: 1199px) {
@@ -62,3 +65,4 @@
     background: #54c45a;
     color: white;
 }
+

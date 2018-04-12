@@ -3,3 +3,8 @@
     font-size: 400%;
     margin-bottom: 30px;
 }
+
+.bgwhite {
+    background: white;
+    width: 100vw;
+}
