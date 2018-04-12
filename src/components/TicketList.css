@@ -61,7 +61,7 @@
 @media only screen and (width: 414px) and (height: 736px) {
     .centered {
         position: fixed;
-        top: 67%;
+        top: 69%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
@@ -75,28 +75,28 @@
 @media only screen and (width: 375px) and (height: 667px) {
     .centered {
         position: fixed;
-        top: 69%;
+        top: 72%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
 
     .scroller {
         overflow: auto;
-        max-height: 40%;
+        max-height: 35%;
     }
 }
 /*iPhone X*/
 @media only screen and (width: 375px) and (height: 812px) {
     .centered {
         position: fixed;
-        top: 65%;
+        top: 67%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
 
     .scroller {
         overflow: auto;
-        max-height: 50%;
+        max-height: 48%;
     }
 }
 
