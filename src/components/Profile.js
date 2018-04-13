@@ -184,31 +184,25 @@ class Profile extends Component {
                 username: user.displayName,
                 user: user
             });
-            console.log("Component Will Mount: user" + user.displayName)
+            // console.log("user" + user.displayName)
             // console.log("uid" + user.uid)
             // console.log("firebaseUserId" + this.state.firebaseUserId)
 
             // hakee käyttäjä tiedot MySQL:stä
-            // this.getUserInfoFromSQL(function (user) {
-            //     if (user.courses === true) {
-            //         this.setState({
-            //             courses: user.courses,
-            //             userRole: user.userRole
-            //         });
-            //     } else {
-            //         this.setState({
-            //             userRole: null,
-            //             userRole: user.userRole
-            //         });
-            //     }
-            // }.bind(this));
             this.getUserInfoFromSQL(function (user) {
-                this.setState({
-                    courses: user.courses,
-                    userRole: user.userRole
-                });
+                if (user.courses !== null) {
+                    this.setState({
+                        courses: user.courses,
+                        userRole: user.userRole
+                    });
+                } else {
+                    this.setState({
+                        courses: null,
+                        userRole: user.userRole
+                    });
+                }
             }.bind(this));
-        })
+        });
 
 
         // hakee käyttäjät jotta niiden oikeuksia voidaan muokata
@@ -216,7 +210,6 @@ class Profile extends Component {
             this.setState(
                 {userlist: allUsers}
             );
-            console.log("firebase ID HÄX" + this.state.firebaseUserId);
             console.log("käyttäjät haettu TESTII");
             console.log(allUsers);
         }.bind(this))
@@ -248,15 +241,16 @@ class Profile extends Component {
             console.log(allUsers);
         }.bind(this))
 
+
         this.setState(this.state) // dumb easy: triggers render
     };
 
     render() {
+        console.log("render username" + this.props.username)
         console.log("render");
 
         // USER
 
-        console.log(this.state.courses)
         // tekee listan käyttäjän omista kursseista
         var deleteCourse = this.deleteCourse; // muuttuja
         var courseList = this.state.courses.map(
@@ -288,9 +282,9 @@ class Profile extends Component {
                         <h2 className="header23Style">Profile information</h2>
                         <h4 className="header4Style"><b>Username:</b> {this.state.username}</h4>
                         <h4 className="header4Style"><b>User role:</b> {this.state.userRole}</h4>
-                        {/*<h4 className="header4Style"><b>Delete your account: </b>*/}
-                            {/*<button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>*/}
-                        {/*</h4>*/}
+                        <h4 className="header4Style"><b>Delete your account: </b>
+                            <button className="glyphicon glyphicon-trash trash" onClick={this.deleteAccount}/>
+                        </h4>
                     </div>
                     <div>
                         <h3 className="header23Style">Your courses</h3>

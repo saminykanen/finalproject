@@ -187,7 +187,7 @@ class TicketService extends Component {
     }
 
     fetchTicketsAndUpdate = (courseId) => {
-          if (!courseId) courseId = 'Java-kurssi';  // virhekäisttelyn voi heittää tähänkin
+          if (!courseId) courseId = 'javak18';  // virhekäisttelyn voi heittää tähänkin
         fetchTickets(function (tickets) {
             // console.log("Tiketit haettu. " + tickets.length)
             this.setState({data: tickets, courseId: courseId});
